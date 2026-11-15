@@ -3,7 +3,7 @@
 Generated from `.taskmaster/tasks/tasks.json` (the source of truth). Never edit by hand; regenerate with
 `python .taskmaster/render_tasks_md.py`.
 
-**Progress: 11/62 tasks done.**
+**Progress: 12/62 tasks done.**
 
 ## Phase 0 - Foundation
 
@@ -52,7 +52,7 @@ Generated from `.taskmaster/tasks/tasks.json` (the source of truth). Never edit 
 - [x] **13. Lesson page: header and three resizable panels** _(after 10)_  
   The Codecademy-style layout: lesson 33% · editor 34% · output 33%, draggable, persisted (PRD 4.1-4.3, 4.6).  
   _Test:_ e2e/lesson-layout.spec.ts: three panels visible at 1440px with widths ~33/34/33 (±3%); dragging a handle changes widths; reload keeps them; restore resets
-- [ ] **14. Independent panel scrolling and lesson controls bar** _(after 13)_  
+- [x] **14. Independent panel scrolling and lesson controls bar** _(after 13)_  
   Each panel scrolls on its own; Prev/Next/Run/Submit/Reset/Save/Clear controls exist (PRD 4.4, 4.7).  
   _Test:_ e2e: scrolling the lesson panel leaves editor and output scrollTop unchanged; Run shows simulated output; Clear empties it
 - [ ] **15. CodeMirror 6 editor component** _(after 13)_  

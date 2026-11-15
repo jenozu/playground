@@ -285,7 +285,7 @@
         "id": 14,
         "title": "Independent panel scrolling and lesson controls bar",
         "description": "Each panel scrolls on its own; Prev/Next/Run/Submit/Reset/Save/Clear controls exist (PRD 4.4, 4.7).",
-        "status": "pending",
+        "status": "done",
         "priority": "medium",
         "phase": 2,
         "complexity": 4,
@@ -294,7 +294,7 @@
         ],
         "human": false,
         "review": false,
-        "details": "overflow-auto per panel with min-h-0 flex fix. Bottom controls bar: Prev/Next (lesson nav), Run, Submit, Reset, Save, Clear output, wired to a lesson-page controller with placeholder handlers (Run prints simulated output). Placeholder lesson Markdown long enough to scroll. Keyboard shortcut Ctrl/Cmd+Enter = Run.",
+        "details": "overflow-auto per panel with min-h-0 flex fix. Bottom controls bar: Prev/Next (lesson nav), Run, Submit, Reset, Save, Clear output, wired to a lesson-page controller with placeholder handlers (Run prints simulated output). Placeholder lesson Markdown long enough to scroll. Keyboard shortcut Ctrl/Cmd+Enter = Run.\n\n[2026-11-15T18:28:44-05:00] built controls bar + per-panel scroll in LessonPage; e2e passes\n\n[2026-11-15T18:33:09-05:00] done by sonnet; verified",
         "testStrategy": "e2e: scrolling the lesson panel leaves editor and output scrollTop unchanged; Run shows simulated output; Clear empties it",
         "subtasks": []
       },
@@ -1437,7 +1437,7 @@
         }
       ],
       "created": "2026-11-15",
-      "updated": "2026-11-15T18:27:59-05:00"
+      "updated": "2026-11-15T18:33:09-05:00"
     }
   }
 }

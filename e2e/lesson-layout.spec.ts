@@ -33,3 +33,20 @@ test('three panels, drag, persist, restore', async ({ page }) => {
   await page.getByRole('button', { name: 'Restore default layout' }).click()
   near(await widths(page), [33, 34, 33])
 })
+
+test('panels scroll independently; controls work', async ({ page }) => {
+  await page.goto(URL)
+  const [l, e, o] = ['lesson', 'editor', 'output'].map((id) => page.getByTestId(`panel-${id}`))
+  await expect(o).toBeVisible()
+  await l.evaluate((n) => (n.scrollTop = 300))
+  expect(await l.evaluate((n) => n.scrollTop)).toBeGreaterThan(0)
+  expect(await e.evaluate((n) => n.scrollTop)).toBe(0)
+  expect(await o.evaluate((n) => n.scrollTop)).toBe(0)
+
+  await page.getByRole('button', { name: 'Run', exact: true }).click()
+  await expect(page.getByTestId('output-text')).toContainText('Simulated output')
+  await page.getByRole('button', { name: 'Clear output' }).click()
+  await expect(page.getByTestId('output-text')).toHaveText('')
+  await page.getByLabel('Code').press('Control+Enter')
+  await expect(page.getByTestId('output-text')).toContainText('Simulated output')
+})
