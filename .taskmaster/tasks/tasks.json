@@ -5,14 +5,14 @@
         "id": 1,
         "title": "Scaffold Vite + React + TypeScript + Tailwind app at repo root",
         "description": "A running empty app with lint, typecheck, unit test and build scripts.",
-        "status": "pending",
+        "status": "done",
         "priority": "high",
         "phase": 0,
         "complexity": 4,
         "dependencies": [],
         "human": false,
         "review": false,
-        "details": "Repo is empty apart from the harness. `npm create vite@latest . -- --template react-ts` equivalent by hand if the dir is non-empty (don't delete harness files). Add Tailwind (v4 via @tailwindcss/vite, or v3 if v4 is incompatible: record which in DECISIONS.md), ESLint flat config (typescript-eslint, react-hooks), Vitest + @testing-library/react + jsdom. package.json scripts: dev, build (`tsc -b && vite build`), lint (`eslint .`), typecheck (`tsc -b --noEmit` or `tsc --noEmit -p tsconfig.app.json`), test (`vitest run`). strict TS. One test `src/App.test.tsx` rendering the app. Pin current stable versions (check npm) and record them in DECISIONS.md. Commit package-lock.json.",
+        "details": "Repo is empty apart from the harness. `npm create vite@latest . -- --template react-ts` equivalent by hand if the dir is non-empty (don't delete harness files). Add Tailwind (v4 via @tailwindcss/vite, or v3 if v4 is incompatible: record which in DECISIONS.md), ESLint flat config (typescript-eslint, react-hooks), Vitest + @testing-library/react + jsdom. package.json scripts: dev, build (`tsc -b && vite build`), lint (`eslint .`), typecheck (`tsc -b --noEmit` or `tsc --noEmit -p tsconfig.app.json`), test (`vitest run`). strict TS. One test `src/App.test.tsx` rendering the app. Pin current stable versions (check npm) and record them in DECISIONS.md. Commit package-lock.json.\n\n[2026-11-15T13:12:40-05:00] plan: builder-sonnet scaffold\n\n[2026-11-15T13:12:52-05:00] plan (sonnet): package.json, vite/ts/eslint configs, src/, index.html, DECISIONS.md - hand scaffold\n\n[2026-11-15T13:17:45-05:00] built scaffold; lint, typecheck, vitest, build all pass. jsdom pinned to 26.1.0 (31 fails on Node 22.12). DECISIONS.md written.\n\n[2026-11-15T13:18:34-05:00] done by sonnet; verified",
         "testStrategy": "npm run lint && npm run typecheck && npx vitest run && npm run build all exit 0",
         "subtasks": []
       },
@@ -78,9 +78,10 @@
         "dependencies": [],
         "human": true,
         "review": false,
-        "details": "Owner: create a private repo (e.g. `gh repo create coding-academy --private --source . --remote origin`) in this folder's terminal, or create it on github.com and run `git remote add origin <url>` then `git push -u origin main`. Reply 'remote added'.",
+        "details": "Owner: create a private repo (e.g. `gh repo create coding-academy --private --source . --remote origin`) in this folder's terminal, or create it on github.com and run `git remote add origin <url>` then `git push -u origin main`. Reply 'remote added'.\n\n[2026-11-15T13:12:40-05:00] human step queued: see human-checklist.md (agents may build around it; stays open until the human confirms)",
         "testStrategy": "git remote get-url origin prints a github.com URL",
-        "subtasks": []
+        "subtasks": [],
+        "queued": true
       },
       {
         "id": 6,
@@ -93,9 +94,10 @@
         "dependencies": [],
         "human": true,
         "review": false,
-        "details": "Owner: save the screenshot as docs/design/reference.png and commit it (or drop it in the folder and tell the lead).",
+        "details": "Owner: save the screenshot as docs/design/reference.png and commit it (or drop it in the folder and tell the lead).\n\n[2026-11-15T13:12:40-05:00] human step queued: see human-checklist.md (agents may build around it; stays open until the human confirms)",
         "testStrategy": "ls docs/design/reference.png",
-        "subtasks": []
+        "subtasks": [],
+        "queued": true
       },
       {
         "id": 7,
@@ -1435,7 +1437,7 @@
         }
       ],
       "created": "2026-11-15",
-      "updated": "2026-11-15"
+      "updated": "2026-11-15T13:18:35-05:00"
     }
   }
 }

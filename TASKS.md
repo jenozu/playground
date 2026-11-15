@@ -3,11 +3,11 @@
 Generated from `.taskmaster/tasks/tasks.json` (the source of truth). Never edit by hand; regenerate with
 `python .taskmaster/render_tasks_md.py`.
 
-**Progress: 0/62 tasks done.**
+**Progress: 1/62 tasks done.**
 
 ## Phase 0 - Foundation
 
-- [ ] **1. Scaffold Vite + React + TypeScript + Tailwind app at repo root**  
+- [x] **1. Scaffold Vite + React + TypeScript + Tailwind app at repo root**  
   A running empty app with lint, typecheck, unit test and build scripts.  
   _Test:_ npm run lint && npm run typecheck && npx vitest run && npm run build all exit 0
 - [ ] **2. Write architecture proposal and project docs skeleton** _(after 1)_  
