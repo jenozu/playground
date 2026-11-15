@@ -185,7 +185,7 @@
         "id": 10,
         "title": "Settings page with persisted preferences and dark/light theme",
         "description": "Theme, editor font size/font and default practice language persist across reloads (PRD 19.3-19.4).",
-        "status": "pending",
+        "status": "done",
         "priority": "medium",
         "phase": 1,
         "complexity": 4,
@@ -195,7 +195,7 @@
         ],
         "human": false,
         "review": false,
-        "details": "src/features/settings/: usePreferences hook over the preferences repo, defaults (theme: system, fontSize 14, font 'JetBrains Mono, monospace', practiceLanguage 'python', panel widths). Theme via `dark` class on <html> and Tailwind tokens in one theme file; no flash on load (read a cached theme from localStorage synchronously in index.html, IndexedDB stays the source of truth). Restore-defaults button.",
+        "details": "src/features/settings/: usePreferences hook over the preferences repo, defaults (theme: system, fontSize 14, font 'JetBrains Mono, monospace', practiceLanguage 'python', panel widths). Theme via `dark` class on <html> and Tailwind tokens in one theme file; no flash on load (read a cached theme from localStorage synchronously in index.html, IndexedDB stays the source of truth). Restore-defaults button.\n\n[2026-11-15T18:05:18-05:00] plan (sonnet): settings/usePreferences + page, index.html theme script, dark classes in AppLayout, e2e theme.spec\n\n[2026-11-15T18:06:12-05:00] done: prefs hook, settings page, theme w/o flash; vitest+e2e (port 5199) pass\n\n[2026-11-15T18:07:41-05:00] done by sonnet; verified; reviewed APPROVE. Manual: /settings choose Dark, reload, no flash; Restore defaults -> System",
         "testStrategy": "Vitest for usePreferences; e2e: switch to dark, reload, still dark",
         "subtasks": []
       },
@@ -1232,7 +1232,7 @@
         ],
         "human": false,
         "review": true,
-        "details": "Define CSP (default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; worker-src 'self' blob:; img-src 'self' blob: data: https:; connect-src 'self' https://api.github.com https://raw.githubusercontent.com; frame-src 'self' blob:/srcdoc as needed) in the host's config (vercel.json headers or the server config) and a meta fallback for dev. Run the `security-review` skill; fix or file its findings. Document in SECURITY.md.",
+        "details": "Define CSP (default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; worker-src 'self' blob:; img-src 'self' blob: data: https:; connect-src 'self' https://api.github.com https://raw.githubusercontent.com; frame-src 'self' blob:/srcdoc as needed) in the host's config (vercel.json headers or the server config) and a meta fallback for dev. Run the `security-review` skill; fix or file its findings. Document in SECURITY.md.\n\n[2026-11-15T18:07:41-05:00] note from 10: index.html has an inline theme script that CSP script-src 'self' will block; allow via sha256 hash or move to public/theme-init.js",
         "testStrategy": "e2e passes with CSP enabled in `vite preview` (headers via preview config); SECURITY.md lists each PRD 17 control and its test",
         "subtasks": []
       },
@@ -1437,7 +1437,7 @@
         }
       ],
       "created": "2026-11-15",
-      "updated": "2026-11-15T18:04:16-05:00"
+      "updated": "2026-11-15T18:07:41-05:00"
     }
   }
 }

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { NavLink, Outlet } from 'react-router-dom'
+import { usePreferences } from '../../features/settings/usePreferences'
 
 const links = [
   { to: '/', label: 'Dashboard' },
@@ -12,9 +13,10 @@ const links = [
 
 export default function AppLayout() {
   const [open, setOpen] = useState(false)
+  usePreferences() // applies the saved theme
   return (
     <div className="min-h-screen md:flex">
-      <header className="flex items-center justify-between border-b border-slate-200 p-3 md:w-56 md:flex-col md:items-stretch md:justify-start md:border-r md:border-b-0">
+      <header className="flex items-center justify-between border-b border-slate-200 p-3 dark:border-slate-700 md:w-56 md:flex-col md:items-stretch md:justify-start md:border-r md:border-b-0">
         <span className="font-bold">Personal Coding Academy</span>
         <button
           type="button"
@@ -28,7 +30,7 @@ export default function AppLayout() {
         <nav
           id="main-nav"
           aria-label="Main"
-          className={`${open ? 'block' : 'hidden'} absolute top-12 right-0 left-0 bg-white p-3 md:static md:mt-4 md:block md:p-0`}
+          className={`${open ? 'block' : 'hidden'} absolute top-12 right-0 left-0 bg-white p-3 dark:bg-slate-900 md:static md:mt-4 md:block md:p-0`}
         >
           <ul className="flex flex-col gap-1">
             {links.map((l) => (
@@ -38,7 +40,7 @@ export default function AppLayout() {
                   end={l.to === '/'}
                   onClick={() => setOpen(false)}
                   className={({ isActive }) =>
-                    `block rounded px-3 py-2 ${isActive ? 'bg-slate-200 font-semibold' : 'hover:bg-slate-100'}`
+                    `block rounded px-3 py-2 ${isActive ? 'bg-slate-200 dark:bg-slate-700 font-semibold' : 'hover:bg-slate-100 dark:hover:bg-slate-800'}`
                   }
                 >
                   {l.label}

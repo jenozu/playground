@@ -3,7 +3,7 @@
 Generated from `.taskmaster/tasks/tasks.json` (the source of truth). Never edit by hand; regenerate with
 `python .taskmaster/render_tasks_md.py`.
 
-**Progress: 7/62 tasks done.**
+**Progress: 8/62 tasks done.**
 
 ## Phase 0 - Foundation
 
@@ -37,7 +37,7 @@ Generated from `.taskmaster/tasks/tasks.json` (the source of truth). Never edit 
 - [x] **9. App shell, routing and main navigation** _(after 1)_  
   Six top-level pages reachable from a nav: Dashboard, My Courses, Practice, Projects, Progress, Settings.  
   _Test:_ e2e/nav.spec.ts: each nav link opens its page at 1440px and at 390px; npx playwright test e2e/nav.spec.ts passes
-- [ ] **10. Settings page with persisted preferences and dark/light theme** _(after 8, 9)_  
+- [x] **10. Settings page with persisted preferences and dark/light theme** _(after 8, 9)_  
   Theme, editor font size/font and default practice language persist across reloads (PRD 19.3-19.4).  
   _Test:_ Vitest for usePreferences; e2e: switch to dark, reload, still dark
 - [ ] **11. Dashboard and My Courses page layouts with empty states** _(after 9)_  

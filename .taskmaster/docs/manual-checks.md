@@ -11,3 +11,7 @@ with numbered steps and the expected result.
 ## Agent-checkable
 
 ## Eyes-on
+
+### Task 10 - Settings theme (2026-11-15)
+1. Open /settings, choose Dark, reload: stays dark, no light flash.
+2. Click Restore defaults: theme returns to System.
