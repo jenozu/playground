@@ -54,7 +54,7 @@
         "id": 4,
         "title": "Set up Playwright with a smoke e2e test",
         "description": "Browser tests run against the Vite dev server.",
-        "status": "pending",
+        "status": "done",
         "priority": "medium",
         "phase": 0,
         "complexity": 4,
@@ -63,7 +63,7 @@
         ],
         "human": false,
         "review": false,
-        "details": "Add @playwright/test, playwright.config.ts with webServer `npm run dev -- --port 5173 --strictPort`, reuseExistingServer, chromium only, viewports desktop 1440x900. `npx playwright install chromium` (download; ask if prompted). e2e/smoke.spec.ts: app loads, no console errors. Exclude e2e/ from Vitest (vitest.config include src/**).",
+        "details": "Add @playwright/test, playwright.config.ts with webServer `npm run dev -- --port 5173 --strictPort`, reuseExistingServer, chromium only, viewports desktop 1440x900. `npx playwright install chromium` (download; ask if prompted). e2e/smoke.spec.ts: app loads, no console errors. Exclude e2e/ from Vitest (vitest.config include src/**).\n\n[2026-11-15T13:21:22-05:00] plan (sonnet): package.json, playwright.config.ts, e2e/smoke.spec.ts, vite.config.ts test.include, .gitignore - standard setup\n\n[2026-11-15T13:21:55-05:00] sonnet: added @playwright/test, playwright.config.ts, e2e/smoke.spec.ts, vitest include src/**; playwright test exit 0, vitest+lint pass\n\n[2026-11-15T13:22:37-05:00] done by sonnet; verified; reviewer approved",
         "testStrategy": "npx playwright test exits 0",
         "subtasks": []
       },
@@ -1437,7 +1437,7 @@
         }
       ],
       "created": "2026-11-15",
-      "updated": "2026-11-15T13:21:00-05:00"
+      "updated": "2026-11-15T13:22:37-05:00"
     }
   }
 }

@@ -3,7 +3,7 @@
 Generated from `.taskmaster/tasks/tasks.json` (the source of truth). Never edit by hand; regenerate with
 `python .taskmaster/render_tasks_md.py`.
 
-**Progress: 3/62 tasks done.**
+**Progress: 4/62 tasks done.**
 
 ## Phase 0 - Foundation
 
@@ -16,7 +16,7 @@ Generated from `.taskmaster/tasks/tasks.json` (the source of truth). Never edit 
 - [x] **3. Create source folder layout and shared domain types** _(after 1)_  
   src/ folders and the TypeScript interfaces every later phase builds on.  
   _Test:_ npm run typecheck exits 0 and `ls src/types/course.ts src/types/execution.ts`
-- [ ] **4. Set up Playwright with a smoke e2e test** _(after 1)_  
+- [x] **4. Set up Playwright with a smoke e2e test** _(after 1)_  
   Browser tests run against the Vite dev server.  
   _Test:_ npx playwright test exits 0
 - [ ] **5. Create the GitHub repository and add it as origin** **[HUMAN]**  
