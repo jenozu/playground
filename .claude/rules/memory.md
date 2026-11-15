@@ -19,11 +19,10 @@ Never update it per task.
 ---
 
 ## Now (overwrite each time, max 6 lines)
-- Phase 1 blocked at task 8: `idb` and `fake-indexeddb` not installed; npm install was permission-denied.
-- Human: run `npm i idb && npm i -D fake-indexeddb` (commit package files), then `/run-phase 1`.
-- Phase 0 PR still unmerged (no GitHub remote).
+- Phase 1 complete (tasks 8-12) on branch `phase-0`, not merged: no GitHub remote yet.
+- Next: human does Phase 0 tasks 5 (remote) and 6, then deliver PR; then `/run-phase 2`.
 - In progress: none.
-- Manual checks waiting: none.
+- Manual checks waiting: task 10 theme (eyes-on, see manual-checks.md).
 
 ## Facts (stable, max 15 lines)
 - Dev machine: Windows 11 + Git Bash, Node 22, Python 3.12 (harness scripts only).
@@ -42,8 +41,8 @@ Never update it per task.
 ## Model routing record (update counts at each close-out)
 | Tier | Done first try | Escalated up | Notes |
 |---|---|---|---|
-| haiku | 1 | 0 | |
-| sonnet | 3 | 0 | |
+| haiku | 2 | 0 | |
+| sonnet | 7 | 0 | |
 | opus | 0 | 0 | |
 <!-- If one tier escalates on 3 tasks in a row, the phase-runner escalates to the lead, who may raise that tier's
      starting complexity in .claude/skills/next-task/SKILL.md. If haiku passes everything, give it complexity 4 too. -->
