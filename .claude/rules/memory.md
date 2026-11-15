@@ -19,8 +19,8 @@ Never update it per task.
 ---
 
 ## Now (overwrite each time, max 6 lines)
-- Plan created 2026-11-15; no phase run yet.
-- Next: phase 0. Run `/run-phase 0`.
+- Phase 0 agent work done (tasks 1-4, 7) on branch `phase-0`, not merged: no GitHub remote yet.
+- Next: human does tasks 5 (remote) and 6 (screenshot), then deliver phase-0 PR; then `/run-phase 1`.
 - In progress: none.
 - Manual checks waiting: none.
 
@@ -35,13 +35,14 @@ Never update it per task.
   haiku → sonnet → opus. Manual checks batched per phase.
 
 ## Learned / gotchas (max 15 lines, newest first)
-- (none yet)
+- jsdom pinned 26.1.0 (31.x crashes on Node 22.12); React 18.3.1, TS 5.9, ESLint 9 per DECISIONS.md.
+- Git/gh: no remote until task 5; `deliver` is skipped until then.
 
 ## Model routing record (update counts at each close-out)
 | Tier | Done first try | Escalated up | Notes |
 |---|---|---|---|
-| haiku | 0 | 0 | |
-| sonnet | 0 | 0 | |
+| haiku | 1 | 0 | |
+| sonnet | 3 | 0 | |
 | opus | 0 | 0 | |
 <!-- If one tier escalates on 3 tasks in a row, the phase-runner escalates to the lead, who may raise that tier's
      starting complexity in .claude/skills/next-task/SKILL.md. If haiku passes everything, give it complexity 4 too. -->
