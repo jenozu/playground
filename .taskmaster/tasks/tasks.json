@@ -203,7 +203,7 @@
         "id": 11,
         "title": "Dashboard and My Courses page layouts with empty states",
         "description": "Pages render their sections with empty states before real data exists (PRD 5.2, 5.3).",
-        "status": "pending",
+        "status": "done",
         "priority": "medium",
         "phase": 1,
         "complexity": 4,
@@ -212,7 +212,7 @@
         ],
         "human": false,
         "review": false,
-        "details": "Dashboard: welcome, Continue Learning card, active courses, overall progress, recently completed, recommended next, practice link: each with an empty state. My Courses: search box, language and difficulty filters, CourseCard component (title, language, description, difficulty, modules, lessons, completion %, last accessed). Components take props only; data wiring comes in phases 3 and 6. Avoid gamification.",
+        "details": "Dashboard: welcome, Continue Learning card, active courses, overall progress, recently completed, recommended next, practice link: each with an empty state. My Courses: search box, language and difficulty filters, CourseCard component (title, language, description, difficulty, modules, lessons, completion %, last accessed). Components take props only; data wiring comes in phases 3 and 6. Avoid gamification.\n\n[2026-11-15T18:09:05-05:00] built CourseCard, CoursesPage, DashboardPage with empty states; vitest, tsc, lint, build, e2e (port 5199) pass\n\n[2026-11-15T18:09:54-05:00] done by sonnet; verified",
         "testStrategy": "Vitest render tests for CourseCard and empty states; e2e dashboard + My Courses render without console errors",
         "subtasks": []
       },
@@ -1437,7 +1437,7 @@
         }
       ],
       "created": "2026-11-15",
-      "updated": "2026-11-15T18:07:41-05:00"
+      "updated": "2026-11-15T18:09:54-05:00"
     }
   }
 }

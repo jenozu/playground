@@ -3,7 +3,7 @@
 Generated from `.taskmaster/tasks/tasks.json` (the source of truth). Never edit by hand; regenerate with
 `python .taskmaster/render_tasks_md.py`.
 
-**Progress: 8/62 tasks done.**
+**Progress: 9/62 tasks done.**
 
 ## Phase 0 - Foundation
 
@@ -40,7 +40,7 @@ Generated from `.taskmaster/tasks/tasks.json` (the source of truth). Never edit 
 - [x] **10. Settings page with persisted preferences and dark/light theme** _(after 8, 9)_  
   Theme, editor font size/font and default practice language persist across reloads (PRD 19.3-19.4).  
   _Test:_ Vitest for usePreferences; e2e: switch to dark, reload, still dark
-- [ ] **11. Dashboard and My Courses page layouts with empty states** _(after 9)_  
+- [x] **11. Dashboard and My Courses page layouts with empty states** _(after 9)_  
   Pages render their sections with empty states before real data exists (PRD 5.2, 5.3).  
   _Test:_ Vitest render tests for CourseCard and empty states; e2e dashboard + My Courses render without console errors
 - [ ] **12. Phase 1 gate: lint, types, tests and build pass** _(after 8, 9, 10, 11)_  
