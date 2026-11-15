@@ -311,7 +311,7 @@
         ],
         "human": false,
         "review": false,
-        "details": "src/components/editor/CodeEditor.tsx wrapping @codemirror/* (basicSetup pieces, lang-sql, lang-python, lang-javascript), controlled value/onChange, language prop, font size/font from preferences, dark/light theme. FileTabs component: list of files, active file, onSelect; single file used for now but API supports many (open/create/switch/reset one file later). Don't recreate the editor on every render (use a ref).",
+        "details": "src/components/editor/CodeEditor.tsx wrapping @codemirror/* (basicSetup pieces, lang-sql, lang-python, lang-javascript), controlled value/onChange, language prop, font size/font from preferences, dark/light theme. FileTabs component: list of files, active file, onSelect; single file used for now but API supports many (open/create/switch/reset one file later). Don't recreate the editor on every render (use a ref).\n\n[2026-11-15T18:36:14-05:00] BLOCKED: npm install of codemirror packages denied by permission system; queued on human-checklist; retry after human installs",
         "testStrategy": "Vitest: editor mounts and onChange fires; e2e: type in editor, undo restores previous text",
         "subtasks": []
       },
@@ -319,7 +319,7 @@
         "id": 16,
         "title": "Output/terminal panel component",
         "description": "Shows stdout, tables, errors with raw details, status, time and pass/fail (PRD 11).",
-        "status": "pending",
+        "status": "done",
         "priority": "medium",
         "phase": 2,
         "complexity": 4,
@@ -329,7 +329,7 @@
         ],
         "human": false,
         "review": false,
-        "details": "src/components/terminal/OutputPanel.tsx: renders a list of output entries (stdout, stderr/warning, error with collapsible raw traceback, table with columns/rows, test results with expected vs actual). Status line: idle/running/success/failed + execution ms. High-contrast monospace, auto-scroll to bottom unless the user scrolled up. Clear button.",
+        "details": "src/components/terminal/OutputPanel.tsx: renders a list of output entries (stdout, stderr/warning, error with collapsible raw traceback, table with columns/rows, test results with expected vs actual). Status line: idle/running/success/failed + execution ms. High-contrast monospace, auto-scroll to bottom unless the user scrolled up. Clear button.\n\n[2026-11-15T18:36:21-05:00] plan (sonnet): src/components/terminal/OutputPanel.tsx + test - presentational panel, windowed-free table with row cap not needed; plain render\n\n[2026-11-15T18:36:54-05:00] built OutputPanel + tests; vitest, eslint, tsc pass\n\n[2026-11-15T18:40:57-05:00] done by sonnet; verified",
         "testStrategy": "Vitest render tests for each entry type incl. a 1000-row table",
         "subtasks": []
       },
@@ -1437,7 +1437,7 @@
         }
       ],
       "created": "2026-11-15",
-      "updated": "2026-11-15T18:33:09-05:00"
+      "updated": "2026-11-15T18:40:57-05:00"
     }
   }
 }

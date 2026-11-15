@@ -3,7 +3,7 @@
 Generated from `.taskmaster/tasks/tasks.json` (the source of truth). Never edit by hand; regenerate with
 `python .taskmaster/render_tasks_md.py`.
 
-**Progress: 12/62 tasks done.**
+**Progress: 13/62 tasks done.**
 
 ## Phase 0 - Foundation
 
@@ -58,7 +58,7 @@ Generated from `.taskmaster/tasks/tasks.json` (the source of truth). Never edit 
 - [ ] **15. CodeMirror 6 editor component** _(after 13)_  
   Centre-panel editor with highlighting, line numbers, autoindent, autocomplete, undo/redo and file tabs (PRD 9.1-9.3).  
   _Test:_ Vitest: editor mounts and onChange fires; e2e: type in editor, undo restores previous text
-- [ ] **16. Output/terminal panel component** _(after 13, 3)_  
+- [x] **16. Output/terminal panel component** _(after 13, 3)_  
   Shows stdout, tables, errors with raw details, status, time and pass/fail (PRD 11).  
   _Test:_ Vitest render tests for each entry type incl. a 1000-row table
 - [ ] **17. Tablet and mobile layouts for the lesson page** _(after 14, 15, 16)_  
