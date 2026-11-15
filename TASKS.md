@@ -3,7 +3,7 @@
 Generated from `.taskmaster/tasks/tasks.json` (the source of truth). Never edit by hand; regenerate with
 `python .taskmaster/render_tasks_md.py`.
 
-**Progress: 13/62 tasks done.**
+**Progress: 14/62 tasks done.**
 
 ## Phase 0 - Foundation
 
@@ -19,7 +19,7 @@ Generated from `.taskmaster/tasks/tasks.json` (the source of truth). Never edit 
 - [x] **4. Set up Playwright with a smoke e2e test** _(after 1)_  
   Browser tests run against the Vite dev server.  
   _Test:_ npx playwright test exits 0
-- [ ] **5. Create the GitHub repository and add it as origin** **[HUMAN]**  
+- [x] **5. Create the GitHub repository and add it as origin** **[HUMAN]**  
   Phases deliver as PRs, which needs a GitHub remote.  
   _Test:_ git remote get-url origin prints a github.com URL
 - [ ] **6. Add the Codecademy reference screenshot to the repo** **[HUMAN]**  

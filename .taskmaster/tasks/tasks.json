@@ -71,17 +71,16 @@
         "id": 5,
         "title": "Create the GitHub repository and add it as origin",
         "description": "Phases deliver as PRs, which needs a GitHub remote.",
-        "status": "pending",
+        "status": "done",
         "priority": "medium",
         "phase": 0,
         "complexity": 1,
         "dependencies": [],
         "human": true,
         "review": false,
-        "details": "Owner: create a private repo (e.g. `gh repo create coding-academy --private --source . --remote origin`) in this folder's terminal, or create it on github.com and run `git remote add origin <url>` then `git push -u origin main`. Reply 'remote added'.\n\n[2026-11-15T13:12:40-05:00] human step queued: see human-checklist.md (agents may build around it; stays open until the human confirms)",
+        "details": "Owner: create a private repo (e.g. `gh repo create coding-academy --private --source . --remote origin`) in this folder's terminal, or create it on github.com and run `git remote add origin <url>` then `git push -u origin main`. Reply 'remote added'.\n\n[2026-11-15T13:12:40-05:00] human step queued: see human-checklist.md (agents may build around it; stays open until the human confirms)\n\n[2026-11-15T18:54:31-05:00] human created jenozu/playground; lead added origin, pushed main + phase-0",
         "testStrategy": "git remote get-url origin prints a github.com URL",
-        "subtasks": [],
-        "queued": true
+        "subtasks": []
       },
       {
         "id": 6,
@@ -1437,7 +1436,7 @@
         }
       ],
       "created": "2026-11-15",
-      "updated": "2026-11-15T18:40:58-05:00"
+      "updated": "2026-11-15T18:54:31-05:00"
     }
   }
 }

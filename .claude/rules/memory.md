@@ -28,7 +28,7 @@ Never update it per task.
 - Dev machine: Windows 11 + Git Bash, Node 22, Python 3.12 (harness scripts only).
 - Single personal user, no auth. Storage is IndexedDB in the browser.
 - Hosting: undecided (Vercel or owner's Hostinger VPS); decided in phase 9.
-- No GitHub remote yet at bootstrap.
+- GitHub remote: origin = jenozu/playground (public).
 
 ## Decisions since the PRD (max 8 lines, newest first; full text in the PRD decision log)
 - 2026-11-15: Built with master-harness v2.0.0: lead (Opus) → phase-runner (Sonnet) → builders
@@ -36,7 +36,6 @@ Never update it per task.
 
 ## Learned / gotchas (max 15 lines, newest first)
 - jsdom pinned 26.1.0 (31.x crashes on Node 22.12); React 18.3.1, TS 5.9, ESLint 9 per DECISIONS.md.
-- Git/gh: no remote until task 5; `deliver` is skipped until then.
 
 ## Model routing record (update counts at each close-out)
 | Tier | Done first try | Escalated up | Notes |
