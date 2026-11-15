@@ -3,7 +3,7 @@
 Generated from `.taskmaster/tasks/tasks.json` (the source of truth). Never edit by hand; regenerate with
 `python .taskmaster/render_tasks_md.py`.
 
-**Progress: 4/62 tasks done.**
+**Progress: 5/62 tasks done.**
 
 ## Phase 0 - Foundation
 
@@ -25,7 +25,7 @@ Generated from `.taskmaster/tasks/tasks.json` (the source of truth). Never edit 
 - [ ] **6. Add the Codecademy reference screenshot to the repo** **[HUMAN]**  
   The layout reference the PRD refers to (22.5) must be in the repo for visual checks.  
   _Test:_ ls docs/design/reference.png
-- [ ] **7. Phase 0 gate: lint, types, tests and build pass** _(after 1, 2, 3, 4)_  
+- [x] **7. Phase 0 gate: lint, types, tests and build pass** _(after 1, 2, 3, 4)_  
   Free script check that phase 0 leaves the repo green.  
   _Test:_ python .taskmaster/run_checks.py run --only 7
 

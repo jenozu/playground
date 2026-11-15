@@ -103,7 +103,7 @@
         "id": 7,
         "title": "Phase 0 gate: lint, types, tests and build pass",
         "description": "Free script check that phase 0 leaves the repo green.",
-        "status": "pending",
+        "status": "done",
         "priority": "high",
         "phase": 0,
         "complexity": 3,
@@ -143,7 +143,7 @@
             "test"
           ]
         ],
-        "details": "Runs lint, tsc, vitest, vite build and Playwright e2e. A failure goes to a builder with the output tail.",
+        "details": "Runs lint, tsc, vitest, vite build and Playwright e2e. A failure goes to a builder with the output tail.\n\n[2026-11-15T13:22:54-05:00] script check passed: 5 command(s), 16.2s, no model used",
         "testStrategy": "python .taskmaster/run_checks.py run --only 7",
         "subtasks": []
       },
@@ -1437,7 +1437,7 @@
         }
       ],
       "created": "2026-11-15",
-      "updated": "2026-11-15T13:22:37-05:00"
+      "updated": "2026-11-15T13:22:54-05:00"
     }
   }
 }
