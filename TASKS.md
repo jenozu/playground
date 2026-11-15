@@ -3,7 +3,7 @@
 Generated from `.taskmaster/tasks/tasks.json` (the source of truth). Never edit by hand; regenerate with
 `python .taskmaster/render_tasks_md.py`.
 
-**Progress: 5/62 tasks done.**
+**Progress: 6/62 tasks done.**
 
 ## Phase 0 - Foundation
 
@@ -31,7 +31,7 @@ Generated from `.taskmaster/tasks/tasks.json` (the source of truth). Never edit 
 
 ## Phase 1 - App shell
 
-- [ ] **8. Storage layer: IndexedDB database and repository interfaces** _(after 3)_  
+- [x] **8. Storage layer: IndexedDB database and repository interfaces** _(after 3)_  
   One place that owns persistence, so UI never touches IndexedDB (PRD 13.5, 18.3).  
   _Test:_ npx vitest run src/storage passes (fake-indexeddb)
 - [ ] **9. App shell, routing and main navigation** _(after 1)_  

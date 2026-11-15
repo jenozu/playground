@@ -151,7 +151,7 @@
         "id": 8,
         "title": "Storage layer: IndexedDB database and repository interfaces",
         "description": "One place that owns persistence, so UI never touches IndexedDB (PRD 13.5, 18.3).",
-        "status": "pending",
+        "status": "done",
         "priority": "high",
         "phase": 1,
         "complexity": 5,
@@ -160,7 +160,7 @@
         ],
         "human": false,
         "review": true,
-        "details": "src/storage/indexeddb/db.ts with `idb`: DB name 'coding-academy', version 1, stores: preferences, courses, courseFiles, progress, code, notes, bookmarks, practiceSessions, attempts. src/storage/repositories/*.ts: small typed repos (get/put/list/delete) behind interfaces so a server DB can replace them later. Upgrade function written so future versions add stores without dropping data. Handle storage errors (quota, private mode) with a typed error the UI can show. Tests with fake-indexeddb.\n\n[2026-11-15T17:49:34-05:00] blocked: builder-sonnet could not npm install idb / fake-indexeddb (permission denied). Needs owner to approve or run the install.",
+        "details": "src/storage/indexeddb/db.ts with `idb`: DB name 'coding-academy', version 1, stores: preferences, courses, courseFiles, progress, code, notes, bookmarks, practiceSessions, attempts. src/storage/repositories/*.ts: small typed repos (get/put/list/delete) behind interfaces so a server DB can replace them later. Upgrade function written so future versions add stores without dropping data. Handle storage errors (quota, private mode) with a typed error the UI can show. Tests with fake-indexeddb.\n\n[2026-11-15T17:49:34-05:00] blocked: builder-sonnet could not npm install idb / fake-indexeddb (permission denied). Needs owner to approve or run the install.\n\n[2026-11-15T17:57:12-05:00] plan (sonnet): src/storage/{errors,indexeddb/db,repositories/index}.ts + test; generic repo factory\n\n[2026-11-15T17:57:36-05:00] done: tests, tsc, lint pass\n\n[2026-11-15T17:58:27-05:00] done by sonnet; verified; reviewed APPROVE",
         "testStrategy": "npx vitest run src/storage passes (fake-indexeddb)",
         "subtasks": []
       },
@@ -1437,7 +1437,7 @@
         }
       ],
       "created": "2026-11-15",
-      "updated": "2026-11-15T17:49:34-05:00"
+      "updated": "2026-11-15T17:58:28-05:00"
     }
   }
 }
