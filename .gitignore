@@ -1,0 +1,15 @@
+# master-harness
+.env
+.env.*
+!.env.example
+.claude/settings.local.json
+.claude/deploy-target
+.harness-backup/
+.harness-tmp/
+
+# app
+node_modules/
+dist/
+coverage/
+test-results/
+playwright-report/

@@ -1,0 +1,1441 @@
+{
+  "master": {
+    "tasks": [
+      {
+        "id": 1,
+        "title": "Scaffold Vite + React + TypeScript + Tailwind app at repo root",
+        "description": "A running empty app with lint, typecheck, unit test and build scripts.",
+        "status": "pending",
+        "priority": "high",
+        "phase": 0,
+        "complexity": 4,
+        "dependencies": [],
+        "human": false,
+        "review": false,
+        "details": "Repo is empty apart from the harness. `npm create vite@latest . -- --template react-ts` equivalent by hand if the dir is non-empty (don't delete harness files). Add Tailwind (v4 via @tailwindcss/vite, or v3 if v4 is incompatible: record which in DECISIONS.md), ESLint flat config (typescript-eslint, react-hooks), Vitest + @testing-library/react + jsdom. package.json scripts: dev, build (`tsc -b && vite build`), lint (`eslint .`), typecheck (`tsc -b --noEmit` or `tsc --noEmit -p tsconfig.app.json`), test (`vitest run`). strict TS. One test `src/App.test.tsx` rendering the app. Pin current stable versions (check npm) and record them in DECISIONS.md. Commit package-lock.json.",
+        "testStrategy": "npm run lint && npm run typecheck && npx vitest run && npm run build all exit 0",
+        "subtasks": []
+      },
+      {
+        "id": 2,
+        "title": "Write architecture proposal and project docs skeleton",
+        "description": "PRD phase-0 deliverables: architecture, dependency analysis, risks, docs files.",
+        "status": "pending",
+        "priority": "medium",
+        "phase": 0,
+        "complexity": 4,
+        "dependencies": [
+          1
+        ],
+        "human": false,
+        "review": false,
+        "details": "Create ARCHITECTURE.md (layers per PRD 18.2/18.3: UI components, features, execution manager+adapters, course-system parser/validator/registry, storage repositories; data flow for Run vs Submit; how bundled sample courses and imported courses go through the same loader), DECISIONS.md (ADR-style; seed: CodeMirror 6, sql.js in worker, Pyodide in worker, JS in sandboxed iframe, IndexedDB via `idb`, zod for manifest validation, react-router, react-resizable-panels, react-markdown without raw HTML, fflate for ZIP), DEVELOPMENT.md (setup, scripts), README.md (overview, quick start), CHANGELOG.md, SECURITY.md stub, COURSE-FORMAT.md stub. Dependency analysis: one table in ARCHITECTURE.md with package, version, size, why. Risks section: Pyodide size/load time, worker termination, CSP with wasm, GitHub API rate limits, IndexedDB quota. Mark nothing as implemented.",
+        "testStrategy": "ls ARCHITECTURE.md DECISIONS.md DEVELOPMENT.md README.md CHANGELOG.md SECURITY.md COURSE-FORMAT.md; grep -c '^## ' ARCHITECTURE.md >= 5",
+        "subtasks": []
+      },
+      {
+        "id": 3,
+        "title": "Create source folder layout and shared domain types",
+        "description": "src/ folders and the TypeScript interfaces every later phase builds on.",
+        "status": "pending",
+        "priority": "medium",
+        "phase": 0,
+        "complexity": 3,
+        "dependencies": [
+          1
+        ],
+        "human": false,
+        "review": false,
+        "details": "Folders per PRD 18.2 (only create those used; add index.ts barrels sparingly). src/types/course.ts: Course, Module, Lesson (type: reading|coding|guided|multiple-choice|debugging|project|review), Exercise, Hint. src/types/execution.ts: ExecutionResult {success, output, errors, executionTime, table?}, ExecutionEngine {initialize, execute, stop, reset, dispose} per PRD 10.2, TestResult {name, passed, expected?, actual?, error?}. No runtime code beyond types. A type-only test file is not needed.",
+        "testStrategy": "npm run typecheck exits 0 and `ls src/types/course.ts src/types/execution.ts`",
+        "subtasks": []
+      },
+      {
+        "id": 4,
+        "title": "Set up Playwright with a smoke e2e test",
+        "description": "Browser tests run against the Vite dev server.",
+        "status": "pending",
+        "priority": "medium",
+        "phase": 0,
+        "complexity": 4,
+        "dependencies": [
+          1
+        ],
+        "human": false,
+        "review": false,
+        "details": "Add @playwright/test, playwright.config.ts with webServer `npm run dev -- --port 5173 --strictPort`, reuseExistingServer, chromium only, viewports desktop 1440x900. `npx playwright install chromium` (download; ask if prompted). e2e/smoke.spec.ts: app loads, no console errors. Exclude e2e/ from Vitest (vitest.config include src/**).",
+        "testStrategy": "npx playwright test exits 0",
+        "subtasks": []
+      },
+      {
+        "id": 5,
+        "title": "Create the GitHub repository and add it as origin",
+        "description": "Phases deliver as PRs, which needs a GitHub remote.",
+        "status": "pending",
+        "priority": "medium",
+        "phase": 0,
+        "complexity": 1,
+        "dependencies": [],
+        "human": true,
+        "review": false,
+        "details": "Owner: create a private repo (e.g. `gh repo create coding-academy --private --source . --remote origin`) in this folder's terminal, or create it on github.com and run `git remote add origin <url>` then `git push -u origin main`. Reply 'remote added'.",
+        "testStrategy": "git remote get-url origin prints a github.com URL",
+        "subtasks": []
+      },
+      {
+        "id": 6,
+        "title": "Add the Codecademy reference screenshot to the repo",
+        "description": "The layout reference the PRD refers to (22.5) must be in the repo for visual checks.",
+        "status": "pending",
+        "priority": "medium",
+        "phase": 0,
+        "complexity": 1,
+        "dependencies": [],
+        "human": true,
+        "review": false,
+        "details": "Owner: save the screenshot as docs/design/reference.png and commit it (or drop it in the folder and tell the lead).",
+        "testStrategy": "ls docs/design/reference.png",
+        "subtasks": []
+      },
+      {
+        "id": 7,
+        "title": "Phase 0 gate: lint, types, tests and build pass",
+        "description": "Free script check that phase 0 leaves the repo green.",
+        "status": "pending",
+        "priority": "high",
+        "phase": 0,
+        "complexity": 3,
+        "dependencies": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "human": false,
+        "review": false,
+        "runner": "script",
+        "check": [
+          [
+            "npm",
+            "run",
+            "lint"
+          ],
+          [
+            "npm",
+            "run",
+            "typecheck"
+          ],
+          [
+            "npx",
+            "vitest",
+            "run"
+          ],
+          [
+            "npm",
+            "run",
+            "build"
+          ],
+          [
+            "npx",
+            "playwright",
+            "test"
+          ]
+        ],
+        "details": "Runs lint, tsc, vitest, vite build and Playwright e2e. A failure goes to a builder with the output tail.",
+        "testStrategy": "python .taskmaster/run_checks.py run --only 7",
+        "subtasks": []
+      },
+      {
+        "id": 8,
+        "title": "Storage layer: IndexedDB database and repository interfaces",
+        "description": "One place that owns persistence, so UI never touches IndexedDB (PRD 13.5, 18.3).",
+        "status": "pending",
+        "priority": "high",
+        "phase": 1,
+        "complexity": 5,
+        "dependencies": [
+          3
+        ],
+        "human": false,
+        "review": true,
+        "details": "src/storage/indexeddb/db.ts with `idb`: DB name 'coding-academy', version 1, stores: preferences, courses, courseFiles, progress, code, notes, bookmarks, practiceSessions, attempts. src/storage/repositories/*.ts: small typed repos (get/put/list/delete) behind interfaces so a server DB can replace them later. Upgrade function written so future versions add stores without dropping data. Handle storage errors (quota, private mode) with a typed error the UI can show. Tests with fake-indexeddb.",
+        "testStrategy": "npx vitest run src/storage passes (fake-indexeddb)",
+        "subtasks": []
+      },
+      {
+        "id": 9,
+        "title": "App shell, routing and main navigation",
+        "description": "Six top-level pages reachable from a nav: Dashboard, My Courses, Practice, Projects, Progress, Settings.",
+        "status": "pending",
+        "priority": "medium",
+        "phase": 1,
+        "complexity": 4,
+        "dependencies": [
+          1
+        ],
+        "human": false,
+        "review": false,
+        "details": "react-router (data router). src/app/routing/routes.tsx, src/components/layout/AppLayout.tsx with sidebar nav (collapses to a top bar + menu under 768px), placeholder pages in src/features/*/pages. Projects page says 'coming later' (PRD 16 is future). 404 route. Accessible nav (nav landmark, aria-current).",
+        "testStrategy": "e2e/nav.spec.ts: each nav link opens its page at 1440px and at 390px; npx playwright test e2e/nav.spec.ts passes",
+        "subtasks": []
+      },
+      {
+        "id": 10,
+        "title": "Settings page with persisted preferences and dark/light theme",
+        "description": "Theme, editor font size/font and default practice language persist across reloads (PRD 19.3-19.4).",
+        "status": "pending",
+        "priority": "medium",
+        "phase": 1,
+        "complexity": 4,
+        "dependencies": [
+          8,
+          9
+        ],
+        "human": false,
+        "review": false,
+        "details": "src/features/settings/: usePreferences hook over the preferences repo, defaults (theme: system, fontSize 14, font 'JetBrains Mono, monospace', practiceLanguage 'python', panel widths). Theme via `dark` class on <html> and Tailwind tokens in one theme file; no flash on load (read a cached theme from localStorage synchronously in index.html, IndexedDB stays the source of truth). Restore-defaults button.",
+        "testStrategy": "Vitest for usePreferences; e2e: switch to dark, reload, still dark",
+        "subtasks": []
+      },
+      {
+        "id": 11,
+        "title": "Dashboard and My Courses page layouts with empty states",
+        "description": "Pages render their sections with empty states before real data exists (PRD 5.2, 5.3).",
+        "status": "pending",
+        "priority": "medium",
+        "phase": 1,
+        "complexity": 4,
+        "dependencies": [
+          9
+        ],
+        "human": false,
+        "review": false,
+        "details": "Dashboard: welcome, Continue Learning card, active courses, overall progress, recently completed, recommended next, practice link: each with an empty state. My Courses: search box, language and difficulty filters, CourseCard component (title, language, description, difficulty, modules, lessons, completion %, last accessed). Components take props only; data wiring comes in phases 3 and 6. Avoid gamification.",
+        "testStrategy": "Vitest render tests for CourseCard and empty states; e2e dashboard + My Courses render without console errors",
+        "subtasks": []
+      },
+      {
+        "id": 12,
+        "title": "Phase 1 gate: lint, types, tests and build pass",
+        "description": "Free script check that phase 1 leaves the repo green.",
+        "status": "pending",
+        "priority": "high",
+        "phase": 1,
+        "complexity": 3,
+        "dependencies": [
+          8,
+          9,
+          10,
+          11
+        ],
+        "human": false,
+        "review": false,
+        "runner": "script",
+        "check": [
+          [
+            "npm",
+            "run",
+            "lint"
+          ],
+          [
+            "npm",
+            "run",
+            "typecheck"
+          ],
+          [
+            "npx",
+            "vitest",
+            "run"
+          ],
+          [
+            "npm",
+            "run",
+            "build"
+          ],
+          [
+            "npx",
+            "playwright",
+            "test"
+          ]
+        ],
+        "details": "Runs lint, tsc, vitest, vite build and Playwright e2e. A failure goes to a builder with the output tail.",
+        "testStrategy": "python .taskmaster/run_checks.py run --only 12",
+        "subtasks": []
+      },
+      {
+        "id": 13,
+        "title": "Lesson page: header and three resizable panels",
+        "description": "The Codecademy-style layout: lesson 33% · editor 34% · output 33%, draggable, persisted (PRD 4.1-4.3, 4.6).",
+        "status": "pending",
+        "priority": "medium",
+        "phase": 2,
+        "complexity": 5,
+        "dependencies": [
+          10
+        ],
+        "human": false,
+        "review": false,
+        "details": "Route /courses/:courseId/lessons/:lessonId. react-resizable-panels with drag handles, min 20% / max 60% per panel, 'restore default layout' action, widths saved via preferences (debounced). Compact header: app nav back link, course/lesson title, course and lesson progress indicators (placeholder values), settings link. Full viewport height, no page scroll.",
+        "testStrategy": "e2e/lesson-layout.spec.ts: three panels visible at 1440px with widths ~33/34/33 (±3%); dragging a handle changes widths; reload keeps them; restore resets",
+        "subtasks": []
+      },
+      {
+        "id": 14,
+        "title": "Independent panel scrolling and lesson controls bar",
+        "description": "Each panel scrolls on its own; Prev/Next/Run/Submit/Reset/Save/Clear controls exist (PRD 4.4, 4.7).",
+        "status": "pending",
+        "priority": "medium",
+        "phase": 2,
+        "complexity": 4,
+        "dependencies": [
+          13
+        ],
+        "human": false,
+        "review": false,
+        "details": "overflow-auto per panel with min-h-0 flex fix. Bottom controls bar: Prev/Next (lesson nav), Run, Submit, Reset, Save, Clear output, wired to a lesson-page controller with placeholder handlers (Run prints simulated output). Placeholder lesson Markdown long enough to scroll. Keyboard shortcut Ctrl/Cmd+Enter = Run.",
+        "testStrategy": "e2e: scrolling the lesson panel leaves editor and output scrollTop unchanged; Run shows simulated output; Clear empties it",
+        "subtasks": []
+      },
+      {
+        "id": 15,
+        "title": "CodeMirror 6 editor component",
+        "description": "Centre-panel editor with highlighting, line numbers, autoindent, autocomplete, undo/redo and file tabs (PRD 9.1-9.3).",
+        "status": "pending",
+        "priority": "medium",
+        "phase": 2,
+        "complexity": 5,
+        "dependencies": [
+          13
+        ],
+        "human": false,
+        "review": false,
+        "details": "src/components/editor/CodeEditor.tsx wrapping @codemirror/* (basicSetup pieces, lang-sql, lang-python, lang-javascript), controlled value/onChange, language prop, font size/font from preferences, dark/light theme. FileTabs component: list of files, active file, onSelect; single file used for now but API supports many (open/create/switch/reset one file later). Don't recreate the editor on every render (use a ref).",
+        "testStrategy": "Vitest: editor mounts and onChange fires; e2e: type in editor, undo restores previous text",
+        "subtasks": []
+      },
+      {
+        "id": 16,
+        "title": "Output/terminal panel component",
+        "description": "Shows stdout, tables, errors with raw details, status, time and pass/fail (PRD 11).",
+        "status": "pending",
+        "priority": "medium",
+        "phase": 2,
+        "complexity": 4,
+        "dependencies": [
+          13,
+          3
+        ],
+        "human": false,
+        "review": false,
+        "details": "src/components/terminal/OutputPanel.tsx: renders a list of output entries (stdout, stderr/warning, error with collapsible raw traceback, table with columns/rows, test results with expected vs actual). Status line: idle/running/success/failed + execution ms. High-contrast monospace, auto-scroll to bottom unless the user scrolled up. Clear button.",
+        "testStrategy": "Vitest render tests for each entry type incl. a 1000-row table",
+        "subtasks": []
+      },
+      {
+        "id": 17,
+        "title": "Tablet and mobile layouts for the lesson page",
+        "description": "Lesson panel collapses on tablet; tabs for Lesson/Code/Output on phones (PRD 4.5).",
+        "status": "pending",
+        "priority": "medium",
+        "phase": 2,
+        "complexity": 5,
+        "dependencies": [
+          14,
+          15,
+          16
+        ],
+        "human": false,
+        "review": false,
+        "details": "≥1024px: three panels. 768-1023px: lesson panel collapsible, editor/output switchable. <768px: tab bar Lesson | Code | Output, one visible at a time, controls stay reachable. Keep editor state when switching tabs (hide, don't unmount).",
+        "testStrategy": "e2e at 390x844 and 820x1180: tabs switch views, editor text survives a tab switch, no horizontal scroll",
+        "subtasks": []
+      },
+      {
+        "id": 18,
+        "title": "Phase 2 gate: lint, types, tests and build pass",
+        "description": "Free script check that phase 2 leaves the repo green.",
+        "status": "pending",
+        "priority": "high",
+        "phase": 2,
+        "complexity": 3,
+        "dependencies": [
+          13,
+          14,
+          15,
+          16,
+          17
+        ],
+        "human": false,
+        "review": false,
+        "runner": "script",
+        "check": [
+          [
+            "npm",
+            "run",
+            "lint"
+          ],
+          [
+            "npm",
+            "run",
+            "typecheck"
+          ],
+          [
+            "npx",
+            "vitest",
+            "run"
+          ],
+          [
+            "npm",
+            "run",
+            "build"
+          ],
+          [
+            "npx",
+            "playwright",
+            "test"
+          ]
+        ],
+        "details": "Runs lint, tsc, vitest, vite build and Playwright e2e. A failure goes to a builder with the output tail.",
+        "testStrategy": "python .taskmaster/run_checks.py run --only 18",
+        "subtasks": []
+      },
+      {
+        "id": 19,
+        "title": "Course manifest schema (zod) and COURSE-FORMAT.md",
+        "description": "The formal course.json + lesson file format, validated and documented (PRD 6.3, 7.1-7.5).",
+        "status": "pending",
+        "priority": "medium",
+        "phase": 3,
+        "complexity": 6,
+        "dependencies": [
+          3
+        ],
+        "human": false,
+        "review": true,
+        "details": "src/course-system/schema/: zod schemas for course.json (schemaVersion 1, id, title, version, language, description, difficulty, estimatedHours, author/source, prerequisites, resources, modules[{id,title,lessons[{id,title,type,content,estimatedMinutes,exercise?{type,language,starter,tests,solution?,hints?[],dataset?}}]}]) and test files per language (SQL: expected rows / check queries; Python & JS: named assert snippets or expected stdout). IDs: lowercase slug regex. Unknown fields allowed (forward compat). COURSE-FORMAT.md documents every field with the PRD 7.2 example. Changing this format later needs owner approval.",
+        "testStrategy": "npx vitest run src/course-system/schema: valid PRD example passes, each required-field omission fails with a path in the message",
+        "subtasks": []
+      },
+      {
+        "id": 20,
+        "title": "Manifest parser and validator over a virtual file map",
+        "description": "One loader for bundled, GitHub and ZIP courses that reports useful errors (PRD 14.4, 20.3).",
+        "status": "pending",
+        "priority": "medium",
+        "phase": 3,
+        "complexity": 6,
+        "dependencies": [
+          19
+        ],
+        "human": false,
+        "review": true,
+        "details": "src/course-system/parser + validator: input = Map<path, string|Uint8Array> for one course root. Finds course.json, parses JSON (error with line/col), validates schema, checks schemaVersion supported, every content/starter/tests/solution/asset path exists, paths are relative and can't escape root (no '..', no leading '/', no backslash), language has an adapter (sql, python, javascript). Returns {course, files, warnings} or a list of {code, path, message}. Pure functions, no DOM.",
+        "testStrategy": "npx vitest run src/course-system: one test per error code (missing manifest, invalid JSON, unsupported version, missing lesson file, missing exercise file, escaping path, unsupported language)",
+        "subtasks": []
+      },
+      {
+        "id": 21,
+        "title": "Course registry backed by storage, with bundled sample loading",
+        "description": "Validated courses register into IndexedDB and appear automatically; removal keeps progress (PRD 6.4, 5.3).",
+        "status": "pending",
+        "priority": "medium",
+        "phase": 3,
+        "complexity": 5,
+        "dependencies": [
+          20,
+          8
+        ],
+        "human": false,
+        "review": false,
+        "details": "src/course-system/registry: register(courseResult, source) stores manifest + files (courses, courseFiles stores), list(), get(id), remove(id) (deletes course + files only; progress/code/notes untouched). On first run, fetch public/courses/index.json (list of course folders) and load each through the same validator as imports: no course is imported in TS code. useCourses hook.",
+        "testStrategy": "Vitest with fake-indexeddb: register, list, remove leaves progress records; e2e: sample courses appear in My Courses on first load",
+        "subtasks": []
+      },
+      {
+        "id": 22,
+        "title": "Safe Markdown lesson renderer",
+        "description": "Lesson Markdown with code, tables, images, links and callouts, safe for untrusted content (PRD 7.3, 8.1, 17.5).",
+        "status": "pending",
+        "priority": "medium",
+        "phase": 3,
+        "complexity": 5,
+        "dependencies": [
+          20
+        ],
+        "human": false,
+        "review": true,
+        "details": "src/features/lesson-viewer/LessonMarkdown.tsx: react-markdown + remark-gfm, NO rehype-raw, urlTransform allowing only http(s), mailto and relative paths; relative image paths resolved to blob URLs from course files; external links open with rel=noopener noreferrer; code blocks highlighted (CodeMirror static highlighting or a small highlighter); callouts from `> [!NOTE]`/`[!TIP]`/`[!WARNING]` blockquotes. Shows title and estimated minutes.",
+        "testStrategy": "Vitest: renders table/image/code; `<script>`, `<img onerror>`, `javascript:` links and raw HTML render as inert text or are removed",
+        "subtasks": []
+      },
+      {
+        "id": 23,
+        "title": "Sample SQL and Python courses as static course files",
+        "description": "Two small real courses that load through the manifest system (PRD 27 Courses).",
+        "status": "pending",
+        "priority": "medium",
+        "phase": 3,
+        "complexity": 4,
+        "dependencies": [
+          19
+        ],
+        "human": false,
+        "review": false,
+        "details": "public/courses/index.json + public/courses/sql-fundamentals/ (2 modules, 5 lessons: SELECT, WHERE, ORDER BY, aggregates, JOIN; dataset.sql with employees/departments; each coding lesson has starter .sql and tests JSON) and public/courses/python-fundamentals/ (2 modules, 5 lessons: print, variables, conditionals, loops, functions; starter .py, tests JSON, solution). One reading-only lesson each. Content original, not copied from Codecademy.",
+        "testStrategy": "Vitest test loads both folders from disk through the validator with zero errors",
+        "subtasks": []
+      },
+      {
+        "id": 24,
+        "title": "Course pages and lesson navigation from the registry",
+        "description": "My Courses, course details and the lesson page run on real course data (PRD 5.3, 8.3, 6.4).",
+        "status": "pending",
+        "priority": "medium",
+        "phase": 3,
+        "complexity": 6,
+        "dependencies": [
+          21,
+          22,
+          23,
+          17,
+          11
+        ],
+        "human": false,
+        "review": false,
+        "details": "My Courses lists registry courses with search and language/difficulty filters, remove (with confirm, says progress is kept), refresh placeholder. Course details page: modules and lessons list. Lesson page: module/lesson sidebar (drawer in lesson panel), loads lesson Markdown + starter code into the editor, Prev/Next across modules, unknown ids show a not-found state. Handle missing files gracefully (error state, not a crash).",
+        "testStrategy": "e2e: open sql-fundamentals → lesson 1 shows its Markdown and starter SQL; Next crosses into module 2; filter by language hides the other course",
+        "subtasks": []
+      },
+      {
+        "id": 25,
+        "title": "Phase 3 gate: lint, types, tests and build pass",
+        "description": "Free script check that phase 3 leaves the repo green.",
+        "status": "pending",
+        "priority": "high",
+        "phase": 3,
+        "complexity": 3,
+        "dependencies": [
+          19,
+          20,
+          21,
+          22,
+          23,
+          24
+        ],
+        "human": false,
+        "review": false,
+        "runner": "script",
+        "check": [
+          [
+            "npm",
+            "run",
+            "lint"
+          ],
+          [
+            "npm",
+            "run",
+            "typecheck"
+          ],
+          [
+            "npx",
+            "vitest",
+            "run"
+          ],
+          [
+            "npm",
+            "run",
+            "build"
+          ],
+          [
+            "npx",
+            "playwright",
+            "test"
+          ]
+        ],
+        "details": "Runs lint, tsc, vitest, vite build and Playwright e2e. A failure goes to a builder with the output tail.",
+        "testStrategy": "python .taskmaster/run_checks.py run --only 25",
+        "subtasks": []
+      },
+      {
+        "id": 26,
+        "title": "Execution manager with lazy-loaded engine registry",
+        "description": "UI runs code through one manager that picks and lazy-loads the language adapter (PRD 10.1-10.2, 20.1).",
+        "status": "pending",
+        "priority": "medium",
+        "phase": 4,
+        "complexity": 5,
+        "dependencies": [
+          3,
+          24
+        ],
+        "human": false,
+        "review": true,
+        "details": "src/execution/manager: getEngine(language) → dynamic import of the adapter (separate chunk), initialize once, run(code, opts) with status events (loading/running/done), stop(), reset(). Default timeout from a profile table (sql 5s, python 10s, js 5s). Lesson page Run → manager → OutputPanel. Unknown language → clear error.",
+        "testStrategy": "Vitest with a fake adapter: lazy load called once, timeout produces an error result, stop() calls the adapter",
+        "subtasks": []
+      },
+      {
+        "id": 27,
+        "title": "SQL adapter: sql.js in a Web Worker",
+        "description": "SQL runs off the main thread with tables, errors, datasets and reset (PRD 10.3).",
+        "status": "pending",
+        "priority": "medium",
+        "phase": 4,
+        "complexity": 6,
+        "dependencies": [
+          26
+        ],
+        "human": false,
+        "review": true,
+        "details": "src/execution/adapters/sql/: worker hosting sql.js (wasm served same-origin via Vite asset import), messages: init(dataset?), exec, reset. Multiple statements → one table per result set; errors keep sqlite's message ('no such table: employees'); reset recreates the db and reapplies the exercise dataset; timeout/stop terminates and respawns the worker. Independent of app IndexedDB.",
+        "testStrategy": "Vitest (worker logic tested as plain functions with sql.js in node): CREATE/INSERT/SELECT/JOIN/aggregate return rows; bad table gives sqlite error; reset clears user tables",
+        "subtasks": []
+      },
+      {
+        "id": 28,
+        "title": "Exercise evaluation and Submit flow (SQL first)",
+        "description": "Submit runs the tests and shows pass/fail with expected vs actual; Run never completes a lesson (PRD 12.2-12.3).",
+        "status": "pending",
+        "priority": "medium",
+        "phase": 4,
+        "complexity": 6,
+        "dependencies": [
+          27
+        ],
+        "human": false,
+        "review": false,
+        "details": "src/features/exercise-evaluation/: evaluator interface per language, separate from execution. SQL evaluator: run user query against fresh dataset, compare result to expected rows (column names, order-sensitive flag) and/or check queries. Returns TestResult[]. Lesson controller: Submit → evaluate → OutputPanel test results → emits 'exercise-passed' (progress wiring in phase 6).",
+        "testStrategy": "Vitest: correct SQL passes, wrong row count and wrong order (when ordered) fail with expected/actual",
+        "subtasks": []
+      },
+      {
+        "id": 29,
+        "title": "Reset starter code, progressive hints and solution view",
+        "description": "Exercise helpers that never reveal the solution by accident (PRD 9.4, 12.4-12.5).",
+        "status": "pending",
+        "priority": "medium",
+        "phase": 4,
+        "complexity": 4,
+        "dependencies": [
+          28
+        ],
+        "human": false,
+        "review": false,
+        "details": "Reset restores starter code (confirm if edited). Hints panel in lesson panel reveals hints one at a time. 'Show solution' behind a confirm, shown read-only beside the user code, never overwrites it. Starter, user code and solution kept distinct in state.",
+        "testStrategy": "Vitest/e2e: hint 2 hidden until hint 1 revealed; reset restores starter; viewing solution leaves editor text unchanged",
+        "subtasks": []
+      },
+      {
+        "id": 30,
+        "title": "SQL lesson end-to-end test",
+        "description": "The full SQL loop works in a real browser.",
+        "status": "pending",
+        "priority": "medium",
+        "phase": 4,
+        "complexity": 3,
+        "dependencies": [
+          29
+        ],
+        "human": false,
+        "review": false,
+        "details": "e2e/sql-lesson.spec.ts: open a sql-fundamentals coding lesson, Run → table appears; Submit wrong query → failure details; correct query → pass; reset database → user-created table gone.",
+        "testStrategy": "npx playwright test e2e/sql-lesson.spec.ts passes",
+        "subtasks": []
+      },
+      {
+        "id": 31,
+        "title": "Phase 4 gate: lint, types, tests and build pass",
+        "description": "Free script check that phase 4 leaves the repo green.",
+        "status": "pending",
+        "priority": "high",
+        "phase": 4,
+        "complexity": 3,
+        "dependencies": [
+          26,
+          27,
+          28,
+          29,
+          30
+        ],
+        "human": false,
+        "review": false,
+        "runner": "script",
+        "check": [
+          [
+            "npm",
+            "run",
+            "lint"
+          ],
+          [
+            "npm",
+            "run",
+            "typecheck"
+          ],
+          [
+            "npx",
+            "vitest",
+            "run"
+          ],
+          [
+            "npm",
+            "run",
+            "build"
+          ],
+          [
+            "npx",
+            "playwright",
+            "test"
+          ]
+        ],
+        "details": "Runs lint, tsc, vitest, vite build and Playwright e2e. A failure goes to a builder with the output tail.",
+        "testStrategy": "python .taskmaster/run_checks.py run --only 31",
+        "subtasks": []
+      },
+      {
+        "id": 32,
+        "title": "Python adapter: Pyodide in a Web Worker, lazy-loaded",
+        "description": "Python runs in the browser with stdout, tracebacks, repeated runs and reset (PRD 10.4, 20.1).",
+        "status": "pending",
+        "priority": "medium",
+        "phase": 5,
+        "complexity": 6,
+        "dependencies": [
+          26
+        ],
+        "human": false,
+        "review": true,
+        "details": "src/execution/adapters/python/: module worker loading Pyodide only when first needed (npm `pyodide` package with assets served same-origin; if that fights Vite, pinned jsdelivr URL and note CSP impact in DECISIONS.md). Capture stdout/stderr via setStdout/setStderr batched messages; errors → Python traceback string with the final 'NameError: ...' line extracted; each run in a fresh globals dict (reset = new dict); show 'Loading Python…' status during first load. Initial page bundle must not include Pyodide.",
+        "testStrategy": "Vitest for message/traceback helpers; e2e: print('hi') shows hi; undefined name shows NameError line; second run works",
+        "subtasks": []
+      },
+      {
+        "id": 33,
+        "title": "Stop and timeout for runaway code",
+        "description": "Infinite loops can be stopped and the UI stays responsive (PRD 10.4, 11.5, 20.2).",
+        "status": "pending",
+        "priority": "medium",
+        "phase": 5,
+        "complexity": 5,
+        "dependencies": [
+          32,
+          27
+        ],
+        "human": false,
+        "review": true,
+        "details": "Stop button active while running → manager.stop() terminates the worker and spawns a fresh one (Python re-init is slow: show status). Timeout per profile triggers the same path with a 'Timed out after Ns' error. Applies to SQL and Python adapters.",
+        "testStrategy": "e2e: `while True: pass` → Stop → output says stopped, UI clicks still respond within 1s, next run works; timeout test with a short profile",
+        "subtasks": []
+      },
+      {
+        "id": 34,
+        "title": "Python exercise evaluation",
+        "description": "Submit runs Python tests and reports each assert (PRD 12.2).",
+        "status": "pending",
+        "priority": "medium",
+        "phase": 5,
+        "complexity": 5,
+        "dependencies": [
+          32,
+          28
+        ],
+        "human": false,
+        "review": false,
+        "details": "Python evaluator: run user code, then each named test snippet in the same namespace (in the worker), catch AssertionError per test; expected-stdout tests compare captured output (trim trailing whitespace). Errors in user code fail all tests with the traceback.",
+        "testStrategy": "Vitest/e2e: add(a,b) example from PRD 12.2 passes 3 tests; a wrong implementation shows which assert failed",
+        "subtasks": []
+      },
+      {
+        "id": 35,
+        "title": "Python sample course e2e and Pyodide limitations doc",
+        "description": "The Python course works end to end; limits are documented (PRD 10.4).",
+        "status": "pending",
+        "priority": "medium",
+        "phase": 5,
+        "complexity": 3,
+        "dependencies": [
+          34,
+          33
+        ],
+        "human": false,
+        "review": false,
+        "details": "e2e/python-lesson.spec.ts: open python-fundamentals coding lesson, run, submit wrong, submit right. Add 'Python limitations' section to ARCHITECTURE.md (no native-dependency packages, no input() blocking, no network/filesystem persistence, first load size).",
+        "testStrategy": "npx playwright test e2e/python-lesson.spec.ts passes; grep -q 'Python limitations' ARCHITECTURE.md",
+        "subtasks": []
+      },
+      {
+        "id": 36,
+        "title": "Phase 5 gate: lint, types, tests and build pass",
+        "description": "Free script check that phase 5 leaves the repo green.",
+        "status": "pending",
+        "priority": "high",
+        "phase": 5,
+        "complexity": 3,
+        "dependencies": [
+          32,
+          33,
+          34,
+          35
+        ],
+        "human": false,
+        "review": false,
+        "runner": "script",
+        "check": [
+          [
+            "npm",
+            "run",
+            "lint"
+          ],
+          [
+            "npm",
+            "run",
+            "typecheck"
+          ],
+          [
+            "npx",
+            "vitest",
+            "run"
+          ],
+          [
+            "npm",
+            "run",
+            "build"
+          ],
+          [
+            "npx",
+            "playwright",
+            "test"
+          ]
+        ],
+        "details": "Runs lint, tsc, vitest, vite build and Playwright e2e. A failure goes to a builder with the output tail.",
+        "testStrategy": "python .taskmaster/run_checks.py run --only 36",
+        "subtasks": []
+      },
+      {
+        "id": 37,
+        "title": "Progress tracking: completion, attempts, last position",
+        "description": "Lesson completion, exercise attempts and last accessed lesson persist by stable IDs (PRD 8.4, 13.1).",
+        "status": "pending",
+        "priority": "medium",
+        "phase": 6,
+        "complexity": 5,
+        "dependencies": [
+          8,
+          28
+        ],
+        "human": false,
+        "review": true,
+        "details": "src/features/learning-progress/: progress service over repos. Complete on passing Submit, or 'Mark complete' button for reading lessons. Record every attempt (time, passed, test counts). Track last course/lesson/activity date. Derived: module/course completion, success rate. Pure calculation functions unit-tested. Header progress indicators use real data.",
+        "testStrategy": "Vitest: completion % math, module complete when all lessons done; e2e: submit passing → reload → lesson shows completed",
+        "subtasks": []
+      },
+      {
+        "id": 38,
+        "title": "Autosave and restore working code",
+        "description": "User code survives leaving the lesson and reloading; starter stays resettable (PRD 9.5, 13.2).",
+        "status": "pending",
+        "priority": "medium",
+        "phase": 6,
+        "complexity": 4,
+        "dependencies": [
+          37
+        ],
+        "human": false,
+        "review": false,
+        "details": "Debounced (~800ms) save of editor content per course/lesson/file into the code repo; flush on route change and beforeunload; Save button forces a save with a brief 'Saved' state. On open: saved code if present else starter.",
+        "testStrategy": "e2e: edit code, reload, code restored; Reset brings back starter",
+        "subtasks": []
+      },
+      {
+        "id": 39,
+        "title": "Continue Learning and live dashboard",
+        "description": "Dashboard resumes the last lesson and shows real progress (PRD 5.2, 13.3).",
+        "status": "pending",
+        "priority": "medium",
+        "phase": 6,
+        "complexity": 5,
+        "dependencies": [
+          38
+        ],
+        "human": false,
+        "review": false,
+        "details": "Wire dashboard sections to progress data: Continue Learning (last course + lesson, opens with saved code), active courses, overall progress, recently completed lessons, recommended next lesson (first incomplete in last course), practice link. Course cards show completion % and last accessed.",
+        "testStrategy": "e2e: complete lesson 1 → dashboard shows it recently completed and recommends lesson 2; Continue opens the last lesson",
+        "subtasks": []
+      },
+      {
+        "id": 40,
+        "title": "Progress page",
+        "description": "Practical overview: active/completed courses, modules, lessons, success rate, recent languages (PRD 5.4).",
+        "status": "pending",
+        "priority": "medium",
+        "phase": 6,
+        "complexity": 4,
+        "dependencies": [
+          37
+        ],
+        "human": false,
+        "review": false,
+        "details": "src/features/learning-progress/pages/ProgressPage.tsx, simple counts and per-course bars, no streaks or leaderboards.",
+        "testStrategy": "Vitest render with seeded progress shows correct counts",
+        "subtasks": []
+      },
+      {
+        "id": 41,
+        "title": "Lesson notes and bookmarks",
+        "description": "Per-lesson notes autosave; lessons and courses can be bookmarked (PRD 13.4, 3.4).",
+        "status": "pending",
+        "priority": "medium",
+        "phase": 6,
+        "complexity": 4,
+        "dependencies": [
+          37
+        ],
+        "human": false,
+        "review": false,
+        "details": "Notes tab/section in the lesson panel (plain textarea, autosave debounced). Bookmark toggle in the lesson header; bookmarks listed on the dashboard.",
+        "testStrategy": "e2e: write a note, reload, note still there; bookmark appears on dashboard",
+        "subtasks": []
+      },
+      {
+        "id": 42,
+        "title": "Export and import learning data",
+        "description": "Progress, notes, code and bookmarks can be backed up and restored as JSON (PRD 13.6, 21.4).",
+        "status": "pending",
+        "priority": "medium",
+        "phase": 6,
+        "complexity": 5,
+        "dependencies": [
+          41,
+          38
+        ],
+        "human": false,
+        "review": true,
+        "details": "Settings → Data: export a versioned JSON (exportVersion, date, stores) download; import validates with zod, previews counts, merges or replaces (confirm). Never executes or renders imported strings as HTML.",
+        "testStrategy": "Vitest: export → import round-trip equals original; malformed file rejected with a message",
+        "subtasks": []
+      },
+      {
+        "id": 43,
+        "title": "Phase 6 gate: lint, types, tests and build pass",
+        "description": "Free script check that phase 6 leaves the repo green.",
+        "status": "pending",
+        "priority": "high",
+        "phase": 6,
+        "complexity": 3,
+        "dependencies": [
+          37,
+          38,
+          39,
+          40,
+          41,
+          42
+        ],
+        "human": false,
+        "review": false,
+        "runner": "script",
+        "check": [
+          [
+            "npm",
+            "run",
+            "lint"
+          ],
+          [
+            "npm",
+            "run",
+            "typecheck"
+          ],
+          [
+            "npx",
+            "vitest",
+            "run"
+          ],
+          [
+            "npm",
+            "run",
+            "build"
+          ],
+          [
+            "npx",
+            "playwright",
+            "test"
+          ]
+        ],
+        "details": "Runs lint, tsc, vitest, vite build and Playwright e2e. A failure goes to a builder with the output tail.",
+        "testStrategy": "python .taskmaster/run_checks.py run --only 43",
+        "subtasks": []
+      },
+      {
+        "id": 44,
+        "title": "GitHub public repository import",
+        "description": "A public repo URL becomes a validated course (PRD 14.2).",
+        "status": "pending",
+        "priority": "medium",
+        "phase": 7,
+        "complexity": 6,
+        "dependencies": [
+          21
+        ],
+        "human": false,
+        "review": true,
+        "details": "src/features/course-import/github.ts: parse https://github.com/owner/repo[/tree/branch/path]; GitHub REST (unauthenticated) for default branch and recursive tree; locate course.json files (pick one if several); fetch referenced files from raw.githubusercontent.com with limits (max files 500, max total 20 MB, extension allowlist .json .md .sql .py .js .ts .txt .csv .png .jpg .jpeg .gif .svg .webp). Clear messages for 404, private repo, rate limit (403/429 with reset time). No token support yet (PRD 17.6). Feeds the validator. Records source {type:'github', owner, repo, ref, path, commit sha}.",
+        "testStrategy": "Vitest with mocked fetch: valid repo → course; 404, rate limit, oversize, disallowed extension each give a clear error",
+        "subtasks": []
+      },
+      {
+        "id": 45,
+        "title": "ZIP course upload with safe extraction",
+        "description": "A ZIP course package imports safely (PRD 14.3, 17.5).",
+        "status": "pending",
+        "priority": "medium",
+        "phase": 7,
+        "complexity": 6,
+        "dependencies": [
+          21
+        ],
+        "human": false,
+        "review": true,
+        "details": "src/features/course-import/zip.ts with fflate: check type/size (≤ 20 MB) before reading, iterate entries without extracting to disk (in-memory map), reject absolute paths, '..' segments, backslashes, drive letters, symlink entries, too many files (≤ 500), too-large uncompressed total (zip bomb guard, ≤ 50 MB), disallowed extensions; strip a single top-level folder. Feeds the validator.",
+        "testStrategy": "Vitest with generated fixtures: valid zip → course; traversal, absolute path, zip bomb, too many files, bad extension each rejected",
+        "subtasks": []
+      },
+      {
+        "id": 46,
+        "title": "Import page with validation report and preview",
+        "description": "User pastes a URL or drops a ZIP, sees errors or a preview, then registers (PRD 14.1-14.4).",
+        "status": "pending",
+        "priority": "medium",
+        "phase": 7,
+        "complexity": 5,
+        "dependencies": [
+          44,
+          45
+        ],
+        "human": false,
+        "review": false,
+        "details": "My Courses → Import: GitHub URL field and ZIP drop/file input; progress state; error list (code, path, message); preview (title, language, modules, lessons, warnings); Register button → registry → navigate to the course. Same course id already present → offer update (next task).",
+        "testStrategy": "e2e: import a fixture zip from e2e/fixtures → course appears in My Courses; invalid zip shows its errors",
+        "subtasks": []
+      },
+      {
+        "id": 47,
+        "title": "Course refresh and updates that keep progress",
+        "description": "Re-importing a course shows what changed and preserves progress and user code (PRD 14.5).",
+        "status": "pending",
+        "priority": "medium",
+        "phase": 7,
+        "complexity": 6,
+        "dependencies": [
+          46,
+          37
+        ],
+        "human": false,
+        "review": true,
+        "details": "Diff old vs new manifest by stable IDs: added, removed, modified (content/starter/tests hash) lessons, version change. Update summary dialog before applying. Progress, notes and saved code untouched; removed lessons' progress kept but hidden. 'Refresh' on GitHub course cards refetches latest commit.",
+        "testStrategy": "Vitest: diff function cases; e2e: import v1, complete lesson, import v2 with an added lesson → summary lists it and completion kept",
+        "subtasks": []
+      },
+      {
+        "id": 48,
+        "title": "Publish a public coding-courses repo for a real import test",
+        "description": "A real GitHub course repo to prove the primary success metric (PRD 25.2, 29).",
+        "status": "pending",
+        "priority": "medium",
+        "phase": 7,
+        "complexity": 1,
+        "dependencies": [
+          23
+        ],
+        "human": true,
+        "review": false,
+        "details": "Owner: create a public GitHub repo (e.g. coding-courses) and push the contents of public/courses/ to it (courses/<id>/...). Paste the URL back; the lead then runs the import manually once.",
+        "testStrategy": "Importing the pasted URL in the app registers the course (manual check)",
+        "subtasks": []
+      },
+      {
+        "id": 49,
+        "title": "Phase 7 gate: lint, types, tests and build pass",
+        "description": "Free script check that phase 7 leaves the repo green.",
+        "status": "pending",
+        "priority": "high",
+        "phase": 7,
+        "complexity": 3,
+        "dependencies": [
+          44,
+          45,
+          46,
+          47
+        ],
+        "human": false,
+        "review": false,
+        "runner": "script",
+        "check": [
+          [
+            "npm",
+            "run",
+            "lint"
+          ],
+          [
+            "npm",
+            "run",
+            "typecheck"
+          ],
+          [
+            "npx",
+            "vitest",
+            "run"
+          ],
+          [
+            "npm",
+            "run",
+            "build"
+          ],
+          [
+            "npx",
+            "playwright",
+            "test"
+          ]
+        ],
+        "details": "Runs lint, tsc, vitest, vite build and Playwright e2e. A failure goes to a builder with the output tail.",
+        "testStrategy": "python .taskmaster/run_checks.py run --only 49",
+        "subtasks": []
+      },
+      {
+        "id": 50,
+        "title": "JavaScript adapter in a sandboxed iframe",
+        "description": "JS runs isolated from the app with console capture, errors, timeout and tests (PRD 10.5, 17.2).",
+        "status": "pending",
+        "priority": "medium",
+        "phase": 8,
+        "complexity": 6,
+        "dependencies": [
+          26,
+          28
+        ],
+        "human": false,
+        "review": true,
+        "details": "src/execution/adapters/javascript/: hidden iframe `sandbox=\"allow-scripts\"` (no allow-same-origin) with srcdoc runner and its own CSP meta; code posted via postMessage; console.log/warn/error and uncaught errors forwarded; parent checks event.source; timeout/stop removes and recreates the iframe. JS evaluator runs named test snippets in the same sandbox. No eval on the main thread.",
+        "testStrategy": "Vitest for message protocol; e2e: console.log output shown, thrown error shown, infinite loop stopped, `parent.document` access throws",
+        "subtasks": []
+      },
+      {
+        "id": 51,
+        "title": "Practice Playground page",
+        "description": "Blank editor for SQL, Python or JS with run and reset, outside any course (PRD 15).",
+        "status": "pending",
+        "priority": "medium",
+        "phase": 8,
+        "complexity": 5,
+        "dependencies": [
+          50,
+          33
+        ],
+        "human": false,
+        "review": false,
+        "details": "src/features/practice-playground/: language picker (default from preferences), CodeEditor + OutputPanel in the same resizable layout component as lessons (reuse, don't copy), Run/Stop/Reset environment (SQL: empty db the user fills; Python: fresh globals).",
+        "testStrategy": "e2e: SQL create table + select works then reset clears it; python and js run in practice",
+        "subtasks": []
+      },
+      {
+        "id": 52,
+        "title": "Saved practice sessions",
+        "description": "Practice work autosaves and earlier sessions can be reopened (PRD 15.2).",
+        "status": "pending",
+        "priority": "medium",
+        "phase": 8,
+        "complexity": 4,
+        "dependencies": [
+          51
+        ],
+        "human": false,
+        "review": false,
+        "details": "practiceSessions repo: autosave current session; list with language, name, updated date; rename, reopen, delete (confirm).",
+        "testStrategy": "e2e: write python in practice, reload, session listed and reopens with the code",
+        "subtasks": []
+      },
+      {
+        "id": 53,
+        "title": "Phase 8 gate: lint, types, tests and build pass",
+        "description": "Free script check that phase 8 leaves the repo green.",
+        "status": "pending",
+        "priority": "high",
+        "phase": 8,
+        "complexity": 3,
+        "dependencies": [
+          50,
+          51,
+          52
+        ],
+        "human": false,
+        "review": false,
+        "runner": "script",
+        "check": [
+          [
+            "npm",
+            "run",
+            "lint"
+          ],
+          [
+            "npm",
+            "run",
+            "typecheck"
+          ],
+          [
+            "npx",
+            "vitest",
+            "run"
+          ],
+          [
+            "npm",
+            "run",
+            "build"
+          ],
+          [
+            "npx",
+            "playwright",
+            "test"
+          ]
+        ],
+        "details": "Runs lint, tsc, vitest, vite build and Playwright e2e. A failure goes to a builder with the output tail.",
+        "testStrategy": "python .taskmaster/run_checks.py run --only 53",
+        "subtasks": []
+      },
+      {
+        "id": 54,
+        "title": "Decide hosting: Vercel or Hostinger VPS",
+        "description": "Pick the deploy target so the ship tasks can proceed (PRD 21.1).",
+        "status": "pending",
+        "priority": "medium",
+        "phase": 9,
+        "complexity": 1,
+        "dependencies": [],
+        "human": true,
+        "review": false,
+        "details": "Owner decision. Vercel: merges to main will auto-deploy, so the lead switches .claude/harness.json to merge_deploys: true, merge: safe-only. VPS: the lead installs the master-harness `vps` skill (`/harness upgrade` can add it) and agents deploy with git push. Tell the lead which; it records it in the PRD decision log.",
+        "testStrategy": "Decision recorded in .taskmaster/docs/prd.md decision log",
+        "subtasks": []
+      },
+      {
+        "id": 55,
+        "title": "Content Security Policy, security headers and security review",
+        "description": "Ship with CSP and a completed security review (PRD 17.2, 22.3).",
+        "status": "pending",
+        "priority": "medium",
+        "phase": 9,
+        "complexity": 5,
+        "dependencies": [
+          54,
+          52,
+          47,
+          42
+        ],
+        "human": false,
+        "review": true,
+        "details": "Define CSP (default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; worker-src 'self' blob:; img-src 'self' blob: data: https:; connect-src 'self' https://api.github.com https://raw.githubusercontent.com; frame-src 'self' blob:/srcdoc as needed) in the host's config (vercel.json headers or the server config) and a meta fallback for dev. Run the `security-review` skill; fix or file its findings. Document in SECURITY.md.",
+        "testStrategy": "e2e passes with CSP enabled in `vite preview` (headers via preview config); SECURITY.md lists each PRD 17 control and its test",
+        "subtasks": []
+      },
+      {
+        "id": 56,
+        "title": "Performance review: lazy loading and bundle size",
+        "description": "Initial load stays small; engines load only when needed (PRD 20.1).",
+        "status": "pending",
+        "priority": "medium",
+        "phase": 9,
+        "complexity": 4,
+        "dependencies": [
+          55
+        ],
+        "human": false,
+        "review": false,
+        "details": "Run a build with rollup-plugin-visualizer or `vite build --report`; ensure pyodide, sql.js and codemirror language packs are not in the entry chunk; add scripts/check-bundle.mjs failing if the entry JS > 400 KB gzip (adjust with a note). Fix regressions.",
+        "testStrategy": "node scripts/check-bundle.mjs exits 0 after npm run build",
+        "subtasks": []
+      },
+      {
+        "id": 57,
+        "title": "User acceptance e2e for Python and SQL (PRD 22.4)",
+        "description": "The PRD acceptance scenario runs automatically for both languages.",
+        "status": "pending",
+        "priority": "medium",
+        "phase": 9,
+        "complexity": 5,
+        "dependencies": [
+          55
+        ],
+        "human": false,
+        "review": false,
+        "details": "e2e/uat.spec.ts: import a course from a fixture zip, open lesson 1, modify starter, run, view output, submit, get feedback, lesson complete, close page, new page, progress and code still there. Repeat for SQL.",
+        "testStrategy": "npx playwright test e2e/uat.spec.ts passes",
+        "subtasks": []
+      },
+      {
+        "id": 58,
+        "title": "Complete documentation incl. deploy, backup and recovery",
+        "description": "Docs match what was built (PRD 26, 21.2, 21.4).",
+        "status": "pending",
+        "priority": "medium",
+        "phase": 9,
+        "complexity": 4,
+        "dependencies": [
+          56,
+          57
+        ],
+        "human": false,
+        "review": false,
+        "details": "Update README, ARCHITECTURE, COURSE-FORMAT, SECURITY, DEVELOPMENT (install, env vars, deploy steps for the chosen host), CHANGELOG, DECISIONS. Backup & recovery: code and courses in GitHub, user data via Settings export/import, how to restore on a new browser. Only describe tested features.",
+        "testStrategy": "grep -q 'Backup' DEVELOPMENT.md README.md; every doc in PRD 26 exists; a link check over relative links in *.md finds none broken",
+        "subtasks": []
+      },
+      {
+        "id": 59,
+        "title": "Production deploy configuration for the chosen host",
+        "description": "The built app can be deployed reproducibly with SPA routing and headers (PRD 21).",
+        "status": "pending",
+        "priority": "medium",
+        "phase": 9,
+        "complexity": 4,
+        "dependencies": [
+          54,
+          55
+        ],
+        "human": false,
+        "review": true,
+        "details": "Per the hosting decision: Vercel → vercel.json (SPA rewrite to index.html, headers incl. CSP, cache for hashed assets, wasm MIME). VPS → static build served per the vps skill's deploy/vps.json (no Node server needed). No hosting-specific code in src/.",
+        "testStrategy": "npm run build && npx vite preview serves deep links (e2e against preview: /courses/... reload works)",
+        "subtasks": []
+      },
+      {
+        "id": 60,
+        "title": "First production deploy",
+        "description": "The app is live at its URL.",
+        "status": "pending",
+        "priority": "medium",
+        "phase": 9,
+        "complexity": 2,
+        "dependencies": [
+          59
+        ],
+        "human": true,
+        "review": false,
+        "details": "Vercel: owner links the GitHub repo in the Vercel dashboard (or `vercel link` then `vercel --prod`) and pastes the URL. VPS: the lead/agents run the vps skill steps; only DNS (if no wildcard domain) is the owner's. Paste the live URL back.",
+        "testStrategy": "Live URL returns 200 and the app loads (manual check)",
+        "subtasks": []
+      },
+      {
+        "id": 61,
+        "title": "Production smoke test",
+        "description": "The live site works: loads, runs SQL and Python, imports a ZIP.",
+        "status": "pending",
+        "priority": "medium",
+        "phase": 9,
+        "complexity": 3,
+        "dependencies": [
+          60
+        ],
+        "human": false,
+        "review": false,
+        "details": "PLAYWRIGHT_BASE_URL=<live url> run e2e/smoke.spec.ts plus a prod-safe subset (no destructive actions). Check CSP has no violations in the console.",
+        "testStrategy": "PLAYWRIGHT_BASE_URL=<url> npx playwright test e2e/smoke.spec.ts passes",
+        "subtasks": []
+      },
+      {
+        "id": 62,
+        "title": "Phase 9 gate: lint, types, tests and build pass",
+        "description": "Free script check that phase 9 leaves the repo green.",
+        "status": "pending",
+        "priority": "high",
+        "phase": 9,
+        "complexity": 3,
+        "dependencies": [
+          55,
+          56,
+          57,
+          58,
+          59,
+          61
+        ],
+        "human": false,
+        "review": false,
+        "runner": "script",
+        "check": [
+          [
+            "npm",
+            "run",
+            "lint"
+          ],
+          [
+            "npm",
+            "run",
+            "typecheck"
+          ],
+          [
+            "npx",
+            "vitest",
+            "run"
+          ],
+          [
+            "npm",
+            "run",
+            "build"
+          ],
+          [
+            "npx",
+            "playwright",
+            "test"
+          ]
+        ],
+        "details": "Runs lint, tsc, vitest, vite build and Playwright e2e. A failure goes to a builder with the output tail.",
+        "testStrategy": "python .taskmaster/run_checks.py run --only 62",
+        "subtasks": []
+      }
+    ],
+    "metadata": {
+      "project": "Personal Coding Academy",
+      "description": "Personal Coding Academy master plan. Source of truth; TASKS.md is generated from this.",
+      "phases": [
+        {
+          "id": 0,
+          "name": "Foundation"
+        },
+        {
+          "id": 1,
+          "name": "App shell"
+        },
+        {
+          "id": 2,
+          "name": "Three-panel lesson UI"
+        },
+        {
+          "id": 3,
+          "name": "Course system"
+        },
+        {
+          "id": 4,
+          "name": "SQL playground"
+        },
+        {
+          "id": 5,
+          "name": "Python playground"
+        },
+        {
+          "id": 6,
+          "name": "Learning progress"
+        },
+        {
+          "id": 7,
+          "name": "Course import"
+        },
+        {
+          "id": 8,
+          "name": "JavaScript + practice"
+        },
+        {
+          "id": 9,
+          "name": "Stabilize + ship"
+        }
+      ],
+      "created": "2026-11-15",
+      "updated": "2026-11-15"
+    }
+  }
+}
