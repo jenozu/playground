@@ -20,7 +20,7 @@
         "id": 2,
         "title": "Write architecture proposal and project docs skeleton",
         "description": "PRD phase-0 deliverables: architecture, dependency analysis, risks, docs files.",
-        "status": "pending",
+        "status": "done",
         "priority": "medium",
         "phase": 0,
         "complexity": 4,
@@ -29,7 +29,7 @@
         ],
         "human": false,
         "review": false,
-        "details": "Create ARCHITECTURE.md (layers per PRD 18.2/18.3: UI components, features, execution manager+adapters, course-system parser/validator/registry, storage repositories; data flow for Run vs Submit; how bundled sample courses and imported courses go through the same loader), DECISIONS.md (ADR-style; seed: CodeMirror 6, sql.js in worker, Pyodide in worker, JS in sandboxed iframe, IndexedDB via `idb`, zod for manifest validation, react-router, react-resizable-panels, react-markdown without raw HTML, fflate for ZIP), DEVELOPMENT.md (setup, scripts), README.md (overview, quick start), CHANGELOG.md, SECURITY.md stub, COURSE-FORMAT.md stub. Dependency analysis: one table in ARCHITECTURE.md with package, version, size, why. Risks section: Pyodide size/load time, worker termination, CSP with wasm, GitHub API rate limits, IndexedDB quota. Mark nothing as implemented.",
+        "details": "Create ARCHITECTURE.md (layers per PRD 18.2/18.3: UI components, features, execution manager+adapters, course-system parser/validator/registry, storage repositories; data flow for Run vs Submit; how bundled sample courses and imported courses go through the same loader), DECISIONS.md (ADR-style; seed: CodeMirror 6, sql.js in worker, Pyodide in worker, JS in sandboxed iframe, IndexedDB via `idb`, zod for manifest validation, react-router, react-resizable-panels, react-markdown without raw HTML, fflate for ZIP), DEVELOPMENT.md (setup, scripts), README.md (overview, quick start), CHANGELOG.md, SECURITY.md stub, COURSE-FORMAT.md stub. Dependency analysis: one table in ARCHITECTURE.md with package, version, size, why. Risks section: Pyodide size/load time, worker termination, CSP with wasm, GitHub API rate limits, IndexedDB quota. Mark nothing as implemented.\n\n[2026-11-15T13:19:56-05:00] plan (sonnet): create ARCHITECTURE/DEVELOPMENT/README/CHANGELOG/SECURITY/COURSE-FORMAT, extend DECISIONS\n\n[2026-11-15T13:20:22-05:00] done (sonnet): 6 docs created, DECISIONS.md extended; testStrategy passes\n\n[2026-11-15T13:21:00-05:00] done by sonnet; verified (builder also edited task details text; harmless)",
         "testStrategy": "ls ARCHITECTURE.md DECISIONS.md DEVELOPMENT.md README.md CHANGELOG.md SECURITY.md COURSE-FORMAT.md; grep -c '^## ' ARCHITECTURE.md >= 5",
         "subtasks": []
       },
@@ -1437,7 +1437,7 @@
         }
       ],
       "created": "2026-11-15",
-      "updated": "2026-11-15T13:19:47-05:00"
+      "updated": "2026-11-15T13:21:00-05:00"
     }
   }
 }

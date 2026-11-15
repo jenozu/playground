@@ -3,14 +3,14 @@
 Generated from `.taskmaster/tasks/tasks.json` (the source of truth). Never edit by hand; regenerate with
 `python .taskmaster/render_tasks_md.py`.
 
-**Progress: 2/62 tasks done.**
+**Progress: 3/62 tasks done.**
 
 ## Phase 0 - Foundation
 
 - [x] **1. Scaffold Vite + React + TypeScript + Tailwind app at repo root**  
   A running empty app with lint, typecheck, unit test and build scripts.  
   _Test:_ npm run lint && npm run typecheck && npx vitest run && npm run build all exit 0
-- [ ] **2. Write architecture proposal and project docs skeleton** _(after 1)_  
+- [x] **2. Write architecture proposal and project docs skeleton** _(after 1)_  
   PRD phase-0 deliverables: architecture, dependency analysis, risks, docs files.  
   _Test:_ ls ARCHITECTURE.md DECISIONS.md DEVELOPMENT.md README.md CHANGELOG.md SECURITY.md COURSE-FORMAT.md; grep -c '^## ' ARCHITECTURE.md >= 5
 - [x] **3. Create source folder layout and shared domain types** _(after 1)_  
