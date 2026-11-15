@@ -348,7 +348,7 @@
         ],
         "human": false,
         "review": false,
-        "details": "≥1024px: three panels. 768-1023px: lesson panel collapsible, editor/output switchable. <768px: tab bar Lesson | Code | Output, one visible at a time, controls stay reachable. Keep editor state when switching tabs (hide, don't unmount).",
+        "details": "≥1024px: three panels. 768-1023px: lesson panel collapsible, editor/output switchable. <768px: tab bar Lesson | Code | Output, one visible at a time, controls stay reachable. Keep editor state when switching tabs (hide, don't unmount).\n\n[2026-11-15T18:40:58-05:00] note: depends on 15 which is blocked on npm install (human-checklist)",
         "testStrategy": "e2e at 390x844 and 820x1180: tabs switch views, editor text survives a tab switch, no horizontal scroll",
         "subtasks": []
       },
@@ -1437,7 +1437,7 @@
         }
       ],
       "created": "2026-11-15",
-      "updated": "2026-11-15T18:40:57-05:00"
+      "updated": "2026-11-15T18:40:58-05:00"
     }
   }
 }

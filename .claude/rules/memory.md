@@ -19,10 +19,10 @@ Never update it per task.
 ---
 
 ## Now (overwrite each time, max 6 lines)
-- Phase 1 complete (tasks 8-12) on branch `phase-0`, not merged: no GitHub remote yet.
-- Next: human does Phase 0 tasks 5 (remote) and 6, then deliver PR; then `/run-phase 2`.
+- Phase 2: tasks 13, 14, 16 done on branch `phase-0` (no remote, not merged). 15 blocked on npm install of codemirror (denied).
+- Human: run install on human-checklist (Task 15), then `/run-phase 2` to finish 15, 17, 18. Also tasks 5, 6 still open.
 - In progress: none.
-- Manual checks waiting: task 10 theme (eyes-on, see manual-checks.md).
+- Manual checks waiting: none.
 
 ## Facts (stable, max 15 lines)
 - Dev machine: Windows 11 + Git Bash, Node 22, Python 3.12 (harness scripts only).
