@@ -19,8 +19,8 @@ Never update it per task.
 ---
 
 ## Now (overwrite each time, max 6 lines)
-- Phase 2: tasks 13, 14, 16 done on branch `phase-0` (no remote, not merged). 15 blocked on npm install of codemirror (denied).
-- Human: run install on human-checklist (Task 15), then `/run-phase 2` to finish 15, 17, 18. Also tasks 5, 6 still open.
+- Phase 2: tasks 13, 14, 16 done on branch `phase-0` (pushed to origin, no PR yet). 15 blocked on npm install of codemirror (denied).
+- Human: run install on human-checklist (Task 15), then `/run-phase 2` to finish 15, 17, 18. Task 6 (screenshot) still open.
 - In progress: none.
 - Manual checks waiting: none.
 
