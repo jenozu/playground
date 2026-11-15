@@ -6,9 +6,11 @@ import CoursesPage from '../../features/courses/pages/CoursesPage'
 import PracticePage from '../../features/practice/pages/PracticePage'
 import ProjectsPage from '../../features/projects/pages/ProjectsPage'
 import ProgressPage from '../../features/progress/pages/ProgressPage'
+import LessonPage from '../../features/lesson/pages/LessonPage'
 import SettingsPage from '../../features/settings/pages/SettingsPage'
 
 export const routes = [
+  { path: '/courses/:courseId/lessons/:lessonId', element: <LessonPage /> },
   {
     path: '/',
     element: <AppLayout />,

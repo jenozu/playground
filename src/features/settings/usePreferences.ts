@@ -15,7 +15,7 @@ export const DEFAULT_PREFERENCES: Preferences = {
   fontSize: 14,
   fontFamily: 'JetBrains Mono, monospace',
   practiceLanguage: 'python',
-  panelWidths: [25, 40, 35],
+  panelWidths: [33, 34, 33],
 }
 
 const ID = 'app'

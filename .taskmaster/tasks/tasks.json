@@ -268,7 +268,7 @@
         "id": 13,
         "title": "Lesson page: header and three resizable panels",
         "description": "The Codecademy-style layout: lesson 33% · editor 34% · output 33%, draggable, persisted (PRD 4.1-4.3, 4.6).",
-        "status": "pending",
+        "status": "done",
         "priority": "medium",
         "phase": 2,
         "complexity": 5,
@@ -277,7 +277,7 @@
         ],
         "human": false,
         "review": false,
-        "details": "Route /courses/:courseId/lessons/:lessonId. react-resizable-panels with drag handles, min 20% / max 60% per panel, 'restore default layout' action, widths saved via preferences (debounced). Compact header: app nav back link, course/lesson title, course and lesson progress indicators (placeholder values), settings link. Full viewport height, no page scroll.",
+        "details": "Route /courses/:courseId/lessons/:lessonId. react-resizable-panels with drag handles, min 20% / max 60% per panel, 'restore default layout' action, widths saved via preferences (debounced). Compact header: app nav back link, course/lesson title, course and lesson progress indicators (placeholder values), settings link. Full viewport height, no page scroll.\n\n[2026-11-15T18:24:32-05:00] built LessonPage (react-resizable-panels v4), route outside AppLayout, default panelWidths 33/34/33, e2e passes\n\n[2026-11-15T18:27:59-05:00] done by sonnet; verified",
         "testStrategy": "e2e/lesson-layout.spec.ts: three panels visible at 1440px with widths ~33/34/33 (±3%); dragging a handle changes widths; reload keeps them; restore resets",
         "subtasks": []
       },
@@ -1437,7 +1437,7 @@
         }
       ],
       "created": "2026-11-15",
-      "updated": "2026-11-15T18:12:26-05:00"
+      "updated": "2026-11-15T18:27:59-05:00"
     }
   }
 }
