@@ -37,7 +37,7 @@
         "id": 3,
         "title": "Create source folder layout and shared domain types",
         "description": "src/ folders and the TypeScript interfaces every later phase builds on.",
-        "status": "pending",
+        "status": "done",
         "priority": "medium",
         "phase": 0,
         "complexity": 3,
@@ -46,7 +46,7 @@
         ],
         "human": false,
         "review": false,
-        "details": "Folders per PRD 18.2 (only create those used; add index.ts barrels sparingly). src/types/course.ts: Course, Module, Lesson (type: reading|coding|guided|multiple-choice|debugging|project|review), Exercise, Hint. src/types/execution.ts: ExecutionResult {success, output, errors, executionTime, table?}, ExecutionEngine {initialize, execute, stop, reset, dispose} per PRD 10.2, TestResult {name, passed, expected?, actual?, error?}. No runtime code beyond types. A type-only test file is not needed.",
+        "details": "Folders per PRD 18.2 (only create those used; add index.ts barrels sparingly). src/types/course.ts: Course, Module, Lesson (type: reading|coding|guided|multiple-choice|debugging|project|review), Exercise, Hint. src/types/execution.ts: ExecutionResult {success, output, errors, executionTime, table?}, ExecutionEngine {initialize, execute, stop, reset, dispose} per PRD 10.2, TestResult {name, passed, expected?, actual?, error?}. No runtime code beyond types. A type-only test file is not needed.\n\n[2026-11-15T13:19:08-05:00] plan (haiku): src/types/course.ts (new) Course/Module/Lesson/Exercise/Hint/LessonType; src/types/execution.ts (new) ExecutionResult/ExecutionEngine/TestResult; no barrels, no runtime code. Built. typecheck exit 0, eslint exit 0 on both files, vitest run exit 0 (1 existing test). Not marked done; phase-runner verifies.\n\n[2026-11-15T13:19:47-05:00] done by haiku; verified",
         "testStrategy": "npm run typecheck exits 0 and `ls src/types/course.ts src/types/execution.ts`",
         "subtasks": []
       },
@@ -1437,7 +1437,7 @@
         }
       ],
       "created": "2026-11-15",
-      "updated": "2026-11-15T13:18:35-05:00"
+      "updated": "2026-11-15T13:19:47-05:00"
     }
   }
 }
