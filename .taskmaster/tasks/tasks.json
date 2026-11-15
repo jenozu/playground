@@ -160,7 +160,7 @@
         ],
         "human": false,
         "review": true,
-        "details": "src/storage/indexeddb/db.ts with `idb`: DB name 'coding-academy', version 1, stores: preferences, courses, courseFiles, progress, code, notes, bookmarks, practiceSessions, attempts. src/storage/repositories/*.ts: small typed repos (get/put/list/delete) behind interfaces so a server DB can replace them later. Upgrade function written so future versions add stores without dropping data. Handle storage errors (quota, private mode) with a typed error the UI can show. Tests with fake-indexeddb.",
+        "details": "src/storage/indexeddb/db.ts with `idb`: DB name 'coding-academy', version 1, stores: preferences, courses, courseFiles, progress, code, notes, bookmarks, practiceSessions, attempts. src/storage/repositories/*.ts: small typed repos (get/put/list/delete) behind interfaces so a server DB can replace them later. Upgrade function written so future versions add stores without dropping data. Handle storage errors (quota, private mode) with a typed error the UI can show. Tests with fake-indexeddb.\n\n[2026-11-15T17:49:34-05:00] blocked: builder-sonnet could not npm install idb / fake-indexeddb (permission denied). Needs owner to approve or run the install.",
         "testStrategy": "npx vitest run src/storage passes (fake-indexeddb)",
         "subtasks": []
       },
@@ -1437,7 +1437,7 @@
         }
       ],
       "created": "2026-11-15",
-      "updated": "2026-11-15T13:22:54-05:00"
+      "updated": "2026-11-15T17:49:34-05:00"
     }
   }
 }

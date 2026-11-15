@@ -19,8 +19,9 @@ Never update it per task.
 ---
 
 ## Now (overwrite each time, max 6 lines)
-- Phase 0 agent work done (tasks 1-4, 7) on branch `phase-0`, not merged: no GitHub remote yet.
-- Next: human does tasks 5 (remote) and 6 (screenshot), then deliver phase-0 PR; then `/run-phase 1`.
+- Phase 1 blocked at task 8: `idb` and `fake-indexeddb` not installed; npm install was permission-denied.
+- Human: run `npm i idb && npm i -D fake-indexeddb` (commit package files), then `/run-phase 1`.
+- Phase 0 PR still unmerged (no GitHub remote).
 - In progress: none.
 - Manual checks waiting: none.
 
