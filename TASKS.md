@@ -3,7 +3,7 @@
 Generated from `.taskmaster/tasks/tasks.json` (the source of truth). Never edit by hand; regenerate with
 `python .taskmaster/render_tasks_md.py`.
 
-**Progress: 9/62 tasks done.**
+**Progress: 10/62 tasks done.**
 
 ## Phase 0 - Foundation
 
@@ -43,7 +43,7 @@ Generated from `.taskmaster/tasks/tasks.json` (the source of truth). Never edit 
 - [x] **11. Dashboard and My Courses page layouts with empty states** _(after 9)_  
   Pages render their sections with empty states before real data exists (PRD 5.2, 5.3).  
   _Test:_ Vitest render tests for CourseCard and empty states; e2e dashboard + My Courses render without console errors
-- [ ] **12. Phase 1 gate: lint, types, tests and build pass** _(after 8, 9, 10, 11)_  
+- [x] **12. Phase 1 gate: lint, types, tests and build pass** _(after 8, 9, 10, 11)_  
   Free script check that phase 1 leaves the repo green.  
   _Test:_ python .taskmaster/run_checks.py run --only 12
 

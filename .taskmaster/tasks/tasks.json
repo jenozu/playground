@@ -220,7 +220,7 @@
         "id": 12,
         "title": "Phase 1 gate: lint, types, tests and build pass",
         "description": "Free script check that phase 1 leaves the repo green.",
-        "status": "pending",
+        "status": "done",
         "priority": "high",
         "phase": 1,
         "complexity": 3,
@@ -260,7 +260,7 @@
             "test"
           ]
         ],
-        "details": "Runs lint, tsc, vitest, vite build and Playwright e2e. A failure goes to a builder with the output tail.",
+        "details": "Runs lint, tsc, vitest, vite build and Playwright e2e. A failure goes to a builder with the output tail.\n\n[2026-11-15T18:11:23-05:00] script check FAILED: `npx playwright test` exit 1 (expected 0); details in .claude/tmp/checks/12.log\n\n[2026-11-15T18:11:48-05:00] fix (haiku): playwright.config.ts - baseURL and webServer moved to port 5199 (--port 5199 --strictPort), reuseExistingServer false. Cause: unrelated app on 5173 was reused by e2e. npx playwright test -> 7 passed, exit 0 (log .claude/tmp/e2e-12.log). Nothing killed on 5173.\n\n[2026-11-15T18:12:26-05:00] script check passed: 5 command(s), 24.5s, no model used",
         "testStrategy": "python .taskmaster/run_checks.py run --only 12",
         "subtasks": []
       },
@@ -1437,7 +1437,7 @@
         }
       ],
       "created": "2026-11-15",
-      "updated": "2026-11-15T18:09:54-05:00"
+      "updated": "2026-11-15T18:12:26-05:00"
     }
   }
 }
