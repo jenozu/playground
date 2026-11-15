@@ -168,7 +168,7 @@
         "id": 9,
         "title": "App shell, routing and main navigation",
         "description": "Six top-level pages reachable from a nav: Dashboard, My Courses, Practice, Projects, Progress, Settings.",
-        "status": "pending",
+        "status": "done",
         "priority": "medium",
         "phase": 1,
         "complexity": 4,
@@ -177,7 +177,7 @@
         ],
         "human": false,
         "review": false,
-        "details": "react-router (data router). src/app/routing/routes.tsx, src/components/layout/AppLayout.tsx with sidebar nav (collapses to a top bar + menu under 768px), placeholder pages in src/features/*/pages. Projects page says 'coming later' (PRD 16 is future). 404 route. Accessible nav (nav landmark, aria-current).",
+        "details": "react-router (data router). src/app/routing/routes.tsx, src/components/layout/AppLayout.tsx with sidebar nav (collapses to a top bar + menu under 768px), placeholder pages in src/features/*/pages. Projects page says 'coming later' (PRD 16 is future). 404 route. Accessible nav (nav landmark, aria-current).\n\n[2026-11-15T18:00:45-05:00] plan (sonnet): routes.tsx, AppLayout, 6 pages + NotFound, App uses RouterProvider; e2e/nav.spec.ts\n\n[2026-11-15T18:03:23-05:00] done: router shell + 6 pages + 404; vitest/lint/build pass; playwright nav passes on port 5199 (5173 occupied by an unrelated 'Fit Boo' dev server, not killed)\n\n[2026-11-15T18:04:16-05:00] done by sonnet; verified (e2e on temp port 5199 because unrelated app on 5173)",
         "testStrategy": "e2e/nav.spec.ts: each nav link opens its page at 1440px and at 390px; npx playwright test e2e/nav.spec.ts passes",
         "subtasks": []
       },
@@ -1437,7 +1437,7 @@
         }
       ],
       "created": "2026-11-15",
-      "updated": "2026-11-15T17:58:28-05:00"
+      "updated": "2026-11-15T18:04:16-05:00"
     }
   }
 }

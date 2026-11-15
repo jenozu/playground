@@ -3,7 +3,7 @@
 Generated from `.taskmaster/tasks/tasks.json` (the source of truth). Never edit by hand; regenerate with
 `python .taskmaster/render_tasks_md.py`.
 
-**Progress: 6/62 tasks done.**
+**Progress: 7/62 tasks done.**
 
 ## Phase 0 - Foundation
 
@@ -34,7 +34,7 @@ Generated from `.taskmaster/tasks/tasks.json` (the source of truth). Never edit 
 - [x] **8. Storage layer: IndexedDB database and repository interfaces** _(after 3)_  
   One place that owns persistence, so UI never touches IndexedDB (PRD 13.5, 18.3).  
   _Test:_ npx vitest run src/storage passes (fake-indexeddb)
-- [ ] **9. App shell, routing and main navigation** _(after 1)_  
+- [x] **9. App shell, routing and main navigation** _(after 1)_  
   Six top-level pages reachable from a nav: Dashboard, My Courses, Practice, Projects, Progress, Settings.  
   _Test:_ e2e/nav.spec.ts: each nav link opens its page at 1440px and at 390px; npx playwright test e2e/nav.spec.ts passes
 - [ ] **10. Settings page with persisted preferences and dark/light theme** _(after 8, 9)_  
