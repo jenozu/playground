@@ -3,7 +3,7 @@
 Generated from `.taskmaster/tasks/tasks.json` (the source of truth). Never edit by hand; regenerate with
 `python .taskmaster/render_tasks_md.py`.
 
-**Progress: 15/62 tasks done.**
+**Progress: 16/62 tasks done.**
 
 ## Phase 0 - Foundation
 
@@ -55,7 +55,7 @@ Generated from `.taskmaster/tasks/tasks.json` (the source of truth). Never edit 
 - [x] **14. Independent panel scrolling and lesson controls bar** _(after 13)_  
   Each panel scrolls on its own; Prev/Next/Run/Submit/Reset/Save/Clear controls exist (PRD 4.4, 4.7).  
   _Test:_ e2e: scrolling the lesson panel leaves editor and output scrollTop unchanged; Run shows simulated output; Clear empties it
-- [ ] **15. CodeMirror 6 editor component** _(after 13)_  
+- [x] **15. CodeMirror 6 editor component** _(after 13)_  
   Centre-panel editor with highlighting, line numbers, autoindent, autocomplete, undo/redo and file tabs (PRD 9.1-9.3).  
   _Test:_ Vitest: editor mounts and onChange fires; e2e: type in editor, undo restores previous text
 - [x] **16. Output/terminal panel component** _(after 13, 3)_  

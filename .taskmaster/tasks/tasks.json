@@ -300,7 +300,7 @@
         "id": 15,
         "title": "CodeMirror 6 editor component",
         "description": "Centre-panel editor with highlighting, line numbers, autoindent, autocomplete, undo/redo and file tabs (PRD 9.1-9.3).",
-        "status": "pending",
+        "status": "done",
         "priority": "medium",
         "phase": 2,
         "complexity": 5,
@@ -309,7 +309,7 @@
         ],
         "human": false,
         "review": false,
-        "details": "src/components/editor/CodeEditor.tsx wrapping @codemirror/* (basicSetup pieces, lang-sql, lang-python, lang-javascript), controlled value/onChange, language prop, font size/font from preferences, dark/light theme. FileTabs component: list of files, active file, onSelect; single file used for now but API supports many (open/create/switch/reset one file later). Don't recreate the editor on every render (use a ref).\n\n[2026-11-15T18:36:14-05:00] BLOCKED: npm install of codemirror packages denied by permission system; queued on human-checklist; retry after human installs\n\n[2026-11-15T19:22:29-05:00] human ran codemirror npm install; all 8 packages in package.json + node_modules. Unblocked.",
+        "details": "src/components/editor/CodeEditor.tsx wrapping @codemirror/* (basicSetup pieces, lang-sql, lang-python, lang-javascript), controlled value/onChange, language prop, font size/font from preferences, dark/light theme. FileTabs component: list of files, active file, onSelect; single file used for now but API supports many (open/create/switch/reset one file later). Don't recreate the editor on every render (use a ref).\n\n[2026-11-15T18:36:14-05:00] BLOCKED: npm install of codemirror packages denied by permission system; queued on human-checklist; retry after human installs\n\n[2026-11-15T19:22:29-05:00] human ran codemirror npm install; all 8 packages in package.json + node_modules. Unblocked.\n\n[2026-11-15T19:32:08-05:00] plan (sonnet): src/components/editor/CodeEditor.tsx, FileTabs.tsx, CodeEditor.test.tsx - EditorView in ref, compartments for lang/theme\n\n[2026-11-15T19:33:05-05:00] built CodeEditor+FileTabs+tests; vitest/tsc/lint pass. oneDark skipped (theme pkg not installed), simple dark theme instead\n\n[2026-11-15T19:33:50-05:00] escalate sonnet→opus: verifier FAIL, no undo test, no e2e (editor not mounted anywhere)\n\n[2026-11-15T19:34:33-05:00] plan (opus): CodeEditor.tsx (+onRun Mod-Enter, aria-label Code), CodeEditor.test.tsx (+undo test), LessonPage.tsx (mount FileTabs+CodeEditor in place of textarea), e2e/editor.spec.ts (type, Ctrl+Z)\n\n[2026-11-15T19:36:22-05:00] opus: added undo/redo + Mod-Enter vitest tests; CodeEditor gets onRun (Prec.highest Mod-Enter) + aria-label Code; mounted FileTabs(main.py)+CodeEditor in LessonPage editor panel replacing textarea; e2e/editor.spec.ts types, Ctrl+Z restores, Ctrl+Y redoes. vitest 15/15, tsc, lint, build, playwright 10/10 pass. Note: Windows redo is Ctrl+Y (CM historyKeymap), not Ctrl+Shift+Z.\n\n[2026-11-15T19:37:20-05:00] done by opus, escalated from sonnet; verified; done pending manual check",
         "testStrategy": "Vitest: editor mounts and onChange fires; e2e: type in editor, undo restores previous text",
         "subtasks": []
       },
@@ -1435,7 +1435,7 @@
         }
       ],
       "created": "2026-11-15",
-      "updated": "2026-11-15T19:22:29-05:00"
+      "updated": "2026-11-15T19:37:20-05:00"
     }
   }
 }

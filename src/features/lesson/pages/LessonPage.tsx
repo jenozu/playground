@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { Group, Panel, Separator, type GroupImperativeHandle, type Layout } from 'react-resizable-panels'
 import { DEFAULT_PREFERENCES, usePreferences } from '../../settings/usePreferences'
+import { CodeEditor } from '../../../components/editor/CodeEditor'
+import { FileTabs } from '../../../components/editor/FileTabs'
 
 const IDS = ['lesson', 'editor', 'output']
 const toLayout = (w: number[]): Layout => Object.fromEntries(IDS.map((id, i) => [id, w[i]]))
@@ -71,15 +73,20 @@ ${code}`)
                 <h2 className="font-semibold">{names[i]}</h2>
                 {id === 'lesson' && filler.map((t) => <p key={t}>{t}</p>)}
                 {id === 'editor' && (
-                  <textarea
-                    aria-label="Code"
-                    className="mt-2 h-[200vh] w-full border font-mono dark:bg-slate-800"
-                    value={code}
-                    onChange={(e) => setCode(e.target.value)}
-                    onKeyDown={(e) => {
-                      if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') run()
-                    }}
-                  />
+                  <div className="mt-2 flex h-[calc(100%-2rem)] flex-col border">
+                    <FileTabs files={[{ id: 'main', name: 'main.py' }]} activeId="main" onSelect={() => {}} />
+                    <div className="min-h-0 flex-1">
+                      <CodeEditor
+                        value={code}
+                        onChange={setCode}
+                        onRun={run}
+                        language="python"
+                        fontSize={prefs.fontSize}
+                        fontFamily={prefs.fontFamily}
+                        dark={document.documentElement.classList.contains('dark')}
+                      />
+                    </div>
+                  </div>
                 )}
                 {id === 'output' && (
                   <>
