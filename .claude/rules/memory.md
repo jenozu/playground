@@ -19,10 +19,10 @@ Never update it per task.
 ---
 
 ## Now (overwrite each time, max 6 lines)
-- Phase 4 on branch `phase-4`: task 26 done+committed. 27 (SQL adapter) built by opus, verifier PASS, awaiting reviewer re-review (rate limit hit); work committed as wip.
-- Remaining: 27 close-out, 28, 29, 30, 63 (before 31), 31.
-- Re-run `/run-phase 4` after limit reset (10:10pm Toronto).
-- Manual checks waiting: SQL worker in real browser (task 27).
+- Phase 4 complete (26-31, 63) on branch `phase-4`; PR delivered at phase end. Next: `/run-phase 5` (Python).
+- Human: Task 15 install item and tasks 5, 6 may still be open (see human-checklist).
+- In progress: none.
+- Manual checks waiting: eyes-on for 27, 28, 29, 63 (manual-checks.md).
 
 ## Facts (stable, max 15 lines)
 - Dev machine: Windows 11 + Git Bash, Node 22, Python 3.12 (harness scripts only).
@@ -36,12 +36,14 @@ Never update it per task.
   haiku → sonnet → opus. Manual checks batched per phase.
 
 ## Learned / gotchas (max 15 lines, newest first)
+- Builders may write tests importing uninstalled libs (user-event); vitest then silently shows unchanged count. Check count rises.
+- Phase-2 e2e used a python stub; real engines changed output. Check e2e when adding engines.
 - jsdom pinned 26.1.0 (31.x crashes on Node 22.12); React 18.3.1, TS 5.9, ESLint 9 per DECISIONS.md.
 
 ## Model routing record (update counts at each close-out)
 | Tier | Done first try | Escalated up | Notes |
 |---|---|---|---|
-| haiku | 2 | 0 | |
+| haiku | 3 | 0 | |
 | sonnet | 8 | 1 | task 15 escalated |
 | opus | 1 | 0 | task 15 |
 <!-- If one tier escalates on 3 tasks in a row, the phase-runner escalates to the lead, who may raise that tier's
