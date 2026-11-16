@@ -560,7 +560,7 @@
         "id": 26,
         "title": "Execution manager with lazy-loaded engine registry",
         "description": "UI runs code through one manager that picks and lazy-loads the language adapter (PRD 10.1-10.2, 20.1).",
-        "status": "pending",
+        "status": "done",
         "priority": "medium",
         "phase": 4,
         "complexity": 5,
@@ -570,7 +570,7 @@
         ],
         "human": false,
         "review": true,
-        "details": "src/execution/manager: getEngine(language) → dynamic import of the adapter (separate chunk), initialize once, run(code, opts) with status events (loading/running/done), stop(), reset(). Default timeout from a profile table (sql 5s, python 10s, js 5s). Lesson page Run → manager → OutputPanel. Unknown language → clear error.",
+        "details": "src/execution/manager: getEngine(language) → dynamic import of the adapter (separate chunk), initialize once, run(code, opts) with status events (loading/running/done), stop(), reset(). Default timeout from a profile table (sql 5s, python 10s, js 5s). Lesson page Run → manager → OutputPanel. Unknown language → clear error.\n\n[2026-11-15T20:39:17-05:00] plan (sonnet): new src/execution/manager.ts + manager.test.ts; wire LessonPage run; adapters registered via dynamic import (none exist yet)\n\n[2026-11-15T20:42:10-05:00] sonnet: manager + tests done; LessonPage Run wired (unknown language until adapters exist); e2e text updated; tsc/lint/vitest(60)/build/playwright pass\n\n[2026-11-15T20:49:58-05:00] done by sonnet; verified, reviewer APPROVE",
         "testStrategy": "Vitest with a fake adapter: lazy load called once, timeout produces an error result, stop() calls the adapter",
         "subtasks": []
       },
@@ -1450,7 +1450,7 @@
         }
       ],
       "created": "2026-11-15",
-      "updated": "2026-11-15T20:38:29-05:00"
+      "updated": "2026-11-15T20:49:58-05:00"
     }
   }
 }

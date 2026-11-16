@@ -3,7 +3,7 @@
 Generated from `.taskmaster/tasks/tasks.json` (the source of truth). Never edit by hand; regenerate with
 `python .taskmaster/render_tasks_md.py`.
 
-**Progress: 25/63 tasks done.**
+**Progress: 26/63 tasks done.**
 
 ## Phase 0 - Foundation
 
@@ -94,7 +94,7 @@ Generated from `.taskmaster/tasks/tasks.json` (the source of truth). Never edit 
 
 ## Phase 4 - SQL playground
 
-- [ ] **26. Execution manager with lazy-loaded engine registry** _(after 3, 24)_\
+- [x] **26. Execution manager with lazy-loaded engine registry** _(after 3, 24)_\
   UI runs code through one manager that picks and lazy-loads the language adapter (PRD 10.1-10.2, 20.1).\
   _Test:_ Vitest with a fake adapter: lazy load called once, timeout produces an error result, stop() calls the adapter
 - [ ] **27. SQL adapter: sql.js in a Web Worker** _(after 26)_\

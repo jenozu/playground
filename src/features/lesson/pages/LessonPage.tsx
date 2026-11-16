@@ -1,3 +1,4 @@
+import { run as runCode } from "../../../execution/manager";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import {
@@ -102,14 +103,17 @@ export default function LessonPage() {
   const setCode = (v: string) => setEdit({ key, v });
   const [out, setOut] = useState("");
   const [note, setNote] = useState("");
-  // ponytail: placeholder handlers; real execution/save/submit arrive in later phases
-  const run = () =>
-    setOut(`Simulated output for:
-${code}`);
+  // ponytail: placeholder save/submit; arrive in later phases
+  const run = async () => {
+    const r = await runCode(lesson?.exercise?.type ?? course!.language, code, {
+      onStatus: (s) => s !== "done" && setOut(s === "loading" ? "Loading engine..." : "Running..."),
+    });
+    setOut([r.output, ...r.errors].filter(Boolean).join("\n") || "(no output)");
+  };
   const controls: [string, () => void][] = [
     ["Previous", () => go(-1)],
     ["Next", () => go(1)],
-    ["Run", run],
+    ["Run", () => void run()],
     ["Submit", () => setNote("Submit (placeholder)")],
     ["Reset", () => setCode(starter ?? "")],
     ["Save", () => setNote("Saved (placeholder)")],
@@ -205,7 +209,7 @@ ${code}`);
             <CodeEditor
               value={code}
               onChange={setCode}
-              onRun={run}
+              onRun={() => void run()}
               language={lesson!.exercise?.type ?? course!.language}
               fontSize={prefs.fontSize}
               fontFamily={prefs.fontFamily}
