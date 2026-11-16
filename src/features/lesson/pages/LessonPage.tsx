@@ -113,50 +113,63 @@ export default function LessonPage() {
   const [tables, setTables] = useState<{ columns: string[]; rows: unknown[][] }[]>([]);
   const [note, setNote] = useState("");
   // ponytail: placeholder save/submit; arrive in later phases
-  const [running, setRunning] = useState(false);
+  // one execution at a time: React flushes the state update before the next click, so busy also guards re-entry
+  const [busy, setBusy] = useState(false);
+  const exclusive = async (fn: () => Promise<void>) => {
+    if (busy) return;
+    setBusy(true);
+    try {
+      await fn();
+    } catch (e) {
+      setOut(`Error: ${e instanceof Error ? e.message : String(e)}`);
+    } finally {
+      setBusy(false);
+    }
+  };
   const stop = async () => {
     await stopCode();
     setOut("Execution stopped.");
   };
-  const run = async () => {
-    const lang = lesson?.exercise?.type ?? course!.language;
-    const r = await runCode(lang, code, {
-      onStatus: (s) => {
-        setRunning(s === "running");
-        if (s === "done") return;
-        setTables([]);
-        setOut(s === "loading" ? (lang === "python" ? "Loading Python…" : "Loading engine...") : "Running...");
-      },
-      options: { dataset: text(files?.get(lesson?.exercise?.dataset ?? "")) || undefined },
+  const run = () =>
+    exclusive(async () => {
+      const lang = lesson?.exercise?.type ?? course!.language;
+      const r = await runCode(lang, code, {
+        onStatus: (s) => {
+          if (s === "done") return;
+          setTables([]);
+          setOut(s === "loading" ? (lang === "python" ? "Loading Python…" : "Loading engine...") : "Running...");
+        },
+        options: { dataset: text(files?.get(lesson?.exercise?.dataset ?? "")) || undefined },
+      });
+      const t = r.tables ?? (r.table ? [r.table] : []);
+      setTables(t);
+      setOut([r.output, ...r.errors].filter(Boolean).join("\n") || "(no output)");
     });
-    const t = r.tables ?? (r.table ? [r.table] : []);
-    setTables(t);
-    setOut([r.output, ...r.errors].filter(Boolean).join("\n") || "(no output)");
-  };
-  const submit = async () => {
-    const ex = lesson?.exercise;
-    const tf = testFileSchema.safeParse(JSON.parse(text(files?.get(ex?.tests ?? "")) || "null"));
-    if (!ex || !tf.success) return setOut("No tests for this lesson.");
-    if (tf.data.language === "javascript") return setOut("Submit is not available for this language yet.");
-    const options = { dataset: text(files?.get(ex.dataset ?? "")) || undefined };
-    const results =
-      tf.data.language === "python"
-        ? await evaluatePython(tf.data.tests, code, { exec: (c) => runCode("python", c) })
-        : await evaluateSql(tf.data.tests, code, {
-            reset: () => resetEngine("sql"),
-            exec: (c) => runCode("sql", c, { options }),
-          });
-    const line = (r: (typeof results)[number]) =>
-      `${r.passed ? "PASS" : "FAIL"} ${r.name}` +
-      (r.passed
-        ? ""
-        : tf.data.language === "python" && r.expected === undefined
-          ? `\n  error: ${r.error ?? ""}`
-          : `\n  expected: ${r.expected ?? ""}\n  actual: ${r.actual ?? r.error ?? ""}`);
-    setTables([]);
-    setOut(results.map(line).join("\n"));
-    emitIfPassed(results, window, { courseId, lessonId });
-  };
+  const submit = () =>
+    exclusive(async () => {
+      const ex = lesson?.exercise;
+      const tf = testFileSchema.safeParse(JSON.parse(text(files?.get(ex?.tests ?? "")) || "null"));
+      if (!ex || !tf.success) return setOut("No tests for this lesson.");
+      if (tf.data.language === "javascript") return setOut("Submit is not available for this language yet.");
+      const options = { dataset: text(files?.get(ex.dataset ?? "")) || undefined };
+      const results =
+        tf.data.language === "python"
+          ? await evaluatePython(tf.data.tests, code, { exec: (c) => runCode("python", c) })
+          : await evaluateSql(tf.data.tests, code, {
+              reset: () => resetEngine("sql"),
+              exec: (c) => runCode("sql", c, { options }),
+            });
+      const line = (r: (typeof results)[number]) =>
+        `${r.passed ? "PASS" : "FAIL"} ${r.name}` +
+        (r.passed
+          ? ""
+          : tf.data.language === "python" && r.expected === undefined
+            ? `\n  error: ${r.error ?? ""}`
+            : `\n  expected: ${r.expected ?? ""}\n  actual: ${r.actual ?? r.error ?? ""}`);
+      setTables([]);
+      setOut(results.map(line).join("\n"));
+      emitIfPassed(results, window, { courseId, lessonId });
+    });
   const controls: [string, () => void][] = [
     ["Previous", () => go(-1)],
     ["Next", () => go(1)],
@@ -408,7 +421,7 @@ export default function LessonPage() {
             type="button"
             className="rounded border px-2 py-1 text-sm"
             onClick={fn}
-            disabled={label === "Stop" && !running}
+            disabled={label === "Stop" ? !busy : busy && (label === "Run" || label === "Submit")}
           >
             {label}
           </button>

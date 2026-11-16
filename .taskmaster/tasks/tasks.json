@@ -1421,12 +1421,12 @@
       {
         "title": "Fix: Run disabled while a run is in progress",
         "description": "Corrective for phase 5 (task 33 reviewer finding, parked by mistake). On LessonPage, Run stays enabled during a run, so a second Run clobbers the running flag and Stop gets disabled mid-run. Disable Run (and Submit) while running; Stop stays enabled until the run ends, errors, times out or is stopped.",
-        "status": "pending",
+        "status": "done",
         "priority": "high",
         "dependencies": [
           33
         ],
-        "details": "",
+        "details": "[2026-11-15T22:31:53-05:00] plan (claude-haiku-5-5): LessonPage Run/Submit disable while running; check runner in LessonPage and its test - approach: guard Run handler on running state, disable buttons\n\n[2026-11-15T22:33:30-05:00] done (claude-haiku-5-5): replaced the running flag with a busy state set by an exclusive() wrapper around run and submit; Run and Submit disabled while busy, Stop enabled while busy (it was only enabled during 'running'). Added run-lock test to LessonPage.test.tsx with a gated mock. A ref guard was tried but lint (react-hooks/refs) rejects reading refs in render; state guard is enough for discrete clicks. LessonPage tests 5/5, typecheck and eslint clean on touched files. Not marked done; phase-runner verifies.\n\n[2026-11-15T22:36:32-05:00] done (claude-haiku-5-5): re-indented run/submit exclusive() bodies in LessonPage.tsx (no logic change). exclusive() now catches a rejected run/submit and shows 'Error: <msg>' in output (before, a reject was an unhandled rejection from void run()). Test mock gained stop() (releases a held run, counts calls) and an error switch. LessonPage.test.tsx now 7/7 incl. reject path and Stop-during-run (Run enabled, Stop disabled after). npm run lint, typecheck, full vitest (98/98) pass. Not marked done; phase-runner verifies.\n\n[2026-11-15T22:36:49-05:00] done by haiku; verified (verifier PASS, reject/stop tests added after)",
         "testStrategy": "Vitest on LessonPage: while a run is pending, Run and Submit are disabled and Stop is enabled; after it resolves, rejects or is stopped, Run is enabled and Stop disabled; clicking Run twice fast executes once. npm run lint, typecheck pass.",
         "complexity": 3,
         "phase": 6,
@@ -1480,7 +1480,7 @@
         }
       ],
       "created": "2026-11-15",
-      "updated": "2026-11-15T22:31:26-05:00"
+      "updated": "2026-11-15T22:36:49-05:00"
     }
   }
 }

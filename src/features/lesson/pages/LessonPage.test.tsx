@@ -33,9 +33,26 @@ vi.mock('../../../components/editor/CodeEditor', () => ({
 
 // The SQL engine normally runs in a Web Worker; here run() executes the same core in-process.
 let SQL: SqlJsStatic
+// exec.gate, when set, holds run() open so a test can inspect the page while a run is pending.
+// exec.error, when set, makes run() reject. stop() releases a held run, like the real engine does.
+const exec = vi.hoisted(() => ({
+  gate: undefined as Promise<void> | undefined,
+  release: undefined as (() => void) | undefined,
+  error: undefined as Error | undefined,
+  calls: 0,
+  stops: 0,
+}))
 vi.mock('../../../execution/manager', () => ({
-  run: (_lang: string, code: string, opts: { options?: { dataset?: string } } = {}) =>
-    Promise.resolve(execSql(createDb(SQL, opts.options?.dataset), code)),
+  run: async (_lang: string, code: string, opts: { options?: { dataset?: string } } = {}) => {
+    exec.calls++
+    if (exec.gate) await exec.gate
+    if (exec.error) throw exec.error
+    return execSql(createDb(SQL, opts.options?.dataset), code)
+  },
+  stop: async () => {
+    exec.stops++
+    exec.release?.()
+  },
   reset: () => Promise.resolve(),
 }))
 
@@ -52,6 +69,11 @@ beforeAll(async () => {
 afterEach(() => {
   cleanup()
   vi.restoreAllMocks()
+  exec.gate = undefined
+  exec.release = undefined
+  exec.error = undefined
+  exec.calls = 0
+  exec.stops = 0
 })
 
 const renderLesson = () =>
@@ -104,5 +126,47 @@ describe('LessonPage lesson list', () => {
     renderLesson()
     await screen.findByText('Show solution', { exact: false })
     expect(err.mock.calls.filter((c) => /same key/i.test(c.map(String).join(' ')))).toEqual([])
+  })
+})
+
+describe('LessonPage run lock', () => {
+  it('while a run is pending Run and Submit are disabled and Stop is enabled; all reset after it settles', async () => {
+    let release!: () => void
+    exec.gate = new Promise<void>((r) => (release = r))
+    renderLesson()
+    await runQuery('SELECT * FROM employees')
+    const run = screen.getByRole('button', { name: 'Run' })
+    expect(run).toBeDisabled()
+    expect(screen.getByRole('button', { name: 'Submit' })).toBeDisabled()
+    expect(screen.getByRole('button', { name: 'Stop' })).toBeEnabled()
+    // a second Run while pending (fast double click) must not start a second execution
+    fireEvent.click(run)
+    expect(exec.calls).toBe(1)
+    release()
+    await waitFor(() => expect(screen.getByRole('button', { name: 'Run' })).toBeEnabled())
+    expect(screen.getByRole('button', { name: 'Submit' })).toBeEnabled()
+    expect(screen.getByRole('button', { name: 'Stop' })).toBeDisabled()
+    expect(screen.getByTestId('output-text')).toHaveTextContent('6 row(s)')
+  })
+
+  it('a run that rejects shows the error and frees Run, Submit and Stop', async () => {
+    exec.error = new Error('engine crashed')
+    renderLesson()
+    await runQuery('SELECT * FROM employees')
+    await waitFor(() => expect(screen.getByRole('button', { name: 'Run' })).toBeEnabled())
+    expect(screen.getByRole('button', { name: 'Submit' })).toBeEnabled()
+    expect(screen.getByRole('button', { name: 'Stop' })).toBeDisabled()
+    expect(screen.getByTestId('output-text')).toHaveTextContent('Error: engine crashed')
+  })
+
+  it('Stop during a run releases the run and leaves Run enabled and Stop disabled', async () => {
+    exec.gate = new Promise<void>((r) => (exec.release = r))
+    renderLesson()
+    await runQuery('SELECT * FROM employees')
+    fireEvent.click(screen.getByRole('button', { name: 'Stop' }))
+    expect(exec.stops).toBe(1)
+    await waitFor(() => expect(screen.getByRole('button', { name: 'Run' })).toBeEnabled())
+    expect(screen.getByRole('button', { name: 'Submit' })).toBeEnabled()
+    expect(screen.getByRole('button', { name: 'Stop' })).toBeDisabled()
   })
 })
