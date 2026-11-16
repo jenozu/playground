@@ -403,7 +403,7 @@
         "id": 19,
         "title": "Course manifest schema (zod) and COURSE-FORMAT.md",
         "description": "The formal course.json + lesson file format, validated and documented (PRD 6.3, 7.1-7.5).",
-        "status": "pending",
+        "status": "done",
         "priority": "medium",
         "phase": 3,
         "complexity": 6,
@@ -412,7 +412,7 @@
         ],
         "human": false,
         "review": true,
-        "details": "src/course-system/schema/: zod schemas for course.json (schemaVersion 1, id, title, version, language, description, difficulty, estimatedHours, author/source, prerequisites, resources, modules[{id,title,lessons[{id,title,type,content,estimatedMinutes,exercise?{type,language,starter,tests,solution?,hints?[],dataset?}}]}]) and test files per language (SQL: expected rows / check queries; Python & JS: named assert snippets or expected stdout). IDs: lowercase slug regex. Unknown fields allowed (forward compat). COURSE-FORMAT.md documents every field with the PRD 7.2 example. Changing this format later needs owner approval.",
+        "details": "src/course-system/schema/: zod schemas for course.json (schemaVersion 1, id, title, version, language, description, difficulty, estimatedHours, author/source, prerequisites, resources, modules[{id,title,lessons[{id,title,type,content,estimatedMinutes,exercise?{type,language,starter,tests,solution?,hints?[],dataset?}}]}]) and test files per language (SQL: expected rows / check queries; Python & JS: named assert snippets or expected stdout). IDs: lowercase slug regex. Unknown fields allowed (forward compat). COURSE-FORMAT.md documents every field with the PRD 7.2 example. Changing this format later needs owner approval.\n\n[2026-11-15T19:42:32-05:00] plan (sonnet): src/course-system/schema/{index.ts,schema.test.ts}, COURSE-FORMAT.md; zod schemas\n\n[2026-11-15T19:43:51-05:00] done (sonnet): zod schema + tests (15 pass), COURSE-FORMAT.md, zod added to package.json; tsc+eslint clean. Test file uses eslint-disabled any for mutation helpers.\n\n[2026-11-15T19:44:51-05:00] escalate sonnet→opus: reviewer CHANGES NEEDED (url scheme, duplicate ids, any in tests)\n\n[2026-11-15T19:45:10-05:00] plan (opus): schema/index.ts + schema.test.ts - http(s)-only resource urls, superRefine dup module/lesson ids, typed path helpers instead of any\n\n[2026-11-15T19:46:07-05:00] opus fix: resources url http(s)-only (refine on URL.protocol), superRefine duplicate module/lesson ids (path at duplicate), tests typed via path helpers (no any). 18 vitest pass, tsc + eslint clean.\n\n[2026-11-15T19:46:56-05:00] done by opus, escalated from sonnet; verified, review findings fixed",
         "testStrategy": "npx vitest run src/course-system/schema: valid PRD example passes, each required-field omission fails with a path in the message",
         "subtasks": []
       },
@@ -1435,7 +1435,7 @@
         }
       ],
       "created": "2026-11-15",
-      "updated": "2026-11-15T19:40:43-05:00"
+      "updated": "2026-11-15T19:46:56-05:00"
     }
   }
 }

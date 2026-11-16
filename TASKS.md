@@ -3,7 +3,7 @@
 Generated from `.taskmaster/tasks/tasks.json` (the source of truth). Never edit by hand; regenerate with
 `python .taskmaster/render_tasks_md.py`.
 
-**Progress: 18/62 tasks done.**
+**Progress: 19/62 tasks done.**
 
 ## Phase 0 - Foundation
 
@@ -70,7 +70,7 @@ Generated from `.taskmaster/tasks/tasks.json` (the source of truth). Never edit 
 
 ## Phase 3 - Course system
 
-- [ ] **19. Course manifest schema (zod) and COURSE-FORMAT.md** _(after 3)_  
+- [x] **19. Course manifest schema (zod) and COURSE-FORMAT.md** _(after 3)_  
   The formal course.json + lesson file format, validated and documented (PRD 6.3, 7.1-7.5).  
   _Test:_ npx vitest run src/course-system/schema: valid PRD example passes, each required-field omission fails with a path in the message
 - [ ] **20. Manifest parser and validator over a virtual file map** _(after 19)_  
