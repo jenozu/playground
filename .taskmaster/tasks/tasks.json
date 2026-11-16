@@ -687,7 +687,7 @@
             "test"
           ]
         ],
-        "details": "Runs lint, tsc, vitest, vite build and Playwright e2e. A failure goes to a builder with the output tail.\n\n[2026-11-15T21:36:03-05:00] script check FAILED: `npx playwright test` exit 1 (expected 0); details in .claude/tmp/checks/31.log\n\n[2026-11-15T21:38:51-05:00] script check passed: 5 command(s), 53.6s, no model used\n\n[2026-11-15T21:39:10-05:00] fix: e2e/lesson-responsive.spec.ts phone test moved from python stub to SQL lesson (python engine arrives phase 5); assertions kept, output now exact '6 row(s)'. Tablet test unchanged.",
+        "details": "Runs lint, tsc, vitest, vite build and Playwright e2e. A failure goes to a builder with the output tail.\n\n[2026-11-15T21:36:03-05:00] script check FAILED: `npx playwright test` exit 1 (expected 0); details in .claude/tmp/checks/31.log\n\n[2026-11-15T21:38:51-05:00] script check passed: 5 command(s), 53.6s, no model used\n\n[2026-11-15T21:39:10-05:00] fix: e2e/lesson-responsive.spec.ts phone test moved from python stub to SQL lesson (python engine arrives phase 5); assertions kept, output now exact '6 row(s)'. Tablet test unchanged.\n\n[2026-11-15T21:39:40-05:00] PR #3 merged",
         "testStrategy": "python .taskmaster/run_checks.py run --only 31",
         "subtasks": []
       },
@@ -1450,7 +1450,7 @@
         }
       ],
       "created": "2026-11-15",
-      "updated": "2026-11-15T21:39:10-05:00"
+      "updated": "2026-11-15T21:39:40-05:00"
     }
   }
 }
