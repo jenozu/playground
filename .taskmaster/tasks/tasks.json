@@ -748,7 +748,7 @@
         "id": 35,
         "title": "Python sample course e2e and Pyodide limitations doc",
         "description": "The Python course works end to end; limits are documented (PRD 10.4).",
-        "status": "pending",
+        "status": "done",
         "priority": "medium",
         "phase": 5,
         "complexity": 3,
@@ -758,7 +758,7 @@
         ],
         "human": false,
         "review": false,
-        "details": "e2e/python-lesson.spec.ts: open python-fundamentals coding lesson, run, submit wrong, submit right. Add 'Python limitations' section to ARCHITECTURE.md (no native-dependency packages, no input() blocking, no network/filesystem persistence, first load size).",
+        "details": "e2e/python-lesson.spec.ts: open python-fundamentals coding lesson, run, submit wrong, submit right. Add 'Python limitations' section to ARCHITECTURE.md (no native-dependency packages, no input() blocking, no network/filesystem persistence, first load size).\n\n[2026-11-15T22:28:18-05:00] added e2e/python-lesson.spec.ts, python phone test restored in lesson-responsive, ARCHITECTURE.md Python limitations; tests pass\n\n[2026-11-15T22:29:00-05:00] done by sonnet; verified; python phone e2e restored alongside SQL",
         "testStrategy": "npx playwright test e2e/python-lesson.spec.ts passes; grep -q 'Python limitations' ARCHITECTURE.md",
         "subtasks": []
       },
@@ -1465,7 +1465,7 @@
         }
       ],
       "created": "2026-11-15",
-      "updated": "2026-11-15T22:23:09-05:00"
+      "updated": "2026-11-15T22:29:01-05:00"
     }
   }
 }

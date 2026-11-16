@@ -7,7 +7,21 @@ const noHScroll = async (page: Page) =>
 
 test.describe('phone', () => {
   test.use({ viewport: { width: 390, height: 844 } })
-  test('tabs switch, editor text survives, no h-scroll', async ({ page }) => {
+  test('python lesson: run shows output in Output tab, no h-scroll', async ({ page }) => {
+    test.setTimeout(150_000)
+    await page.goto(URL)
+    await page.getByRole('tab', { name: 'Code' }).click()
+    const code = page.getByLabel('Code')
+    await code.click()
+    await page.keyboard.press('Control+a')
+    await page.keyboard.press('Delete')
+    await page.keyboard.type("print('hi')")
+    await page.getByRole('button', { name: 'Run', exact: true }).click()
+    await page.getByRole('tab', { name: 'Output' }).click()
+    await expect(page.getByTestId('output-text')).toHaveText('hi', { timeout: 120_000 })
+    await noHScroll(page)
+  })
+  test('sql lesson: tabs switch, editor text survives, no h-scroll', async ({ page }) => {
     await page.goto(SQL_URL)
     await page.getByRole('tab', { name: 'Code' }).click()
     await expect(page.getByTestId('panel-editor')).toBeVisible()

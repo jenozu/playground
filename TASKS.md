@@ -3,7 +3,7 @@
 Generated from `.taskmaster/tasks/tasks.json` (the source of truth). Never edit by hand; regenerate with
 `python .taskmaster/render_tasks_md.py`.
 
-**Progress: 36/64 tasks done.**
+**Progress: 37/64 tasks done.**
 
 ## Phase 0 - Foundation
 
@@ -127,7 +127,7 @@ Generated from `.taskmaster/tasks/tasks.json` (the source of truth). Never edit 
 - [x] **34. Python exercise evaluation** _(after 32, 28)_\
   Submit runs Python tests and reports each assert (PRD 12.2).\
   _Test:_ Vitest/e2e: add(a,b) example from PRD 12.2 passes 3 tests; a wrong implementation shows which assert failed
-- [ ] **35. Python sample course e2e and Pyodide limitations doc** _(after 34, 33)_\
+- [x] **35. Python sample course e2e and Pyodide limitations doc** _(after 34, 33)_\
   The Python course works end to end; limits are documented (PRD 10.4).\
   _Test:_ npx playwright test e2e/python-lesson.spec.ts passes; grep -q 'Python limitations' ARCHITECTURE.md
 - [ ] **36. Phase 5 gate: lint, types, tests and build pass** _(after 32, 33, 34, 35)_\
