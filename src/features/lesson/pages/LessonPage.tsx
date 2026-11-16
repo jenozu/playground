@@ -24,6 +24,14 @@ import type { CourseFiles } from "../../../course-system/parser";
 import { Hints, Solution, shouldReset } from "../ExerciseHelpers";
 import { Entry } from "../../../components/terminal/OutputPanel";
 import { LessonMarkdown } from "../../lesson-viewer/LessonMarkdown";
+import { coursePercent } from "../../learning-progress/calc";
+import {
+  completeLesson,
+  completedIds,
+  listLessonProgress,
+  recordAttempt,
+  touchLesson,
+} from "../../learning-progress/service";
 
 const IDS = ["lesson", "editor", "output"];
 const toLayout = (w: number[]): Layout =>
@@ -100,6 +108,14 @@ export default function LessonPage() {
     const t = flat[idx + d];
     if (t) void navigate(`/courses/${courseId}/lessons/${t.l.id}`);
   };
+  const [done, setDone] = useState<Set<string>>(new Set());
+  const refreshProgress = async () =>
+    setDone(completedIds(await listLessonProgress(courseId), courseId ?? ""));
+  useEffect(() => {
+    if (!courseId || !lessonId) return;
+    void touchLesson(courseId, lessonId).then(refreshProgress).catch(() => {});
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [courseId, lessonId]);
   const { prefs, loaded, update } = usePreferences();
   const isDark = useIsDark();
   const group = useRef<GroupImperativeHandle>(null);
@@ -169,6 +185,10 @@ export default function LessonPage() {
       setTables([]);
       setOut(results.map(line).join("\n"));
       emitIfPassed(results, window, { courseId, lessonId });
+      if (courseId && lessonId) {
+        await recordAttempt(courseId, lessonId, results);
+        await refreshProgress();
+      }
     });
   const controls: [string, () => void][] = [
     ["Previous", () => go(-1)],
@@ -182,6 +202,9 @@ export default function LessonPage() {
         if (shouldReset(code, starter ?? "")) setCode(starter ?? "");
       },
     ],
+    ...(!lesson?.exercise && !done.has(lessonId ?? "")
+      ? [["Mark complete", () => void completeLesson(courseId!, lessonId!).then(refreshProgress)] as [string, () => void]]
+      : []),
     ["Save", () => setNote("Saved (placeholder)")],
     ["Clear output", () => (setOut(""), setTables([]))],
   ];
@@ -323,8 +346,8 @@ export default function LessonPage() {
         <h1 className="flex-1 truncate font-semibold">
           {course.title} / {lesson.title}
         </h1>
-        <span className="text-sm">Course 0%</span>
-        <span className="text-sm">Lesson 0%</span>
+        <span className="text-sm">Course {coursePercent(course, done)}%</span>
+        <span className="text-sm">Lesson {done.has(lesson.id) ? 100 : 0}%</span>
         <button
           type="button"
           className="rounded border px-2 py-1 text-sm"

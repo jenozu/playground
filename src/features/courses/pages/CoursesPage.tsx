@@ -1,4 +1,6 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { coursePercent } from '../../learning-progress/calc'
+import { listLessonProgress, completedIds, lastPosition } from '../../learning-progress/service'
 import CourseCard, { type CourseSummary } from '../components/CourseCard'
 import { useCourses } from '../../../course-system/registry/useCourses'
 import { remove } from '../../../course-system/registry'
@@ -50,12 +52,15 @@ export function RegisteredCoursesPage() {
   const { courses, loading, error } = useCourses()
   const [removed, setRemoved] = useState<string[]>([])
   const [note, setNote] = useState('')
+  const [prog, setProg] = useState<Awaited<ReturnType<typeof listLessonProgress>>>([])
+  useEffect(() => { listLessonProgress().then(setProg, () => {}) }, [])
   if (loading) return <p>Loading courses…</p>
   if (error) return <p role="alert">Could not load courses: {error}</p>
   const summaries: CourseSummary[] = courses.filter((r) => !removed.includes(r.id)).map(({ course: c }) => ({
     id: c.id, title: c.title, language: c.language, description: c.description, difficulty: c.difficulty,
     moduleCount: c.modules.length, lessonCount: c.modules.reduce((n, m) => n + m.lessons.length, 0),
-    completionPercent: 0, // progress wiring is phase 6
+    completionPercent: coursePercent(c, completedIds(prog, c.id)),
+    lastAccessed: lastPosition(prog, c.id)?.lastAccessed.slice(0, 10),
   }))
   const onRemove = async (id: string) => {
     if (!window.confirm('Remove this course? Your progress, notes and saved code are kept.')) return

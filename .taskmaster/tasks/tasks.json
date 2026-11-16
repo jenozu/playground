@@ -814,7 +814,7 @@
         "id": 37,
         "title": "Progress tracking: completion, attempts, last position",
         "description": "Lesson completion, exercise attempts and last accessed lesson persist by stable IDs (PRD 8.4, 13.1).",
-        "status": "pending",
+        "status": "done",
         "priority": "medium",
         "phase": 6,
         "complexity": 5,
@@ -824,7 +824,7 @@
         ],
         "human": false,
         "review": true,
-        "details": "src/features/learning-progress/: progress service over repos. Complete on passing Submit, or 'Mark complete' button for reading lessons. Record every attempt (time, passed, test counts). Track last course/lesson/activity date. Derived: module/course completion, success rate. Pure calculation functions unit-tested. Header progress indicators use real data.",
+        "details": "src/features/learning-progress/: progress service over repos. Complete on passing Submit, or 'Mark complete' button for reading lessons. Record every attempt (time, passed, test counts). Track last course/lesson/activity date. Derived: module/course completion, success rate. Pure calculation functions unit-tested. Header progress indicators use real data.\n\n[2026-11-15T22:37:29-05:00] plan (sonnet): src/features/learning-progress/{calc,service,useProgress}.ts + tests; wire LessonPage (submit, mark complete, header %, last position) and CoursesPage\n\n[2026-11-15T22:38:34-05:00] done: calc/service/tests, LessonPage + CoursesPage wired, e2e/progress.spec.ts passes; vitest 101 pass, lint+tsc clean\n\n[2026-11-15T22:40:18-05:00] done by sonnet; verified, reviewer APPROVE",
         "testStrategy": "Vitest: completion % math, module complete when all lessons done; e2e: submit passing → reload → lesson shows completed",
         "subtasks": []
       },
@@ -1480,7 +1480,7 @@
         }
       ],
       "created": "2026-11-15",
-      "updated": "2026-11-15T22:36:49-05:00"
+      "updated": "2026-11-15T22:40:18-05:00"
     }
   }
 }
