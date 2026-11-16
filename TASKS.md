@@ -3,7 +3,7 @@
 Generated from `.taskmaster/tasks/tasks.json` (the source of truth). Never edit by hand; regenerate with
 `python .taskmaster/render_tasks_md.py`.
 
-**Progress: 38/64 tasks done.**
+**Progress: 38/65 tasks done.**
 
 ## Phase 0 - Foundation
 
@@ -160,6 +160,9 @@ Generated from `.taskmaster/tasks/tasks.json` (the source of truth). Never edit 
 - [ ] **43. Phase 6 gate: lint, types, tests and build pass** _(after 37, 38, 39, 40, 41, 42)_\
   Free script check that phase 6 leaves the repo green.\
   _Test:_ python .taskmaster/run_checks.py run --only 43
+- [ ] **65. Fix: Run disabled while a run is in progress** _(after 33)_\
+  Corrective for phase 5 (task 33 reviewer finding, parked by mistake). On LessonPage, Run stays enabled during a run, so a second Run clobbers the running flag and Stop gets disabled mid-run. Disable Run (and Submit) while running; Stop stays enabled until the run ends, errors, times out or is stopped.\
+  _Test:_ Vitest on LessonPage: while a run is pending, Run and Submit are disabled and Stop is enabled; after it resolves, rejects or is stopped, Run is enabled and Stop disabled; clicking Run twice fast executes once. npm run lint, typecheck pass.
 
 ## Phase 7 - Course import
 

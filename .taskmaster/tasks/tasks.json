@@ -1417,6 +1417,21 @@
         "phase": 5,
         "id": 64,
         "subtasks": []
+      },
+      {
+        "title": "Fix: Run disabled while a run is in progress",
+        "description": "Corrective for phase 5 (task 33 reviewer finding, parked by mistake). On LessonPage, Run stays enabled during a run, so a second Run clobbers the running flag and Stop gets disabled mid-run. Disable Run (and Submit) while running; Stop stays enabled until the run ends, errors, times out or is stopped.",
+        "status": "pending",
+        "priority": "high",
+        "dependencies": [
+          33
+        ],
+        "details": "",
+        "testStrategy": "Vitest on LessonPage: while a run is pending, Run and Submit are disabled and Stop is enabled; after it resolves, rejects or is stopped, Run is enabled and Stop disabled; clicking Run twice fast executes once. npm run lint, typecheck pass.",
+        "complexity": 3,
+        "phase": 6,
+        "id": 65,
+        "subtasks": []
       }
     ],
     "metadata": {
@@ -1465,7 +1480,7 @@
         }
       ],
       "created": "2026-11-15",
-      "updated": "2026-11-15T22:30:54-05:00"
+      "updated": "2026-11-15T22:31:26-05:00"
     }
   }
 }
