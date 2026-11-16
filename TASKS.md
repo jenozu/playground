@@ -3,7 +3,7 @@
 Generated from `.taskmaster/tasks/tasks.json` (the source of truth). Never edit by hand; regenerate with
 `python .taskmaster/render_tasks_md.py`.
 
-**Progress: 17/62 tasks done.**
+**Progress: 18/62 tasks done.**
 
 ## Phase 0 - Foundation
 
@@ -64,7 +64,7 @@ Generated from `.taskmaster/tasks/tasks.json` (the source of truth). Never edit 
 - [x] **17. Tablet and mobile layouts for the lesson page** _(after 14, 15, 16)_  
   Lesson panel collapses on tablet; tabs for Lesson/Code/Output on phones (PRD 4.5).  
   _Test:_ e2e at 390x844 and 820x1180: tabs switch views, editor text survives a tab switch, no horizontal scroll
-- [ ] **18. Phase 2 gate: lint, types, tests and build pass** _(after 13, 14, 15, 16, 17)_  
+- [x] **18. Phase 2 gate: lint, types, tests and build pass** _(after 13, 14, 15, 16, 17)_  
   Free script check that phase 2 leaves the repo green.  
   _Test:_ python .taskmaster/run_checks.py run --only 18
 
