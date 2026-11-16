@@ -3,7 +3,7 @@
 Generated from `.taskmaster/tasks/tasks.json` (the source of truth). Never edit by hand; regenerate with
 `python .taskmaster/render_tasks_md.py`.
 
-**Progress: 37/64 tasks done.**
+**Progress: 38/64 tasks done.**
 
 ## Phase 0 - Foundation
 
@@ -130,7 +130,7 @@ Generated from `.taskmaster/tasks/tasks.json` (the source of truth). Never edit 
 - [x] **35. Python sample course e2e and Pyodide limitations doc** _(after 34, 33)_\
   The Python course works end to end; limits are documented (PRD 10.4).\
   _Test:_ npx playwright test e2e/python-lesson.spec.ts passes; grep -q 'Python limitations' ARCHITECTURE.md
-- [ ] **36. Phase 5 gate: lint, types, tests and build pass** _(after 32, 33, 34, 35)_\
+- [x] **36. Phase 5 gate: lint, types, tests and build pass** _(after 32, 33, 34, 35)_\
   Free script check that phase 5 leaves the repo green.\
   _Test:_ python .taskmaster/run_checks.py run --only 36
 - [x] **64. Fix: SQL results render as a table in the Output panel** _(after 30)_\
