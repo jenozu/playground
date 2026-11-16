@@ -3,7 +3,7 @@
 Generated from `.taskmaster/tasks/tasks.json` (the source of truth). Never edit by hand; regenerate with
 `python .taskmaster/render_tasks_md.py`.
 
-**Progress: 16/62 tasks done.**
+**Progress: 17/62 tasks done.**
 
 ## Phase 0 - Foundation
 
@@ -61,7 +61,7 @@ Generated from `.taskmaster/tasks/tasks.json` (the source of truth). Never edit 
 - [x] **16. Output/terminal panel component** _(after 13, 3)_  
   Shows stdout, tables, errors with raw details, status, time and pass/fail (PRD 11).  
   _Test:_ Vitest render tests for each entry type incl. a 1000-row table
-- [ ] **17. Tablet and mobile layouts for the lesson page** _(after 14, 15, 16)_  
+- [x] **17. Tablet and mobile layouts for the lesson page** _(after 14, 15, 16)_  
   Lesson panel collapses on tablet; tabs for Lesson/Code/Output on phones (PRD 4.5).  
   _Test:_ e2e at 390x844 and 820x1180: tabs switch views, editor text survives a tab switch, no horizontal scroll
 - [ ] **18. Phase 2 gate: lint, types, tests and build pass** _(after 13, 14, 15, 16, 17)_  

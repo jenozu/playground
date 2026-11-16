@@ -335,7 +335,7 @@
         "id": 17,
         "title": "Tablet and mobile layouts for the lesson page",
         "description": "Lesson panel collapses on tablet; tabs for Lesson/Code/Output on phones (PRD 4.5).",
-        "status": "pending",
+        "status": "done",
         "priority": "medium",
         "phase": 2,
         "complexity": 5,
@@ -346,7 +346,7 @@
         ],
         "human": false,
         "review": false,
-        "details": "≥1024px: three panels. 768-1023px: lesson panel collapsible, editor/output switchable. <768px: tab bar Lesson | Code | Output, one visible at a time, controls stay reachable. Keep editor state when switching tabs (hide, don't unmount).\n\n[2026-11-15T18:40:58-05:00] note: depends on 15 which is blocked on npm install (human-checklist)",
+        "details": "≥1024px: three panels. 768-1023px: lesson panel collapsible, editor/output switchable. <768px: tab bar Lesson | Code | Output, one visible at a time, controls stay reachable. Keep editor state when switching tabs (hide, don't unmount).\n\n[2026-11-15T18:40:58-05:00] note: depends on 15 which is blocked on npm install (human-checklist)\n\n[2026-11-15T19:39:36-05:00] done by sonnet; verified",
         "testStrategy": "e2e at 390x844 and 820x1180: tabs switch views, editor text survives a tab switch, no horizontal scroll",
         "subtasks": []
       },
@@ -1435,7 +1435,7 @@
         }
       ],
       "created": "2026-11-15",
-      "updated": "2026-11-15T19:37:20-05:00"
+      "updated": "2026-11-15T19:39:36-05:00"
     }
   }
 }
