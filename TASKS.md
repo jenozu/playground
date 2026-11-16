@@ -3,7 +3,7 @@
 Generated from `.taskmaster/tasks/tasks.json` (the source of truth). Never edit by hand; regenerate with
 `python .taskmaster/render_tasks_md.py`.
 
-**Progress: 41/65 tasks done.**
+**Progress: 42/65 tasks done.**
 
 ## Phase 0 - Foundation
 
@@ -145,7 +145,7 @@ Generated from `.taskmaster/tasks/tasks.json` (the source of truth). Never edit 
 - [x] **38. Autosave and restore working code** _(after 37)_\
   User code survives leaving the lesson and reloading; starter stays resettable (PRD 9.5, 13.2).\
   _Test:_ e2e: edit code, reload, code restored; Reset brings back starter
-- [ ] **39. Continue Learning and live dashboard** _(after 38)_\
+- [x] **39. Continue Learning and live dashboard** _(after 38)_\
   Dashboard resumes the last lesson and shows real progress (PRD 5.2, 13.3).\
   _Test:_ e2e: complete lesson 1 → dashboard shows it recently completed and recommends lesson 2; Continue opens the last lesson
 - [ ] **40. Progress page** _(after 37)_\

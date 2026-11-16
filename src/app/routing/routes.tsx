@@ -1,7 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom'
 import AppLayout from '../../components/layout/AppLayout'
 import NotFoundPage from '../../components/layout/NotFoundPage'
-import DashboardPage from '../../features/dashboard/pages/DashboardPage'
+import LiveDashboard from '../../features/dashboard/pages/LiveDashboard'
 import { RegisteredCoursesPage } from '../../features/courses/pages/CoursesPage'
 import CourseDetailPage from '../../features/courses/pages/CourseDetailPage'
 import PracticePage from '../../features/practice/pages/PracticePage'
@@ -16,7 +16,7 @@ export const routes = [
     path: '/',
     element: <AppLayout />,
     children: [
-      { index: true, element: <DashboardPage /> },
+      { index: true, element: <LiveDashboard /> },
       { path: 'courses', element: <RegisteredCoursesPage /> },
       { path: 'courses/:courseId', element: <CourseDetailPage /> },
       { path: 'practice', element: <PracticePage /> },

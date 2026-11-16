@@ -849,7 +849,7 @@
         "id": 39,
         "title": "Continue Learning and live dashboard",
         "description": "Dashboard resumes the last lesson and shows real progress (PRD 5.2, 13.3).",
-        "status": "pending",
+        "status": "done",
         "priority": "medium",
         "phase": 6,
         "complexity": 5,
@@ -858,7 +858,7 @@
         ],
         "human": false,
         "review": false,
-        "details": "Wire dashboard sections to progress data: Continue Learning (last course + lesson, opens with saved code), active courses, overall progress, recently completed lessons, recommended next lesson (first incomplete in last course), practice link. Course cards show completion % and last accessed.",
+        "details": "Wire dashboard sections to progress data: Continue Learning (last course + lesson, opens with saved code), active courses, overall progress, recently completed lessons, recommended next lesson (first incomplete in last course), practice link. Course cards show completion % and last accessed.\n\n[2026-11-15T22:46:44-05:00] built LiveDashboard + e2e/dashboard.spec.ts; tests, lint, build pass\n\n[2026-11-15T22:48:30-05:00] done by sonnet; verified",
         "testStrategy": "e2e: complete lesson 1 → dashboard shows it recently completed and recommends lesson 2; Continue opens the last lesson",
         "subtasks": []
       },
@@ -1480,7 +1480,7 @@
         }
       ],
       "created": "2026-11-15",
-      "updated": "2026-11-15T22:44:54-05:00"
+      "updated": "2026-11-15T22:48:30-05:00"
     }
   }
 }
