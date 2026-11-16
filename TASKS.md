@@ -3,68 +3,68 @@
 Generated from `.taskmaster/tasks/tasks.json` (the source of truth). Never edit by hand; regenerate with
 `python .taskmaster/render_tasks_md.py`.
 
-**Progress: 0/62 tasks done.**
+**Progress: 18/62 tasks done.**
 
 ## Phase 0 - Foundation
 
-- [ ] **1. Scaffold Vite + React + TypeScript + Tailwind app at repo root**  
+- [x] **1. Scaffold Vite + React + TypeScript + Tailwind app at repo root**  
   A running empty app with lint, typecheck, unit test and build scripts.  
   _Test:_ npm run lint && npm run typecheck && npx vitest run && npm run build all exit 0
-- [ ] **2. Write architecture proposal and project docs skeleton** _(after 1)_  
+- [x] **2. Write architecture proposal and project docs skeleton** _(after 1)_  
   PRD phase-0 deliverables: architecture, dependency analysis, risks, docs files.  
   _Test:_ ls ARCHITECTURE.md DECISIONS.md DEVELOPMENT.md README.md CHANGELOG.md SECURITY.md COURSE-FORMAT.md; grep -c '^## ' ARCHITECTURE.md >= 5
-- [ ] **3. Create source folder layout and shared domain types** _(after 1)_  
+- [x] **3. Create source folder layout and shared domain types** _(after 1)_  
   src/ folders and the TypeScript interfaces every later phase builds on.  
   _Test:_ npm run typecheck exits 0 and `ls src/types/course.ts src/types/execution.ts`
-- [ ] **4. Set up Playwright with a smoke e2e test** _(after 1)_  
+- [x] **4. Set up Playwright with a smoke e2e test** _(after 1)_  
   Browser tests run against the Vite dev server.  
   _Test:_ npx playwright test exits 0
-- [ ] **5. Create the GitHub repository and add it as origin** **[HUMAN]**  
+- [x] **5. Create the GitHub repository and add it as origin** **[HUMAN]**  
   Phases deliver as PRs, which needs a GitHub remote.  
   _Test:_ git remote get-url origin prints a github.com URL
-- [ ] **6. Add the Codecademy reference screenshot to the repo** **[HUMAN]**  
+- [x] **6. Add the Codecademy reference screenshot to the repo** **[HUMAN]**  
   The layout reference the PRD refers to (22.5) must be in the repo for visual checks.  
   _Test:_ ls docs/design/reference.png
-- [ ] **7. Phase 0 gate: lint, types, tests and build pass** _(after 1, 2, 3, 4)_  
+- [x] **7. Phase 0 gate: lint, types, tests and build pass** _(after 1, 2, 3, 4)_  
   Free script check that phase 0 leaves the repo green.  
   _Test:_ python .taskmaster/run_checks.py run --only 7
 
 ## Phase 1 - App shell
 
-- [ ] **8. Storage layer: IndexedDB database and repository interfaces** _(after 3)_  
+- [x] **8. Storage layer: IndexedDB database and repository interfaces** _(after 3)_  
   One place that owns persistence, so UI never touches IndexedDB (PRD 13.5, 18.3).  
   _Test:_ npx vitest run src/storage passes (fake-indexeddb)
-- [ ] **9. App shell, routing and main navigation** _(after 1)_  
+- [x] **9. App shell, routing and main navigation** _(after 1)_  
   Six top-level pages reachable from a nav: Dashboard, My Courses, Practice, Projects, Progress, Settings.  
   _Test:_ e2e/nav.spec.ts: each nav link opens its page at 1440px and at 390px; npx playwright test e2e/nav.spec.ts passes
-- [ ] **10. Settings page with persisted preferences and dark/light theme** _(after 8, 9)_  
+- [x] **10. Settings page with persisted preferences and dark/light theme** _(after 8, 9)_  
   Theme, editor font size/font and default practice language persist across reloads (PRD 19.3-19.4).  
   _Test:_ Vitest for usePreferences; e2e: switch to dark, reload, still dark
-- [ ] **11. Dashboard and My Courses page layouts with empty states** _(after 9)_  
+- [x] **11. Dashboard and My Courses page layouts with empty states** _(after 9)_  
   Pages render their sections with empty states before real data exists (PRD 5.2, 5.3).  
   _Test:_ Vitest render tests for CourseCard and empty states; e2e dashboard + My Courses render without console errors
-- [ ] **12. Phase 1 gate: lint, types, tests and build pass** _(after 8, 9, 10, 11)_  
+- [x] **12. Phase 1 gate: lint, types, tests and build pass** _(after 8, 9, 10, 11)_  
   Free script check that phase 1 leaves the repo green.  
   _Test:_ python .taskmaster/run_checks.py run --only 12
 
 ## Phase 2 - Three-panel lesson UI
 
-- [ ] **13. Lesson page: header and three resizable panels** _(after 10)_  
+- [x] **13. Lesson page: header and three resizable panels** _(after 10)_  
   The Codecademy-style layout: lesson 33% · editor 34% · output 33%, draggable, persisted (PRD 4.1-4.3, 4.6).  
   _Test:_ e2e/lesson-layout.spec.ts: three panels visible at 1440px with widths ~33/34/33 (±3%); dragging a handle changes widths; reload keeps them; restore resets
-- [ ] **14. Independent panel scrolling and lesson controls bar** _(after 13)_  
+- [x] **14. Independent panel scrolling and lesson controls bar** _(after 13)_  
   Each panel scrolls on its own; Prev/Next/Run/Submit/Reset/Save/Clear controls exist (PRD 4.4, 4.7).  
   _Test:_ e2e: scrolling the lesson panel leaves editor and output scrollTop unchanged; Run shows simulated output; Clear empties it
-- [ ] **15. CodeMirror 6 editor component** _(after 13)_  
+- [x] **15. CodeMirror 6 editor component** _(after 13)_  
   Centre-panel editor with highlighting, line numbers, autoindent, autocomplete, undo/redo and file tabs (PRD 9.1-9.3).  
   _Test:_ Vitest: editor mounts and onChange fires; e2e: type in editor, undo restores previous text
-- [ ] **16. Output/terminal panel component** _(after 13, 3)_  
+- [x] **16. Output/terminal panel component** _(after 13, 3)_  
   Shows stdout, tables, errors with raw details, status, time and pass/fail (PRD 11).  
   _Test:_ Vitest render tests for each entry type incl. a 1000-row table
-- [ ] **17. Tablet and mobile layouts for the lesson page** _(after 14, 15, 16)_  
+- [x] **17. Tablet and mobile layouts for the lesson page** _(after 14, 15, 16)_  
   Lesson panel collapses on tablet; tabs for Lesson/Code/Output on phones (PRD 4.5).  
   _Test:_ e2e at 390x844 and 820x1180: tabs switch views, editor text survives a tab switch, no horizontal scroll
-- [ ] **18. Phase 2 gate: lint, types, tests and build pass** _(after 13, 14, 15, 16, 17)_  
+- [x] **18. Phase 2 gate: lint, types, tests and build pass** _(after 13, 14, 15, 16, 17)_  
   Free script check that phase 2 leaves the repo green.  
   _Test:_ python .taskmaster/run_checks.py run --only 18
 
