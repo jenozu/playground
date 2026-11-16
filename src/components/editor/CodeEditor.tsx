@@ -6,6 +6,7 @@ import { indentWithTab } from '@codemirror/commands'
 import { sql } from '@codemirror/lang-sql'
 import { python } from '@codemirror/lang-python'
 import { javascript } from '@codemirror/lang-javascript'
+import { oneDark } from '@codemirror/theme-one-dark'
 
 export type EditorLanguage = 'sql' | 'python' | 'javascript'
 
@@ -40,7 +41,7 @@ export function CodeEditor({ value, onChange, language, fontSize = 14, fontFamil
       '&': { height: '100%', fontSize: `${fontSize}px` },
       '.cm-scroller': { fontFamily: fontFamily ?? 'ui-monospace, monospace' },
     }),
-    EditorView.theme({ '&': { backgroundColor: dark ? '#1e293b' : '#fff', color: dark ? '#e2e8f0' : '#0f172a' } }, { dark }),
+    dark ? oneDark : EditorView.theme({ '&': { backgroundColor: '#fff', color: '#0f172a' } }, { dark: false }),
   ]
 
   useEffect(() => {

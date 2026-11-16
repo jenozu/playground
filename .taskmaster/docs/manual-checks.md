@@ -37,3 +37,6 @@ with numbered steps and the expected result.
 1. Edit code, Reset, decline confirm: edits stay; accept: starter returns.
 2. Show hint repeatedly: hints appear one at a time.
 3. Show solution + confirm: appears read-only; editor text unchanged.
+
+### Task 63 - Editor dark theme (2026-11-15)
+1. Open a lesson, toggle theme in Settings. Expected: editor recolors live (oneDark), text and undo history kept.

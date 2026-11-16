@@ -14,6 +14,7 @@ import {
   DEFAULT_PREFERENCES,
   usePreferences,
 } from "../../settings/usePreferences";
+import { useIsDark } from "../../settings/useIsDark";
 import { CodeEditor } from "../../../components/editor/CodeEditor";
 import { FileTabs } from "../../../components/editor/FileTabs";
 import { useCourses } from "../../../course-system/registry/useCourses";
@@ -98,6 +99,7 @@ export default function LessonPage() {
     if (t) void navigate(`/courses/${courseId}/lessons/${t.l.id}`);
   };
   const { prefs, loaded, update } = usePreferences();
+  const isDark = useIsDark();
   const group = useRef<GroupImperativeHandle>(null);
   const timer = useRef<ReturnType<typeof setTimeout>>(undefined);
   useEffect(() => () => clearTimeout(timer.current), []);
@@ -241,7 +243,7 @@ export default function LessonPage() {
               language={lesson!.exercise?.type ?? course!.language}
               fontSize={prefs.fontSize}
               fontFamily={prefs.fontFamily}
-              dark={document.documentElement.classList.contains("dark")}
+              dark={isDark}
             />
           </div>
         </div>

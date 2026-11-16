@@ -1391,12 +1391,12 @@
       {
         "title": "Editor dark theme via @codemirror/theme-one-dark, live theme switching",
         "description": "Owner-approved (2026-11-15, PRD decision log). Install @codemirror/theme-one-dark; add a shared theme hook so the CodeMirror editor switches light/dark live when the app theme changes, without remounting or losing editor content.",
-        "status": "pending",
+        "status": "done",
         "priority": "low",
         "dependencies": [
           15
         ],
-        "details": "npm install --loglevel=error --no-audit --no-fund @codemirror/theme-one-dark. Reuse the app's existing theme state; reconfigure the editor theme through a CodeMirror Compartment. Keep undo history and content across switches.\n\n[2026-11-15T20:38:29-05:00] added via adapt: owner approved theme-one-dark 2026-11-15",
+        "details": "npm install --loglevel=error --no-audit --no-fund @codemirror/theme-one-dark. Reuse the app's existing theme state; reconfigure the editor theme through a CodeMirror Compartment. Keep undo history and content across switches.\n\n[2026-11-15T20:38:29-05:00] added via adapt: owner approved theme-one-dark 2026-11-15\n\n[2026-11-15T21:33:10-05:00] plan (sonnet): CodeEditor.tsx look compartment adds oneDark when dark; LessonPage dark reactive; test\n\n[2026-11-15T21:34:20-05:00] done: oneDark in look compartment when dark, useIsDark hook (MutationObserver) used by LessonPage; test + lint/tsc/build pass\n\n[2026-11-15T21:35:04-05:00] done by sonnet; verified. Note: useIsDark MutationObserver path not unit-tested",
         "testStrategy": "Vitest: toggling app theme reconfigures the editor (oneDark extension present in dark, absent in light) and keeps the doc text and undo history. npm run lint, typecheck, build pass.",
         "complexity": 4,
         "phase": 4,
@@ -1450,7 +1450,7 @@
         }
       ],
       "created": "2026-11-15",
-      "updated": "2026-11-15T21:29:28-05:00"
+      "updated": "2026-11-15T21:35:04-05:00"
     }
   }
 }
