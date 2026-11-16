@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import CourseCard, { type CourseSummary } from '../components/CourseCard'
 import { useCourses } from '../../../course-system/registry/useCourses'
+import { remove } from '../../../course-system/registry'
 
-export default function CoursesPage({ courses = [] }: { courses?: CourseSummary[] }) {
+export default function CoursesPage({ courses = [], onRemove, onRefresh }: { courses?: CourseSummary[]; onRemove?: (id: string) => void; onRefresh?: () => void }) {
   const [q, setQ] = useState('')
   const [language, setLanguage] = useState('')
   const [difficulty, setDifficulty] = useState('')
@@ -28,6 +29,9 @@ export default function CoursesPage({ courses = [] }: { courses?: CourseSummary[
           <option value="">All difficulties</option>
           {diffs.map((d) => <option key={d}>{d}</option>)}
         </select>
+        {onRefresh && (
+          <button type="button" className="rounded border px-2 py-1" onClick={onRefresh}>Refresh</button>
+        )}
       </div>
       {courses.length === 0 ? (
         <p className="mt-4 text-slate-600">No courses yet. Imported courses will appear here.</p>
@@ -35,7 +39,7 @@ export default function CoursesPage({ courses = [] }: { courses?: CourseSummary[
         <p className="mt-4 text-slate-600">No courses match your filters.</p>
       ) : (
         <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {shown.map((c) => <CourseCard key={c.id} course={c} />)}
+          {shown.map((c) => <CourseCard key={c.id} course={c} onRemove={onRemove} />)}
         </div>
       )}
     </section>
@@ -44,12 +48,25 @@ export default function CoursesPage({ courses = [] }: { courses?: CourseSummary[
 
 export function RegisteredCoursesPage() {
   const { courses, loading, error } = useCourses()
+  const [removed, setRemoved] = useState<string[]>([])
+  const [note, setNote] = useState('')
   if (loading) return <p>Loading courses…</p>
   if (error) return <p role="alert">Could not load courses: {error}</p>
-  const summaries: CourseSummary[] = courses.map(({ course: c }) => ({
+  const summaries: CourseSummary[] = courses.filter((r) => !removed.includes(r.id)).map(({ course: c }) => ({
     id: c.id, title: c.title, language: c.language, description: c.description, difficulty: c.difficulty,
     moduleCount: c.modules.length, lessonCount: c.modules.reduce((n, m) => n + m.lessons.length, 0),
     completionPercent: 0, // progress wiring is phase 6
   }))
-  return <CoursesPage courses={summaries} />
+  const onRemove = async (id: string) => {
+    if (!window.confirm('Remove this course? Your progress, notes and saved code are kept.')) return
+    await remove(id)
+    setRemoved((r) => [...r, id])
+  }
+  // ponytail: refresh is a placeholder until course update/import (phase 7)
+  return (
+    <>
+      <CoursesPage courses={summaries} onRemove={(id) => void onRemove(id)} onRefresh={() => setNote('Refresh is not available yet.')} />
+      {note && <p role="status" className="mt-2 text-sm">{note}</p>}
+    </>
+  )
 }

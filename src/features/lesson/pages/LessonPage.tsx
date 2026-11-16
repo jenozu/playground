@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import {
   Group,
   Panel,
@@ -13,6 +13,10 @@ import {
 } from "../../settings/usePreferences";
 import { CodeEditor } from "../../../components/editor/CodeEditor";
 import { FileTabs } from "../../../components/editor/FileTabs";
+import { useCourses } from "../../../course-system/registry/useCourses";
+import { getFiles } from "../../../course-system/registry";
+import type { CourseFiles } from "../../../course-system/parser";
+import { LessonMarkdown } from "../../lesson-viewer/LessonMarkdown";
 
 const IDS = ["lesson", "editor", "output"];
 const toLayout = (w: number[]): Layout =>
@@ -36,13 +40,66 @@ function useMode() {
   return m;
 }
 
+const text = (v: string | Uint8Array | undefined) =>
+  typeof v === "string" ? v : v ? new TextDecoder().decode(v) : undefined;
+
 export default function LessonPage() {
   const { courseId, lessonId } = useParams();
+  const navigate = useNavigate();
+  const { courses, loading, error } = useCourses();
+  const course = courses.find((r) => r.id === courseId)?.course;
+  // result is keyed by course id so a stale course never shows
+  const [res, setRes] = useState<{ id: string; files?: CourseFiles }>();
+  useEffect(() => {
+    let live = true;
+    if (course && courseId)
+      getFiles(courseId).then(
+        (f) => live && setRes({ id: courseId, files: f ?? undefined }),
+        () => live && setRes({ id: courseId }),
+      );
+    return () => {
+      live = false;
+    };
+  }, [course, courseId]);
+  const cur = res?.id === courseId ? res : undefined;
+  const files = cur?.files;
+  const filesErr = !!cur && !cur.files;
+  const flat = (course?.modules ?? []).flatMap((m) =>
+    m.lessons.map((l) => ({ m, l })),
+  );
+  const idx = flat.findIndex((x) => x.l.id === lessonId);
+  const lesson = flat[idx]?.l;
+  const markdown = text(files?.get(lesson?.content ?? ""));
+  const starter = text(files?.get(lesson?.exercise?.starter ?? ""));
+  // blob URLs for binary course files (images); revoked when the course changes or on unmount
+  const assets = useMemo(() => {
+    const m = new Map<string, string>();
+    files?.forEach((v, k) => {
+      if (typeof v !== "string") m.set(k, URL.createObjectURL(new Blob([v as BlobPart])));
+    });
+    return m;
+  }, [files]);
+  useEffect(() => () => assets.forEach((u) => URL.revokeObjectURL(u)), [assets]);
+  const resolveAsset = (src: string) => {
+    const parts = (lesson?.content ?? "").split("/").slice(0, -1);
+    for (const p of src.split("/")) {
+      if (p === "..") parts.pop();
+      else if (p !== ".") parts.push(p);
+    }
+    return assets.get(parts.join("/")) ?? assets.get(src);
+  };
+  const go = (d: number) => {
+    const t = flat[idx + d];
+    if (t) void navigate(`/courses/${courseId}/lessons/${t.l.id}`);
+  };
   const { prefs, loaded, update } = usePreferences();
   const group = useRef<GroupImperativeHandle>(null);
   const timer = useRef<ReturnType<typeof setTimeout>>(undefined);
   useEffect(() => () => clearTimeout(timer.current), []);
-  const [code, setCode] = useState('print("hello")');
+  const key = `${courseId}/${lessonId}`;
+  const [edit, setEdit] = useState<{ key: string; v: string }>();
+  const code = edit?.key === key ? edit.v : (starter ?? "");
+  const setCode = (v: string) => setEdit({ key, v });
   const [out, setOut] = useState("");
   const [note, setNote] = useState("");
   // ponytail: placeholder handlers; real execution/save/submit arrive in later phases
@@ -50,11 +107,11 @@ export default function LessonPage() {
     setOut(`Simulated output for:
 ${code}`);
   const controls: [string, () => void][] = [
-    ["Previous", () => setNote("Previous lesson (placeholder)")],
-    ["Next", () => setNote("Next lesson (placeholder)")],
+    ["Previous", () => go(-1)],
+    ["Next", () => go(1)],
     ["Run", run],
     ["Submit", () => setNote("Submit (placeholder)")],
-    ["Reset", () => setCode('print("hello")')],
+    ["Reset", () => setCode(starter ?? "")],
     ["Save", () => setNote("Saved (placeholder)")],
     ["Clear output", () => setOut("")],
   ];
@@ -76,8 +133,23 @@ ${code}`);
   ) as [string, string][];
   const filler = Array.from(
     { length: 60 },
-    (_, i) => `Placeholder lesson paragraph ${i + 1}.`,
+    (_, i) => `Placeholder output padding ${i + 1}.`,
   );
+
+  if (loading || (course && !files && !filesErr)) return <p className="p-4">Loading lesson…</p>;
+  if (error || filesErr)
+    return (
+      <p role="alert" className="p-4">
+        Could not load this course{error ? `: ${error}` : "."} <Link to="/courses" className="underline">Courses</Link>
+      </p>
+    );
+  if (!course || !lesson)
+    return (
+      <section className="p-4">
+        <h1 className="text-2xl font-bold">Lesson not found</h1>
+        <Link to="/courses" className="underline">Back to My Courses</Link>
+      </section>
+    );
 
   const panel = (id: string, i: number, hide = false) => (
     <section
@@ -87,11 +159,45 @@ ${code}`);
       className={`h-full overflow-auto p-3 ${hide ? "hidden" : ""}`}
     >
       <h2 className="font-semibold">{names[i]}</h2>
-      {id === "lesson" && filler.map((t) => <p key={t}>{t}</p>)}
+      {id === "lesson" && (
+        <>
+          <details className="mb-3 rounded border p-2">
+            <summary className="cursor-pointer text-sm">Lessons</summary>
+            {course!.modules.map((m) => (
+              <div key={m.id} className="mt-2">
+                <p className="text-sm font-semibold">{m.title}</p>
+                <ul className="ml-4 list-disc text-sm">
+                  {m.lessons.map((l) => (
+                    <li key={l.id}>
+                      <Link
+                        to={`/courses/${courseId}/lessons/${l.id}`}
+                        aria-current={l.id === lessonId ? "page" : undefined}
+                        className={l.id === lessonId ? "font-bold underline" : "underline"}
+                      >
+                        {l.title}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </details>
+          {markdown === undefined ? (
+            <p role="alert">This lesson&apos;s content file is missing.</p>
+          ) : (
+            <LessonMarkdown
+              markdown={markdown}
+              title={lesson!.title}
+              estimatedMinutes={lesson!.estimatedMinutes}
+              resolveAsset={resolveAsset}
+            />
+          )}
+        </>
+      )}
       {id === "editor" && (
         <div className="mt-2 flex h-[calc(100%-2rem)] flex-col border">
           <FileTabs
-            files={[{ id: "main", name: "main.py" }]}
+            files={[{ id: "main", name: lesson!.exercise?.starter.split("/").pop() ?? "main" }]}
             activeId="main"
             onSelect={() => {}}
           />
@@ -100,7 +206,7 @@ ${code}`);
               value={code}
               onChange={setCode}
               onRun={run}
-              language="python"
+              language={lesson!.exercise?.type ?? course!.language}
               fontSize={prefs.fontSize}
               fontFamily={prefs.fontFamily}
               dark={document.documentElement.classList.contains("dark")}
@@ -140,7 +246,7 @@ ${code}`);
           &larr; Courses
         </Link>
         <h1 className="flex-1 truncate font-semibold">
-          {courseId} / {lessonId}
+          {course.title} / {lesson.title}
         </h1>
         <span className="text-sm">Course 0%</span>
         <span className="text-sm">Lesson 0%</span>

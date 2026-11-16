@@ -489,7 +489,7 @@
         "id": 24,
         "title": "Course pages and lesson navigation from the registry",
         "description": "My Courses, course details and the lesson page run on real course data (PRD 5.3, 8.3, 6.4).",
-        "status": "pending",
+        "status": "done",
         "priority": "medium",
         "phase": 3,
         "complexity": 6,
@@ -502,7 +502,7 @@
         ],
         "human": false,
         "review": false,
-        "details": "My Courses lists registry courses with search and language/difficulty filters, remove (with confirm, says progress is kept), refresh placeholder. Course details page: modules and lessons list. Lesson page: module/lesson sidebar (drawer in lesson panel), loads lesson Markdown + starter code into the editor, Prev/Next across modules, unknown ids show a not-found state. Handle missing files gracefully (error state, not a crash).",
+        "details": "My Courses lists registry courses with search and language/difficulty filters, remove (with confirm, says progress is kept), refresh placeholder. Course details page: modules and lessons list. Lesson page: module/lesson sidebar (drawer in lesson panel), loads lesson Markdown + starter code into the editor, Prev/Next across modules, unknown ids show a not-found state. Handle missing files gracefully (error state, not a crash).\n\n[2026-11-15T20:06:52-05:00] plan (sonnet): CourseCard link+remove, CoursesPage remove/refresh, new CourseDetailPage, LessonPage on registry (blob assets, prev/next, sidebar), route, update e2e specs from c1/l1 placeholder to python-fundamentals/lesson-01\n\n[2026-11-15T20:34:40-05:00] sonnet: fixed lint (derived state instead of setState in effects), CourseCard test router, e2e specs; tsc/lint/vitest(56)/build/playwright(15) pass\n\n[2026-11-15T20:36:01-05:00] done by sonnet; verified",
         "testStrategy": "e2e: open sql-fundamentals → lesson 1 shows its Markdown and starter SQL; Next crosses into module 2; filter by language hides the other course",
         "subtasks": []
       },
@@ -1435,7 +1435,7 @@
         }
       ],
       "created": "2026-11-15",
-      "updated": "2026-11-15T20:05:58-05:00"
+      "updated": "2026-11-15T20:36:02-05:00"
     }
   }
 }
