@@ -3,7 +3,7 @@
 Generated from `.taskmaster/tasks/tasks.json` (the source of truth). Never edit by hand; regenerate with
 `python .taskmaster/render_tasks_md.py`.
 
-**Progress: 27/63 tasks done.**
+**Progress: 28/63 tasks done.**
 
 ## Phase 0 - Foundation
 
@@ -100,7 +100,7 @@ Generated from `.taskmaster/tasks/tasks.json` (the source of truth). Never edit 
 - [x] **27. SQL adapter: sql.js in a Web Worker** _(after 26)_\
   SQL runs off the main thread with tables, errors, datasets and reset (PRD 10.3).\
   _Test:_ Vitest (worker logic tested as plain functions with sql.js in node): CREATE/INSERT/SELECT/JOIN/aggregate return rows; bad table gives sqlite error; reset clears user tables
-- [ ] **28. Exercise evaluation and Submit flow (SQL first)** _(after 27)_\
+- [x] **28. Exercise evaluation and Submit flow (SQL first)** _(after 27)_\
   Submit runs the tests and shows pass/fail with expected vs actual; Run never completes a lesson (PRD 12.2-12.3).\
   _Test:_ Vitest: correct SQL passes, wrong row count and wrong order (when ordered) fail with expected/actual
 - [ ] **29. Reset starter code, progressive hints and solution view** _(after 28)_\

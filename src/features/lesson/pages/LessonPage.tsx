@@ -1,4 +1,6 @@
-import { run as runCode } from "../../../execution/manager";
+import { run as runCode, reset as resetEngine } from "../../../execution/manager";
+import { testFileSchema } from "../../../course-system/schema";
+import { emitIfPassed, evaluateSql } from "../../exercise-evaluation/sql";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import {
@@ -107,14 +109,31 @@ export default function LessonPage() {
   const run = async () => {
     const r = await runCode(lesson?.exercise?.type ?? course!.language, code, {
       onStatus: (s) => s !== "done" && setOut(s === "loading" ? "Loading engine..." : "Running..."),
+      options: { dataset: text(files?.get(lesson?.exercise?.dataset ?? "")) || undefined },
     });
     setOut([r.output, ...r.errors].filter(Boolean).join("\n") || "(no output)");
+  };
+  const submit = async () => {
+    const ex = lesson?.exercise;
+    const tf = testFileSchema.safeParse(JSON.parse(text(files?.get(ex?.tests ?? "")) || "null"));
+    if (!ex || !tf.success) return setOut("No tests for this lesson.");
+    if (tf.data.language !== "sql") return setOut("Submit is not available for this language yet.");
+    const options = { dataset: text(files?.get(ex.dataset ?? "")) || undefined };
+    const results = await evaluateSql(tf.data.tests, code, {
+      reset: () => resetEngine("sql"),
+      exec: (c) => runCode("sql", c, { options }),
+    });
+    const line = (r: (typeof results)[number]) =>
+      `${r.passed ? "PASS" : "FAIL"} ${r.name}` +
+      (r.passed ? "" : `\n  expected: ${r.expected ?? ""}\n  actual: ${r.actual ?? r.error ?? ""}`);
+    setOut(results.map(line).join("\n"));
+    emitIfPassed(results, window, { courseId, lessonId });
   };
   const controls: [string, () => void][] = [
     ["Previous", () => go(-1)],
     ["Next", () => go(1)],
     ["Run", () => void run()],
-    ["Submit", () => setNote("Submit (placeholder)")],
+    ["Submit", () => void submit()],
     ["Reset", () => setCode(starter ?? "")],
     ["Save", () => setNote("Saved (placeholder)")],
     ["Clear output", () => setOut("")],

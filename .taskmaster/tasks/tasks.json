@@ -595,7 +595,7 @@
         "id": 28,
         "title": "Exercise evaluation and Submit flow (SQL first)",
         "description": "Submit runs the tests and shows pass/fail with expected vs actual; Run never completes a lesson (PRD 12.2-12.3).",
-        "status": "pending",
+        "status": "done",
         "priority": "medium",
         "phase": 4,
         "complexity": 6,
@@ -604,7 +604,7 @@
         ],
         "human": false,
         "review": false,
-        "details": "src/features/exercise-evaluation/: evaluator interface per language, separate from execution. SQL evaluator: run user query against fresh dataset, compare result to expected rows (column names, order-sensitive flag) and/or check queries. Returns TestResult[]. Lesson controller: Submit → evaluate → OutputPanel test results → emits 'exercise-passed' (progress wiring in phase 6).",
+        "details": "src/features/exercise-evaluation/: evaluator interface per language, separate from execution. SQL evaluator: run user query against fresh dataset, compare result to expected rows (column names, order-sensitive flag) and/or check queries. Returns TestResult[]. Lesson controller: Submit → evaluate → OutputPanel test results → emits 'exercise-passed' (progress wiring in phase 6).\n\n[2026-11-15T21:20:01-05:00] built evaluator sql.ts + Submit wiring in LessonPage; tests pass\n\n[2026-11-15T21:22:39-05:00] done by sonnet; verified. Idea: use OutputPanel test entries; try/catch JSON.parse of tests",
         "testStrategy": "Vitest: correct SQL passes, wrong row count and wrong order (when ordered) fail with expected/actual",
         "subtasks": []
       },
@@ -1450,7 +1450,7 @@
         }
       ],
       "created": "2026-11-15",
-      "updated": "2026-11-15T21:18:08-05:00"
+      "updated": "2026-11-15T21:22:40-05:00"
     }
   }
 }
