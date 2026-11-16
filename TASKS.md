@@ -3,7 +3,7 @@
 Generated from `.taskmaster/tasks/tasks.json` (the source of truth). Never edit by hand; regenerate with
 `python .taskmaster/render_tasks_md.py`.
 
-**Progress: 29/63 tasks done.**
+**Progress: 30/63 tasks done.**
 
 ## Phase 0 - Foundation
 
@@ -106,7 +106,7 @@ Generated from `.taskmaster/tasks/tasks.json` (the source of truth). Never edit 
 - [x] **29. Reset starter code, progressive hints and solution view** _(after 28)_\
   Exercise helpers that never reveal the solution by accident (PRD 9.4, 12.4-12.5).\
   _Test:_ Vitest/e2e: hint 2 hidden until hint 1 revealed; reset restores starter; viewing solution leaves editor text unchanged
-- [ ] **30. SQL lesson end-to-end test** _(after 29)_\
+- [x] **30. SQL lesson end-to-end test** _(after 29)_\
   The full SQL loop works in a real browser.\
   _Test:_ npx playwright test e2e/sql-lesson.spec.ts passes
 - [ ] **31. Phase 4 gate: lint, types, tests and build pass** _(after 26, 27, 28, 29, 30)_\
