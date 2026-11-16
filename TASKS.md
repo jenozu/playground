@@ -3,7 +3,7 @@
 Generated from `.taskmaster/tasks/tasks.json` (the source of truth). Never edit by hand; regenerate with
 `python .taskmaster/render_tasks_md.py`.
 
-**Progress: 43/65 tasks done.**
+**Progress: 44/65 tasks done.**
 
 ## Phase 0 - Foundation
 
@@ -151,7 +151,7 @@ Generated from `.taskmaster/tasks/tasks.json` (the source of truth). Never edit 
 - [x] **40. Progress page** _(after 37)_\
   Practical overview: active/completed courses, modules, lessons, success rate, recent languages (PRD 5.4).\
   _Test:_ Vitest render with seeded progress shows correct counts
-- [ ] **41. Lesson notes and bookmarks** _(after 37)_\
+- [x] **41. Lesson notes and bookmarks** _(after 37)_\
   Per-lesson notes autosave; lessons and courses can be bookmarked (PRD 13.4, 3.4).\
   _Test:_ e2e: write a note, reload, note still there; bookmark appears on dashboard
 - [ ] **42. Export and import learning data** _(after 41, 38)_\

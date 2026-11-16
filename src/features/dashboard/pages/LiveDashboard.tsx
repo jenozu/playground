@@ -3,12 +3,14 @@ import { useCourses } from '../../../course-system/registry/useCourses'
 import { coursePercent } from '../../learning-progress/calc'
 import { completedIds, lastPosition, listLessonProgress, type LessonProgress } from '../../learning-progress/service'
 import type { CourseSummary } from '../../courses/components/CourseCard'
+import { listBookmarks, type Bookmark } from '../../notes/service'
 import DashboardPage from './DashboardPage'
 
 export default function LiveDashboard() {
   const { courses } = useCourses()
   const [prog, setProg] = useState<LessonProgress[]>([])
-  useEffect(() => { listLessonProgress().then(setProg, () => {}) }, [])
+  const [marks, setMarks] = useState<Bookmark[]>([])
+  useEffect(() => { listLessonProgress().then(setProg, () => {}); listBookmarks().then(setMarks, () => {}) }, [])
 
   const to = (c: string, l: string) => `/courses/${c}/lessons/${l}`
   const info = courses.map(({ course: c }) => {
@@ -35,8 +37,17 @@ export default function LiveDashboard() {
     .flatMap((p) => info.find((i) => i.c.id === p.courseId)?.lessons.find((l) => l.id === p.lessonId)?.title ?? [])
     .slice(0, 5)
 
+  const bookmarks = marks.flatMap((b) => {
+    const i = info.find((x) => x.c.id === b.courseId)
+    if (!i) return []
+    if (!b.lessonId) return [{ title: i.c.title, courseTitle: 'Course', to: `/courses/${i.c.id}` }]
+    const l = i.lessons.find((x) => x.id === b.lessonId)
+    return l ? [{ title: l.title, courseTitle: i.c.title, to: to(i.c.id, l.id) }] : []
+  })
+
   return (
     <DashboardPage
+      bookmarks={bookmarks}
       continueLearning={lastInfo && lastLesson ? { title: lastLesson.title, courseTitle: lastInfo.c.title, to: to(lastInfo.c.id, lastLesson.id) } : undefined}
       activeCourses={info.filter((i) => prog.some((p) => p.courseId === i.c.id) && i.summary.completionPercent < 100).map((i) => i.summary)}
       overallPercent={all.length && prog.length ? Math.round((doneCount / all.length) * 100) : undefined}

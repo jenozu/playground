@@ -883,7 +883,7 @@
         "id": 41,
         "title": "Lesson notes and bookmarks",
         "description": "Per-lesson notes autosave; lessons and courses can be bookmarked (PRD 13.4, 3.4).",
-        "status": "pending",
+        "status": "done",
         "priority": "medium",
         "phase": 6,
         "complexity": 4,
@@ -892,7 +892,7 @@
         ],
         "human": false,
         "review": false,
-        "details": "Notes tab/section in the lesson panel (plain textarea, autosave debounced). Bookmark toggle in the lesson header; bookmarks listed on the dashboard.",
+        "details": "Notes tab/section in the lesson panel (plain textarea, autosave debounced). Bookmark toggle in the lesson header; bookmarks listed on the dashboard.\n\n[2026-11-15T22:52:56-05:00] plan (sonnet): notes/bookmarks service + LessonNotes + Bookmark button (lesson header, course detail) + dashboard section\n\n[2026-11-15T22:54:55-05:00] done: notes (debounced autosave) + lesson/course bookmarks + dashboard section; e2e/notes.spec.ts, build, lint, vitest pass\n\n[2026-11-15T22:56:12-05:00] done by sonnet; verified",
         "testStrategy": "e2e: write a note, reload, note still there; bookmark appears on dashboard",
         "subtasks": []
       },
@@ -1480,7 +1480,7 @@
         }
       ],
       "created": "2026-11-15",
-      "updated": "2026-11-15T22:52:14-05:00"
+      "updated": "2026-11-15T22:56:12-05:00"
     }
   }
 }

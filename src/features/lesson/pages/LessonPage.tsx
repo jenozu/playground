@@ -21,6 +21,8 @@ import { FileTabs } from "../../../components/editor/FileTabs";
 import { useCourses } from "../../../course-system/registry/useCourses";
 import { getFiles } from "../../../course-system/registry";
 import type { CourseFiles } from "../../../course-system/parser";
+import { LessonNotes } from "../../notes/LessonNotes";
+import { BookmarkButton } from "../../notes/BookmarkButton";
 import { Hints, Solution, shouldReset } from "../ExerciseHelpers";
 import { Entry } from "../../../components/terminal/OutputPanel";
 import { LessonMarkdown } from "../../lesson-viewer/LessonMarkdown";
@@ -324,6 +326,7 @@ export default function LessonPage() {
           )}
           <Hints key={key} hints={lesson!.exercise?.hints ?? []} />
           {solution !== undefined && <Solution key={`sol-${key}`} solution={solution} />}
+          <LessonNotes key={`notes-${key}`} courseId={courseId!} lessonId={lessonId!} />
         </>
       )}
       {id === "editor" && (
@@ -383,6 +386,7 @@ export default function LessonPage() {
         <h1 className="flex-1 truncate font-semibold">
           {course.title} / {lesson.title}
         </h1>
+        <BookmarkButton key={key} courseId={course.id} lessonId={lesson.id} label="lesson" />
         <span className="text-sm">Course {coursePercent(course, done)}%</span>
         <span className="text-sm">Lesson {done.has(lesson.id) ? 100 : 0}%</span>
         <button
