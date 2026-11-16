@@ -3,7 +3,9 @@ import type { Attempt } from './calc'
 
 // Keys are stable ids (course/lesson), never titles or positions.
 const key = (courseId: string, lessonId: string) => `lesson:${courseId}/${lessonId}`
-const now = () => new Date().toISOString()
+// Strictly increasing timestamps so same-millisecond writes keep their order (lastPosition sorts on these).
+let lastMs = 0
+const now = () => new Date((lastMs = Math.max(Date.now(), lastMs + 1))).toISOString()
 
 export interface LessonProgress {
   id: string

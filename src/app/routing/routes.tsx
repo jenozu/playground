@@ -6,7 +6,7 @@ import { RegisteredCoursesPage } from '../../features/courses/pages/CoursesPage'
 import CourseDetailPage from '../../features/courses/pages/CourseDetailPage'
 import PracticePage from '../../features/practice/pages/PracticePage'
 import ProjectsPage from '../../features/projects/pages/ProjectsPage'
-import ProgressPage from '../../features/progress/pages/ProgressPage'
+import ProgressPage from '../../features/learning-progress/pages/ProgressPage'
 import LessonPage from '../../features/lesson/pages/LessonPage'
 import SettingsPage from '../../features/settings/pages/SettingsPage'
 

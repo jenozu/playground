@@ -824,7 +824,7 @@
         ],
         "human": false,
         "review": true,
-        "details": "src/features/learning-progress/: progress service over repos. Complete on passing Submit, or 'Mark complete' button for reading lessons. Record every attempt (time, passed, test counts). Track last course/lesson/activity date. Derived: module/course completion, success rate. Pure calculation functions unit-tested. Header progress indicators use real data.\n\n[2026-11-15T22:37:29-05:00] plan (sonnet): src/features/learning-progress/{calc,service,useProgress}.ts + tests; wire LessonPage (submit, mark complete, header %, last position) and CoursesPage\n\n[2026-11-15T22:38:34-05:00] done: calc/service/tests, LessonPage + CoursesPage wired, e2e/progress.spec.ts passes; vitest 101 pass, lint+tsc clean\n\n[2026-11-15T22:40:18-05:00] done by sonnet; verified, reviewer APPROVE\n\n[2026-11-15T22:44:43-05:00] fix: calc.ts + progress.test.ts use course-system/schema Course/Module (app passes schema type; types/course.ts differs). build/lint/vitest pass.\n\n[2026-11-15T22:44:53-05:00] corrective: calc.ts used stale Course type, build failed; fixed by sonnet",
+        "details": "src/features/learning-progress/: progress service over repos. Complete on passing Submit, or 'Mark complete' button for reading lessons. Record every attempt (time, passed, test counts). Track last course/lesson/activity date. Derived: module/course completion, success rate. Pure calculation functions unit-tested. Header progress indicators use real data.\n\n[2026-11-15T22:37:29-05:00] plan (sonnet): src/features/learning-progress/{calc,service,useProgress}.ts + tests; wire LessonPage (submit, mark complete, header %, last position) and CoursesPage\n\n[2026-11-15T22:38:34-05:00] done: calc/service/tests, LessonPage + CoursesPage wired, e2e/progress.spec.ts passes; vitest 101 pass, lint+tsc clean\n\n[2026-11-15T22:40:18-05:00] done by sonnet; verified, reviewer APPROVE\n\n[2026-11-15T22:44:43-05:00] fix: calc.ts + progress.test.ts use course-system/schema Course/Module (app passes schema type; types/course.ts differs). build/lint/vitest pass.\n\n[2026-11-15T22:44:53-05:00] corrective: calc.ts used stale Course type, build failed; fixed by sonnet\n\n[2026-11-15T22:52:14-05:00] corrective: flaky lastPosition fixed via monotonic now()",
         "testStrategy": "Vitest: completion % math, module complete when all lessons done; e2e: submit passing → reload → lesson shows completed",
         "subtasks": []
       },
@@ -866,7 +866,7 @@
         "id": 40,
         "title": "Progress page",
         "description": "Practical overview: active/completed courses, modules, lessons, success rate, recent languages (PRD 5.4).",
-        "status": "pending",
+        "status": "done",
         "priority": "medium",
         "phase": 6,
         "complexity": 4,
@@ -875,7 +875,7 @@
         ],
         "human": false,
         "review": false,
-        "details": "src/features/learning-progress/pages/ProgressPage.tsx, simple counts and per-course bars, no streaks or leaderboards.",
+        "details": "src/features/learning-progress/pages/ProgressPage.tsx, simple counts and per-course bars, no streaks or leaderboards.\n\n[2026-11-15T22:49:30-05:00] built ProgressPage in learning-progress/pages, test + build + lint pass\n\n[2026-11-15T22:52:14-05:00] done by sonnet; verified",
         "testStrategy": "Vitest render with seeded progress shows correct counts",
         "subtasks": []
       },
@@ -1480,7 +1480,7 @@
         }
       ],
       "created": "2026-11-15",
-      "updated": "2026-11-15T22:48:30-05:00"
+      "updated": "2026-11-15T22:52:14-05:00"
     }
   }
 }
