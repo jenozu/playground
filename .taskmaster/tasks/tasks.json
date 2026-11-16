@@ -712,7 +712,7 @@
         "id": 33,
         "title": "Stop and timeout for runaway code",
         "description": "Infinite loops can be stopped and the UI stays responsive (PRD 10.4, 11.5, 20.2).",
-        "status": "pending",
+        "status": "done",
         "priority": "medium",
         "phase": 5,
         "complexity": 5,
@@ -722,7 +722,7 @@
         ],
         "human": false,
         "review": true,
-        "details": "Stop button active while running → manager.stop() terminates the worker and spawns a fresh one (Python re-init is slow: show status). Timeout per profile triggers the same path with a 'Timed out after Ns' error. Applies to SQL and Python adapters.",
+        "details": "Stop button active while running → manager.stop() terminates the worker and spawns a fresh one (Python re-init is slow: show status). Timeout per profile triggers the same path with a 'Timed out after Ns' error. Applies to SQL and Python adapters.\n\n[2026-11-15T22:13:05-05:00] plan (sonnet): inspect execution manager/adapters, wire stop+timeout\n\n[2026-11-15T22:16:48-05:00] Stop button in LessonPage (enabled while running), manager timeout now settles before stop(); e2e stop+timeout pass on cold vite cache\n\n[2026-11-15T22:19:16-05:00] done by sonnet; verified, reviewer APPROVE (minor Run-while-running parked)",
         "testStrategy": "e2e: `while True: pass` → Stop → output says stopped, UI clicks still respond within 1s, next run works; timeout test with a short profile",
         "subtasks": []
       },
@@ -1465,7 +1465,7 @@
         }
       ],
       "created": "2026-11-15",
-      "updated": "2026-11-15T22:12:49-05:00"
+      "updated": "2026-11-15T22:19:16-05:00"
     }
   }
 }

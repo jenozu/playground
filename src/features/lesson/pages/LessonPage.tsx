@@ -1,4 +1,4 @@
-import { run as runCode, reset as resetEngine } from "../../../execution/manager";
+import { run as runCode, reset as resetEngine, stop as stopCode } from "../../../execution/manager";
 import { testFileSchema } from "../../../course-system/schema";
 import { emitIfPassed, evaluateSql } from "../../exercise-evaluation/sql";
 import { useEffect, useMemo, useRef, useState } from "react";
@@ -112,12 +112,20 @@ export default function LessonPage() {
   const [tables, setTables] = useState<{ columns: string[]; rows: unknown[][] }[]>([]);
   const [note, setNote] = useState("");
   // ponytail: placeholder save/submit; arrive in later phases
+  const [running, setRunning] = useState(false);
+  const stop = async () => {
+    await stopCode();
+    setOut("Execution stopped.");
+  };
   const run = async () => {
     const lang = lesson?.exercise?.type ?? course!.language;
     const r = await runCode(lang, code, {
-      onStatus: (s) =>
-        s !== "done" &&
-        (setTables([]), setOut(s === "loading" ? (lang === "python" ? "Loading Python…" : "Loading engine...") : "Running...")),
+      onStatus: (s) => {
+        setRunning(s === "running");
+        if (s === "done") return;
+        setTables([]);
+        setOut(s === "loading" ? (lang === "python" ? "Loading Python…" : "Loading engine...") : "Running...");
+      },
       options: { dataset: text(files?.get(lesson?.exercise?.dataset ?? "")) || undefined },
     });
     const t = r.tables ?? (r.table ? [r.table] : []);
@@ -145,6 +153,7 @@ export default function LessonPage() {
     ["Previous", () => go(-1)],
     ["Next", () => go(1)],
     ["Run", () => void run()],
+    ["Stop", () => void stop()],
     ["Submit", () => void submit()],
     [
       "Reset",
@@ -391,6 +400,7 @@ export default function LessonPage() {
             type="button"
             className="rounded border px-2 py-1 text-sm"
             onClick={fn}
+            disabled={label === "Stop" && !running}
           >
             {label}
           </button>

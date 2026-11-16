@@ -3,7 +3,7 @@
 Generated from `.taskmaster/tasks/tasks.json` (the source of truth). Never edit by hand; regenerate with
 `python .taskmaster/render_tasks_md.py`.
 
-**Progress: 34/64 tasks done.**
+**Progress: 35/64 tasks done.**
 
 ## Phase 0 - Foundation
 
@@ -121,7 +121,7 @@ Generated from `.taskmaster/tasks/tasks.json` (the source of truth). Never edit 
 - [x] **32. Python adapter: Pyodide in a Web Worker, lazy-loaded** _(after 26)_\
   Python runs in the browser with stdout, tracebacks, repeated runs and reset (PRD 10.4, 20.1).\
   _Test:_ Vitest for message/traceback helpers; e2e: print('hi') shows hi; undefined name shows NameError line; second run works
-- [ ] **33. Stop and timeout for runaway code** _(after 32, 27)_\
+- [x] **33. Stop and timeout for runaway code** _(after 32, 27)_\
   Infinite loops can be stopped and the UI stays responsive (PRD 10.4, 11.5, 20.2).\
   _Test:_ e2e: `while True: pass` → Stop → output says stopped, UI clicks still respond within 1s, next run works; timeout test with a short profile
 - [ ] **34. Python exercise evaluation** _(after 32, 28)_\

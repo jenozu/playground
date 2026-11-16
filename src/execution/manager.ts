@@ -53,8 +53,8 @@ export async function run(
       engine.execute(code, opts.options),
       new Promise<ExecutionResult>((res) => {
         timer = setTimeout(() => {
+          res(fail(`Timed out after ${ms / 1000}s.`)); // settle first: stop() rejects execute()
           engine.stop().catch(() => {});
-          res(fail(`Timed out after ${ms / 1000}s.`));
         }, ms);
       }),
     ]);
