@@ -3,7 +3,7 @@
 Generated from `.taskmaster/tasks/tasks.json` (the source of truth). Never edit by hand; regenerate with
 `python .taskmaster/render_tasks_md.py`.
 
-**Progress: 19/62 tasks done.**
+**Progress: 20/62 tasks done.**
 
 ## Phase 0 - Foundation
 
@@ -73,7 +73,7 @@ Generated from `.taskmaster/tasks/tasks.json` (the source of truth). Never edit 
 - [x] **19. Course manifest schema (zod) and COURSE-FORMAT.md** _(after 3)_  
   The formal course.json + lesson file format, validated and documented (PRD 6.3, 7.1-7.5).  
   _Test:_ npx vitest run src/course-system/schema: valid PRD example passes, each required-field omission fails with a path in the message
-- [ ] **20. Manifest parser and validator over a virtual file map** _(after 19)_  
+- [x] **20. Manifest parser and validator over a virtual file map** _(after 19)_  
   One loader for bundled, GitHub and ZIP courses that reports useful errors (PRD 14.4, 20.3).  
   _Test:_ npx vitest run src/course-system: one test per error code (missing manifest, invalid JSON, unsupported version, missing lesson file, missing exercise file, escaping path, unsupported language)
 - [ ] **21. Course registry backed by storage, with bundled sample loading** _(after 20, 8)_  

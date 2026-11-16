@@ -420,7 +420,7 @@
         "id": 20,
         "title": "Manifest parser and validator over a virtual file map",
         "description": "One loader for bundled, GitHub and ZIP courses that reports useful errors (PRD 14.4, 20.3).",
-        "status": "pending",
+        "status": "done",
         "priority": "medium",
         "phase": 3,
         "complexity": 6,
@@ -429,7 +429,7 @@
         ],
         "human": false,
         "review": true,
-        "details": "src/course-system/parser + validator: input = Map<path, string|Uint8Array> for one course root. Finds course.json, parses JSON (error with line/col), validates schema, checks schemaVersion supported, every content/starter/tests/solution/asset path exists, paths are relative and can't escape root (no '..', no leading '/', no backslash), language has an adapter (sql, python, javascript). Returns {course, files, warnings} or a list of {code, path, message}. Pure functions, no DOM.",
+        "details": "src/course-system/parser + validator: input = Map<path, string|Uint8Array> for one course root. Finds course.json, parses JSON (error with line/col), validates schema, checks schemaVersion supported, every content/starter/tests/solution/asset path exists, paths are relative and can't escape root (no '..', no leading '/', no backslash), language has an adapter (sql, python, javascript). Returns {course, files, warnings} or a list of {code, path, message}. Pure functions, no DOM.\n\n[2026-11-15T19:48:10-05:00] built parser/index.ts loadCourse + parser.test.ts; tests, tsc, eslint pass\n\n[2026-11-15T19:49:21-05:00] done by sonnet; verified, reviewed",
         "testStrategy": "npx vitest run src/course-system: one test per error code (missing manifest, invalid JSON, unsupported version, missing lesson file, missing exercise file, escaping path, unsupported language)",
         "subtasks": []
       },
@@ -1435,7 +1435,7 @@
         }
       ],
       "created": "2026-11-15",
-      "updated": "2026-11-15T19:46:56-05:00"
+      "updated": "2026-11-15T19:49:21-05:00"
     }
   }
 }
