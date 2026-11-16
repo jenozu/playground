@@ -7,4 +7,3 @@ promote to a task (`tasks.py add` or the `adapt` skill), defer, or delete on pur
 - 2026-11-15: task 8 idea: per-store record types; add blocking() handler in openDB at first version bump
 - 2026-11-15: playwright.config.ts reuseExistingServer picks up unrelated app on 5173; use another port or false
 - 2026-11-15: lesson header should show real course/lesson titles once phase 3 exists (from task 13)
-- 2026-11-15 Parking: shared theme hook so editor dark updates live; install @codemirror/theme-one-dark (needs approval)

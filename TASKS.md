@@ -3,7 +3,7 @@
 Generated from `.taskmaster/tasks/tasks.json` (the source of truth). Never edit by hand; regenerate with
 `python .taskmaster/render_tasks_md.py`.
 
-**Progress: 25/62 tasks done.**
+**Progress: 25/63 tasks done.**
 
 ## Phase 0 - Foundation
 
@@ -112,6 +112,9 @@ Generated from `.taskmaster/tasks/tasks.json` (the source of truth). Never edit 
 - [ ] **31. Phase 4 gate: lint, types, tests and build pass** _(after 26, 27, 28, 29, 30)_\
   Free script check that phase 4 leaves the repo green.\
   _Test:_ python .taskmaster/run_checks.py run --only 31
+- [ ] **63. Editor dark theme via @codemirror/theme-one-dark, live theme switching** _(after 15)_\
+  Owner-approved (2026-11-15, PRD decision log). Install @codemirror/theme-one-dark; add a shared theme hook so the CodeMirror editor switches light/dark live when the app theme changes, without remounting or losing editor content.\
+  _Test:_ Vitest: toggling app theme reconfigures the editor (oneDark extension present in dark, absent in light) and keeps the doc text and undo history. npm run lint, typecheck, build pass.
 
 ## Phase 5 - Python playground
 

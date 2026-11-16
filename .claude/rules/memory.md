@@ -31,6 +31,7 @@ Never update it per task.
 - GitHub remote: origin = jenozu/playground (public).
 
 ## Decisions since the PRD (max 8 lines, newest first; full text in the PRD decision log)
+- 2026-11-15: Approved @codemirror/theme-one-dark for live editor dark mode (task 63, phase 4).
 - 2026-11-15: Built with master-harness v2.0.0: lead (Opus) → phase-runner (Sonnet) → builders
   haiku → sonnet → opus. Manual checks batched per phase.
 

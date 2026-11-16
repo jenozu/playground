@@ -1387,6 +1387,21 @@
         "details": "Runs lint, tsc, vitest, vite build and Playwright e2e. A failure goes to a builder with the output tail.",
         "testStrategy": "python .taskmaster/run_checks.py run --only 62",
         "subtasks": []
+      },
+      {
+        "title": "Editor dark theme via @codemirror/theme-one-dark, live theme switching",
+        "description": "Owner-approved (2026-11-15, PRD decision log). Install @codemirror/theme-one-dark; add a shared theme hook so the CodeMirror editor switches light/dark live when the app theme changes, without remounting or losing editor content.",
+        "status": "pending",
+        "priority": "low",
+        "dependencies": [
+          15
+        ],
+        "details": "npm install --loglevel=error --no-audit --no-fund @codemirror/theme-one-dark. Reuse the app's existing theme state; reconfigure the editor theme through a CodeMirror Compartment. Keep undo history and content across switches.\n\n[2026-11-15T20:38:29-05:00] added via adapt: owner approved theme-one-dark 2026-11-15",
+        "testStrategy": "Vitest: toggling app theme reconfigures the editor (oneDark extension present in dark, absent in light) and keeps the doc text and undo history. npm run lint, typecheck, build pass.",
+        "complexity": 4,
+        "phase": 4,
+        "id": 63,
+        "subtasks": []
       }
     ],
     "metadata": {
@@ -1435,7 +1450,7 @@
         }
       ],
       "created": "2026-11-15",
-      "updated": "2026-11-15T20:36:49-05:00"
+      "updated": "2026-11-15T20:38:29-05:00"
     }
   }
 }
