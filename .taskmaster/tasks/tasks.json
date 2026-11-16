@@ -455,7 +455,7 @@
         "id": 22,
         "title": "Safe Markdown lesson renderer",
         "description": "Lesson Markdown with code, tables, images, links and callouts, safe for untrusted content (PRD 7.3, 8.1, 17.5).",
-        "status": "pending",
+        "status": "done",
         "priority": "medium",
         "phase": 3,
         "complexity": 5,
@@ -464,7 +464,7 @@
         ],
         "human": false,
         "review": true,
-        "details": "src/features/lesson-viewer/LessonMarkdown.tsx: react-markdown + remark-gfm, NO rehype-raw, urlTransform allowing only http(s), mailto and relative paths; relative image paths resolved to blob URLs from course files; external links open with rel=noopener noreferrer; code blocks highlighted (CodeMirror static highlighting or a small highlighter); callouts from `> [!NOTE]`/`[!TIP]`/`[!WARNING]` blockquotes. Shows title and estimated minutes.\n\n[2026-11-15T19:52:32-05:00] BLOCKED (sonnet): react-markdown and remark-gfm not in package.json or node_modules; no existing markdown renderer in src. Human must run: npm install react-markdown remark-gfm\n\n[2026-11-15T19:53:01-05:00] phase-runner installed react-markdown + remark-gfm (stack deps named in AGENTS.md); retrying builder",
+        "details": "src/features/lesson-viewer/LessonMarkdown.tsx: react-markdown + remark-gfm, NO rehype-raw, urlTransform allowing only http(s), mailto and relative paths; relative image paths resolved to blob URLs from course files; external links open with rel=noopener noreferrer; code blocks highlighted (CodeMirror static highlighting or a small highlighter); callouts from `> [!NOTE]`/`[!TIP]`/`[!WARNING]` blockquotes. Shows title and estimated minutes.\n\n[2026-11-15T19:52:32-05:00] BLOCKED (sonnet): react-markdown and remark-gfm not in package.json or node_modules; no existing markdown renderer in src. Human must run: npm install react-markdown remark-gfm\n\n[2026-11-15T19:53:01-05:00] phase-runner installed react-markdown + remark-gfm (stack deps named in AGENTS.md); retrying builder\n\n[2026-11-15T19:54:08-05:00] built LessonMarkdown + tests, 4 pass, tsc/eslint clean; raw HTML renders as escaped text, no highlighter (styled pre only)\n\n[2026-11-15T19:54:56-05:00] escalate sonnet→opus: verifier FAIL, code blocks not highlighted (details require it)\n\n[2026-11-15T19:55:40-05:00] plan (opus): LessonMarkdown.tsx + test - code override highlighting via @lezer/highlight highlightCode + tagHighlighter (Tailwind classes) with lang-sql/python/javascript parsers, output as React spans; target=_blank only for absolute http(s) links\n\n[2026-11-15T19:57:11-05:00] opus: added static highlighting (code override -> @lezer/highlight highlightCode + tagHighlighter with Tailwind classes; parsers sql(SQLite)/python/js/ts) rendered as React spans/text, no innerHTML; target=_blank only for absolute http(s) links. 6/6 lesson-viewer tests, 51/51 full suite, tsc/eslint clean, build ok. Note: @lezer/highlight is a transitive (hoisted) dep, not in package.json.\n\n[2026-11-15T19:58:49-05:00] phase-runner declared @lezer/highlight in package.json (already installed transitively via CodeMirror)\n\n[2026-11-15T20:00:05-05:00] reviewer CHANGES NEEDED (proto-key crash in PARSERS lookup, /\\host url); sending findings back to opus\n\n[2026-11-15T20:00:23-05:00] plan (opus): LessonMarkdown.tsx + test - PARSERS as Map (no proto lookup), safeUrl rejects /^[/\\]{2}/, tests for both\n\n[2026-11-15T20:01:25-05:00] opus: reviewer fixes - PARSERS now a Map (fence lang 'constructor'/'__proto__'/'toString' render plain, no throw); safeUrl rejects /^[/\\]{2}/ (//host, /\\host, \\host). +2 tests: 8/8 lesson-viewer, 53/53 full, tsc/eslint clean, build ok\n\n[2026-11-15T20:02:19-05:00] done by opus, escalated from sonnet; verified, review findings fixed; manual check queued",
         "testStrategy": "Vitest: renders table/image/code; `<script>`, `<img onerror>`, `javascript:` links and raw HTML render as inert text or are removed",
         "subtasks": []
       },
@@ -1435,7 +1435,7 @@
         }
       ],
       "created": "2026-11-15",
-      "updated": "2026-11-15T19:53:01-05:00"
+      "updated": "2026-11-15T20:02:19-05:00"
     }
   }
 }

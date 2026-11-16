@@ -3,7 +3,7 @@
 Generated from `.taskmaster/tasks/tasks.json` (the source of truth). Never edit by hand; regenerate with
 `python .taskmaster/render_tasks_md.py`.
 
-**Progress: 21/62 tasks done.**
+**Progress: 22/62 tasks done.**
 
 ## Phase 0 - Foundation
 
@@ -79,7 +79,7 @@ Generated from `.taskmaster/tasks/tasks.json` (the source of truth). Never edit 
 - [x] **21. Course registry backed by storage, with bundled sample loading** _(after 20, 8)_  
   Validated courses register into IndexedDB and appear automatically; removal keeps progress (PRD 6.4, 5.3).  
   _Test:_ Vitest with fake-indexeddb: register, list, remove leaves progress records; e2e: sample courses appear in My Courses on first load
-- [ ] **22. Safe Markdown lesson renderer** _(after 20)_  
+- [x] **22. Safe Markdown lesson renderer** _(after 20)_  
   Lesson Markdown with code, tables, images, links and callouts, safe for untrusted content (PRD 7.3, 8.1, 17.5).  
   _Test:_ Vitest: renders table/image/code; `<script>`, `<img onerror>`, `javascript:` links and raw HTML render as inert text or are removed
 - [ ] **23. Sample SQL and Python courses as static course files** _(after 19)_  
