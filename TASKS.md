@@ -3,7 +3,7 @@
 Generated from `.taskmaster/tasks/tasks.json` (the source of truth). Never edit by hand; regenerate with
 `python .taskmaster/render_tasks_md.py`.
 
-**Progress: 26/63 tasks done.**
+**Progress: 27/63 tasks done.**
 
 ## Phase 0 - Foundation
 
@@ -97,7 +97,7 @@ Generated from `.taskmaster/tasks/tasks.json` (the source of truth). Never edit 
 - [x] **26. Execution manager with lazy-loaded engine registry** _(after 3, 24)_\
   UI runs code through one manager that picks and lazy-loads the language adapter (PRD 10.1-10.2, 20.1).\
   _Test:_ Vitest with a fake adapter: lazy load called once, timeout produces an error result, stop() calls the adapter
-- [>] **27. SQL adapter: sql.js in a Web Worker** _(after 26)_\
+- [x] **27. SQL adapter: sql.js in a Web Worker** _(after 26)_\
   SQL runs off the main thread with tables, errors, datasets and reset (PRD 10.3).\
   _Test:_ Vitest (worker logic tested as plain functions with sql.js in node): CREATE/INSERT/SELECT/JOIN/aggregate return rows; bad table gives sqlite error; reset clears user tables
 - [ ] **28. Exercise evaluation and Submit flow (SQL first)** _(after 27)_\
