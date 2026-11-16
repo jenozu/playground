@@ -19,10 +19,10 @@ Never update it per task.
 ---
 
 ## Now (overwrite each time, max 6 lines)
-- Phase 2 complete, PR #1 merged to main. Branch phase-3 ready.
-- Next: `/run-phase 3`. Tasks 5 (remote added) and 6 handled; check human-checklist.
+- Phase 3 complete (tasks 19-25 done) on branch `phase-3`; PR opened at phase end.
+- Next: `/run-phase 4` (SQL). Tasks 5, 6 and Task 15 install may still be open on human-checklist.
 - In progress: none.
-- Manual checks waiting: task 15 editor (eyes-on, see manual-checks.md).
+- Manual checks waiting: none.
 
 ## Facts (stable, max 15 lines)
 - Dev machine: Windows 11 + Git Bash, Node 22, Python 3.12 (harness scripts only).
