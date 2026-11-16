@@ -3,7 +3,7 @@
 Generated from `.taskmaster/tasks/tasks.json` (the source of truth). Never edit by hand; regenerate with
 `python .taskmaster/render_tasks_md.py`.
 
-**Progress: 24/62 tasks done.**
+**Progress: 25/62 tasks done.**
 
 ## Phase 0 - Foundation
 
@@ -88,7 +88,7 @@ Generated from `.taskmaster/tasks/tasks.json` (the source of truth). Never edit 
 - [x] **24. Course pages and lesson navigation from the registry** _(after 21, 22, 23, 17, 11)_\
   My Courses, course details and the lesson page run on real course data (PRD 5.3, 8.3, 6.4).\
   _Test:_ e2e: open sql-fundamentals → lesson 1 shows its Markdown and starter SQL; Next crosses into module 2; filter by language hides the other course
-- [ ] **25. Phase 3 gate: lint, types, tests and build pass** _(after 19, 20, 21, 22, 23, 24)_\
+- [x] **25. Phase 3 gate: lint, types, tests and build pass** _(after 19, 20, 21, 22, 23, 24)_\
   Free script check that phase 3 leaves the repo green.\
   _Test:_ python .taskmaster/run_checks.py run --only 25
 
