@@ -20,3 +20,6 @@ with numbered steps and the expected result.
 1. Open /courses/c1/lessons/l1. Expected: highlighting, line numbers, autocomplete while typing.
 2. Toggle light/dark (reload after toggle; editor reads theme at render). Expected: readable in both.
 3. Change font size in Settings. Expected: editor follows.
+
+### Task 22 - Safe Markdown lesson renderer (2026-11-15)
+1. Open a lesson with a ```sql / ```python fenced block in the running app. Expected: keywords, strings, comments show in colour on the dark code background.

@@ -1,0 +1,18 @@
+{
+  "language": "sql",
+  "tests": [
+    {
+      "name": "counts and sums all employees",
+      "expectedColumns": [
+        "n",
+        "total"
+      ],
+      "expectedRows": [
+        [
+          6,
+          380000
+        ]
+      ]
+    }
+  ]
+}

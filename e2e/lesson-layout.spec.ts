@@ -1,6 +1,6 @@
 import { test, expect, type Page } from '@playwright/test'
 
-const URL = '/courses/c1/lessons/l1'
+const URL = '/courses/python-fundamentals/lessons/lesson-01'
 const widths = async (page: Page) => {
   const w = await Promise.all(
     ['lesson', 'editor', 'output'].map(async (id) => (await page.getByTestId(`panel-${id}`).boundingBox())!.width),
@@ -38,7 +38,7 @@ test('panels scroll independently; controls work', async ({ page }) => {
   await page.goto(URL)
   const [l, e, o] = ['lesson', 'editor', 'output'].map((id) => page.getByTestId(`panel-${id}`))
   await expect(o).toBeVisible()
-  await l.evaluate((n) => (n.scrollTop = 300))
+  await l.evaluate((n) => { const d = document.createElement('div'); d.style.height = '3000px'; n.appendChild(d); n.scrollTop = 300 })
   expect(await l.evaluate((n) => n.scrollTop)).toBeGreaterThan(0)
   expect(await e.evaluate((n) => n.scrollTop)).toBe(0)
   expect(await o.evaluate((n) => n.scrollTop)).toBe(0)

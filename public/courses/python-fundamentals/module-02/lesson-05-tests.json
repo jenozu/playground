@@ -1,0 +1,13 @@
+{
+  "language": "python",
+  "tests": [
+    {
+      "name": "square(3) is 9",
+      "assert": "assert square(3) == 9"
+    },
+    {
+      "name": "square(-2) is 4",
+      "assert": "assert square(-2) == 4"
+    }
+  ]
+}

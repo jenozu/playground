@@ -1,0 +1,19 @@
+{
+  "language": "sql",
+  "tests": [
+    {
+      "name": "returns names with salary above 60000",
+      "expectedRows": [
+        [
+          "Alice"
+        ],
+        [
+          "Carol"
+        ],
+        [
+          "Eve"
+        ]
+      ]
+    }
+  ]
+}

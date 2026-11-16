@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+
 export interface CourseSummary {
   id: string
   title: string
@@ -10,10 +12,10 @@ export interface CourseSummary {
   lastAccessed?: string
 }
 
-export default function CourseCard({ course }: { course: CourseSummary }) {
+export default function CourseCard({ course, onRemove }: { course: CourseSummary; onRemove?: (id: string) => void }) {
   return (
     <article className="rounded border border-slate-300 p-4">
-      <h3 className="font-semibold">{course.title}</h3>
+      <h3 className="font-semibold"><Link to={`/courses/${course.id}`} className="underline">{course.title}</Link></h3>
       <p className="text-sm text-slate-600">
         {course.language} · {course.difficulty}
       </p>
@@ -26,6 +28,11 @@ export default function CourseCard({ course }: { course: CourseSummary }) {
       <p className="text-xs text-slate-500">
         {course.lastAccessed ? `Last accessed ${course.lastAccessed}` : 'Not started yet'}
       </p>
+      {onRemove && (
+        <button type="button" className="mt-2 rounded border px-2 py-1 text-sm" onClick={() => onRemove(course.id)}>
+          Remove
+        </button>
+      )}
     </article>
   )
 }

@@ -1,0 +1,9 @@
+{
+  "language": "python",
+  "tests": [
+    {
+      "name": "prints 1 to 5",
+      "expectedStdout": "1\n2\n3\n4\n5\n"
+    }
+  ]
+}

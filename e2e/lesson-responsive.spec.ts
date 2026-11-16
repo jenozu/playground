@@ -1,6 +1,6 @@
 import { test, expect, type Page } from '@playwright/test'
 
-const URL = '/courses/c1/lessons/l1'
+const URL = '/courses/python-fundamentals/lessons/lesson-01'
 const noHScroll = async (page: Page) =>
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true)
 
@@ -16,7 +16,7 @@ test.describe('phone', () => {
     await page.keyboard.press('Control+End')
     await page.keyboard.type('\nx = 1')
     await noHScroll(page)
-    await page.getByRole('tab', { name: 'Lesson' }).click()
+    await page.getByRole('tab', { name: 'Lesson', exact: true }).click()
     await expect(page.getByTestId('panel-lesson')).toBeVisible()
     await expect(page.getByTestId('panel-editor')).toBeHidden()
     await noHScroll(page)

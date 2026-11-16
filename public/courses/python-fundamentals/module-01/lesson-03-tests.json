@@ -1,0 +1,9 @@
+{
+  "language": "python",
+  "tests": [
+    {
+      "name": "kind is odd for 7",
+      "assert": "assert kind == 'odd'"
+    }
+  ]
+}

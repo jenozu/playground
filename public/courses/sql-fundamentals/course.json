@@ -1,0 +1,104 @@
+{
+  "schemaVersion": 1,
+  "id": "sql-fundamentals",
+  "title": "SQL Fundamentals",
+  "version": "1.0.0",
+  "language": "sql",
+  "description": "Query a small company database: SELECT, WHERE, ORDER BY, aggregates and JOIN.",
+  "difficulty": "beginner",
+  "estimatedHours": 2,
+  "author": "Personal Coding Academy",
+  "modules": [
+    {
+      "id": "module-01",
+      "title": "Reading data",
+      "lessons": [
+        {
+          "id": "lesson-01",
+          "title": "SELECT basics",
+          "content": "module-01/lesson-01.md",
+          "estimatedMinutes": 5,
+          "type": "reading"
+        },
+        {
+          "id": "lesson-02",
+          "title": "Filtering with WHERE",
+          "content": "module-01/lesson-02.md",
+          "estimatedMinutes": 10,
+          "type": "coding",
+          "exercise": {
+            "type": "sql",
+            "starter": "module-01/lesson-02.sql",
+            "tests": "module-01/lesson-02-tests.json",
+            "solution": "module-01/lesson-02-solution.sql",
+            "hints": [
+              "Add a WHERE clause after FROM.",
+              "The condition is salary > 60000."
+            ],
+            "dataset": "dataset.sql"
+          }
+        },
+        {
+          "id": "lesson-03",
+          "title": "Sorting with ORDER BY",
+          "content": "module-01/lesson-03.md",
+          "estimatedMinutes": 10,
+          "type": "coding",
+          "exercise": {
+            "type": "sql",
+            "starter": "module-01/lesson-03.sql",
+            "tests": "module-01/lesson-03-tests.json",
+            "solution": "module-01/lesson-03-solution.sql",
+            "hints": [
+              "ORDER BY goes at the end of the query.",
+              "DESC means descending."
+            ],
+            "dataset": "dataset.sql"
+          }
+        }
+      ]
+    },
+    {
+      "id": "module-02",
+      "title": "Summaries and joins",
+      "lessons": [
+        {
+          "id": "lesson-04",
+          "title": "Aggregate functions",
+          "content": "module-02/lesson-04.md",
+          "estimatedMinutes": 10,
+          "type": "coding",
+          "exercise": {
+            "type": "sql",
+            "starter": "module-02/lesson-04.sql",
+            "tests": "module-02/lesson-04-tests.json",
+            "solution": "module-02/lesson-04-solution.sql",
+            "hints": [
+              "COUNT(*) counts rows.",
+              "Name the columns with AS."
+            ],
+            "dataset": "dataset.sql"
+          }
+        },
+        {
+          "id": "lesson-05",
+          "title": "Combining tables with JOIN",
+          "content": "module-02/lesson-05.md",
+          "estimatedMinutes": 15,
+          "type": "coding",
+          "exercise": {
+            "type": "sql",
+            "starter": "module-02/lesson-05.sql",
+            "tests": "module-02/lesson-05-tests.json",
+            "solution": "module-02/lesson-05-solution.sql",
+            "hints": [
+              "JOIN departments d ON ... goes before ORDER BY.",
+              "Match e.department_id to d.id."
+            ],
+            "dataset": "dataset.sql"
+          }
+        }
+      ]
+    }
+  ]
+}

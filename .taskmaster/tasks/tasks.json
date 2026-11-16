@@ -395,7 +395,7 @@
             "test"
           ]
         ],
-        "details": "Runs lint, tsc, vitest, vite build and Playwright e2e. A failure goes to a builder with the output tail.\n\n[2026-11-15T19:40:11-05:00] script check passed: 5 command(s), 29.3s, no model used",
+        "details": "Runs lint, tsc, vitest, vite build and Playwright e2e. A failure goes to a builder with the output tail.\n\n[2026-11-15T19:40:11-05:00] script check passed: 5 command(s), 29.3s, no model used\n\n[2026-11-15T19:40:43-05:00] PR #1 merged",
         "testStrategy": "python .taskmaster/run_checks.py run --only 18",
         "subtasks": []
       },
@@ -403,7 +403,7 @@
         "id": 19,
         "title": "Course manifest schema (zod) and COURSE-FORMAT.md",
         "description": "The formal course.json + lesson file format, validated and documented (PRD 6.3, 7.1-7.5).",
-        "status": "pending",
+        "status": "done",
         "priority": "medium",
         "phase": 3,
         "complexity": 6,
@@ -412,7 +412,7 @@
         ],
         "human": false,
         "review": true,
-        "details": "src/course-system/schema/: zod schemas for course.json (schemaVersion 1, id, title, version, language, description, difficulty, estimatedHours, author/source, prerequisites, resources, modules[{id,title,lessons[{id,title,type,content,estimatedMinutes,exercise?{type,language,starter,tests,solution?,hints?[],dataset?}}]}]) and test files per language (SQL: expected rows / check queries; Python & JS: named assert snippets or expected stdout). IDs: lowercase slug regex. Unknown fields allowed (forward compat). COURSE-FORMAT.md documents every field with the PRD 7.2 example. Changing this format later needs owner approval.",
+        "details": "src/course-system/schema/: zod schemas for course.json (schemaVersion 1, id, title, version, language, description, difficulty, estimatedHours, author/source, prerequisites, resources, modules[{id,title,lessons[{id,title,type,content,estimatedMinutes,exercise?{type,language,starter,tests,solution?,hints?[],dataset?}}]}]) and test files per language (SQL: expected rows / check queries; Python & JS: named assert snippets or expected stdout). IDs: lowercase slug regex. Unknown fields allowed (forward compat). COURSE-FORMAT.md documents every field with the PRD 7.2 example. Changing this format later needs owner approval.\n\n[2026-11-15T19:42:32-05:00] plan (sonnet): src/course-system/schema/{index.ts,schema.test.ts}, COURSE-FORMAT.md; zod schemas\n\n[2026-11-15T19:43:51-05:00] done (sonnet): zod schema + tests (15 pass), COURSE-FORMAT.md, zod added to package.json; tsc+eslint clean. Test file uses eslint-disabled any for mutation helpers.\n\n[2026-11-15T19:44:51-05:00] escalate sonnet→opus: reviewer CHANGES NEEDED (url scheme, duplicate ids, any in tests)\n\n[2026-11-15T19:45:10-05:00] plan (opus): schema/index.ts + schema.test.ts - http(s)-only resource urls, superRefine dup module/lesson ids, typed path helpers instead of any\n\n[2026-11-15T19:46:07-05:00] opus fix: resources url http(s)-only (refine on URL.protocol), superRefine duplicate module/lesson ids (path at duplicate), tests typed via path helpers (no any). 18 vitest pass, tsc + eslint clean.\n\n[2026-11-15T19:46:56-05:00] done by opus, escalated from sonnet; verified, review findings fixed",
         "testStrategy": "npx vitest run src/course-system/schema: valid PRD example passes, each required-field omission fails with a path in the message",
         "subtasks": []
       },
@@ -420,7 +420,7 @@
         "id": 20,
         "title": "Manifest parser and validator over a virtual file map",
         "description": "One loader for bundled, GitHub and ZIP courses that reports useful errors (PRD 14.4, 20.3).",
-        "status": "pending",
+        "status": "done",
         "priority": "medium",
         "phase": 3,
         "complexity": 6,
@@ -429,7 +429,7 @@
         ],
         "human": false,
         "review": true,
-        "details": "src/course-system/parser + validator: input = Map<path, string|Uint8Array> for one course root. Finds course.json, parses JSON (error with line/col), validates schema, checks schemaVersion supported, every content/starter/tests/solution/asset path exists, paths are relative and can't escape root (no '..', no leading '/', no backslash), language has an adapter (sql, python, javascript). Returns {course, files, warnings} or a list of {code, path, message}. Pure functions, no DOM.",
+        "details": "src/course-system/parser + validator: input = Map<path, string|Uint8Array> for one course root. Finds course.json, parses JSON (error with line/col), validates schema, checks schemaVersion supported, every content/starter/tests/solution/asset path exists, paths are relative and can't escape root (no '..', no leading '/', no backslash), language has an adapter (sql, python, javascript). Returns {course, files, warnings} or a list of {code, path, message}. Pure functions, no DOM.\n\n[2026-11-15T19:48:10-05:00] built parser/index.ts loadCourse + parser.test.ts; tests, tsc, eslint pass\n\n[2026-11-15T19:49:21-05:00] done by sonnet; verified, reviewed",
         "testStrategy": "npx vitest run src/course-system: one test per error code (missing manifest, invalid JSON, unsupported version, missing lesson file, missing exercise file, escaping path, unsupported language)",
         "subtasks": []
       },
@@ -437,7 +437,7 @@
         "id": 21,
         "title": "Course registry backed by storage, with bundled sample loading",
         "description": "Validated courses register into IndexedDB and appear automatically; removal keeps progress (PRD 6.4, 5.3).",
-        "status": "pending",
+        "status": "done",
         "priority": "medium",
         "phase": 3,
         "complexity": 5,
@@ -447,7 +447,7 @@
         ],
         "human": false,
         "review": false,
-        "details": "src/course-system/registry: register(courseResult, source) stores manifest + files (courses, courseFiles stores), list(), get(id), remove(id) (deletes course + files only; progress/code/notes untouched). On first run, fetch public/courses/index.json (list of course folders) and load each through the same validator as imports: no course is imported in TS code. useCourses hook.",
+        "details": "src/course-system/registry: register(courseResult, source) stores manifest + files (courses, courseFiles stores), list(), get(id), remove(id) (deletes course + files only; progress/code/notes untouched). On first run, fetch public/courses/index.json (list of course folders) and load each through the same validator as imports: no course is imported in TS code. useCourses hook.\n\n[2026-11-15T19:51:03-05:00] sonnet: registry (register/list/get/getFiles/remove), loadBundledSamples, useCourses, RegisteredCoursesPage wired; public/courses/index.json=[]; vitest passes; e2e deferred until task 23 samples exist\n\n[2026-11-15T19:52:14-05:00] done by sonnet; verified, reviewed; e2e deferred to 23",
         "testStrategy": "Vitest with fake-indexeddb: register, list, remove leaves progress records; e2e: sample courses appear in My Courses on first load",
         "subtasks": []
       },
@@ -455,7 +455,7 @@
         "id": 22,
         "title": "Safe Markdown lesson renderer",
         "description": "Lesson Markdown with code, tables, images, links and callouts, safe for untrusted content (PRD 7.3, 8.1, 17.5).",
-        "status": "pending",
+        "status": "done",
         "priority": "medium",
         "phase": 3,
         "complexity": 5,
@@ -464,7 +464,7 @@
         ],
         "human": false,
         "review": true,
-        "details": "src/features/lesson-viewer/LessonMarkdown.tsx: react-markdown + remark-gfm, NO rehype-raw, urlTransform allowing only http(s), mailto and relative paths; relative image paths resolved to blob URLs from course files; external links open with rel=noopener noreferrer; code blocks highlighted (CodeMirror static highlighting or a small highlighter); callouts from `> [!NOTE]`/`[!TIP]`/`[!WARNING]` blockquotes. Shows title and estimated minutes.",
+        "details": "src/features/lesson-viewer/LessonMarkdown.tsx: react-markdown + remark-gfm, NO rehype-raw, urlTransform allowing only http(s), mailto and relative paths; relative image paths resolved to blob URLs from course files; external links open with rel=noopener noreferrer; code blocks highlighted (CodeMirror static highlighting or a small highlighter); callouts from `> [!NOTE]`/`[!TIP]`/`[!WARNING]` blockquotes. Shows title and estimated minutes.\n\n[2026-11-15T19:52:32-05:00] BLOCKED (sonnet): react-markdown and remark-gfm not in package.json or node_modules; no existing markdown renderer in src. Human must run: npm install react-markdown remark-gfm\n\n[2026-11-15T19:53:01-05:00] phase-runner installed react-markdown + remark-gfm (stack deps named in AGENTS.md); retrying builder\n\n[2026-11-15T19:54:08-05:00] built LessonMarkdown + tests, 4 pass, tsc/eslint clean; raw HTML renders as escaped text, no highlighter (styled pre only)\n\n[2026-11-15T19:54:56-05:00] escalate sonnet→opus: verifier FAIL, code blocks not highlighted (details require it)\n\n[2026-11-15T19:55:40-05:00] plan (opus): LessonMarkdown.tsx + test - code override highlighting via @lezer/highlight highlightCode + tagHighlighter (Tailwind classes) with lang-sql/python/javascript parsers, output as React spans; target=_blank only for absolute http(s) links\n\n[2026-11-15T19:57:11-05:00] opus: added static highlighting (code override -> @lezer/highlight highlightCode + tagHighlighter with Tailwind classes; parsers sql(SQLite)/python/js/ts) rendered as React spans/text, no innerHTML; target=_blank only for absolute http(s) links. 6/6 lesson-viewer tests, 51/51 full suite, tsc/eslint clean, build ok. Note: @lezer/highlight is a transitive (hoisted) dep, not in package.json.\n\n[2026-11-15T19:58:49-05:00] phase-runner declared @lezer/highlight in package.json (already installed transitively via CodeMirror)\n\n[2026-11-15T20:00:05-05:00] reviewer CHANGES NEEDED (proto-key crash in PARSERS lookup, /\\host url); sending findings back to opus\n\n[2026-11-15T20:00:23-05:00] plan (opus): LessonMarkdown.tsx + test - PARSERS as Map (no proto lookup), safeUrl rejects /^[/\\]{2}/, tests for both\n\n[2026-11-15T20:01:25-05:00] opus: reviewer fixes - PARSERS now a Map (fence lang 'constructor'/'__proto__'/'toString' render plain, no throw); safeUrl rejects /^[/\\]{2}/ (//host, /\\host, \\host). +2 tests: 8/8 lesson-viewer, 53/53 full, tsc/eslint clean, build ok\n\n[2026-11-15T20:02:19-05:00] done by opus, escalated from sonnet; verified, review findings fixed; manual check queued",
         "testStrategy": "Vitest: renders table/image/code; `<script>`, `<img onerror>`, `javascript:` links and raw HTML render as inert text or are removed",
         "subtasks": []
       },
@@ -472,7 +472,7 @@
         "id": 23,
         "title": "Sample SQL and Python courses as static course files",
         "description": "Two small real courses that load through the manifest system (PRD 27 Courses).",
-        "status": "pending",
+        "status": "done",
         "priority": "medium",
         "phase": 3,
         "complexity": 4,
@@ -481,7 +481,7 @@
         ],
         "human": false,
         "review": false,
-        "details": "public/courses/index.json + public/courses/sql-fundamentals/ (2 modules, 5 lessons: SELECT, WHERE, ORDER BY, aggregates, JOIN; dataset.sql with employees/departments; each coding lesson has starter .sql and tests JSON) and public/courses/python-fundamentals/ (2 modules, 5 lessons: print, variables, conditionals, loops, functions; starter .py, tests JSON, solution). One reading-only lesson each. Content original, not copied from Codecademy.",
+        "details": "public/courses/index.json + public/courses/sql-fundamentals/ (2 modules, 5 lessons: SELECT, WHERE, ORDER BY, aggregates, JOIN; dataset.sql with employees/departments; each coding lesson has starter .sql and tests JSON) and public/courses/python-fundamentals/ (2 modules, 5 lessons: print, variables, conditionals, loops, functions; starter .py, tests JSON, solution). One reading-only lesson each. Content original, not copied from Codecademy.\n\n[2026-11-15T19:51:10-05:00] note from 21: add folders to public/courses/index.json and write e2e that My Courses lists them (21's e2e deferred to here)\n\n[2026-11-15T20:04:30-05:00] built both sample courses + index.json, vitest samples.test.ts and e2e pass\n\n[2026-11-15T20:05:58-05:00] done by sonnet; verified",
         "testStrategy": "Vitest test loads both folders from disk through the validator with zero errors",
         "subtasks": []
       },
@@ -489,7 +489,7 @@
         "id": 24,
         "title": "Course pages and lesson navigation from the registry",
         "description": "My Courses, course details and the lesson page run on real course data (PRD 5.3, 8.3, 6.4).",
-        "status": "pending",
+        "status": "done",
         "priority": "medium",
         "phase": 3,
         "complexity": 6,
@@ -502,7 +502,7 @@
         ],
         "human": false,
         "review": false,
-        "details": "My Courses lists registry courses with search and language/difficulty filters, remove (with confirm, says progress is kept), refresh placeholder. Course details page: modules and lessons list. Lesson page: module/lesson sidebar (drawer in lesson panel), loads lesson Markdown + starter code into the editor, Prev/Next across modules, unknown ids show a not-found state. Handle missing files gracefully (error state, not a crash).",
+        "details": "My Courses lists registry courses with search and language/difficulty filters, remove (with confirm, says progress is kept), refresh placeholder. Course details page: modules and lessons list. Lesson page: module/lesson sidebar (drawer in lesson panel), loads lesson Markdown + starter code into the editor, Prev/Next across modules, unknown ids show a not-found state. Handle missing files gracefully (error state, not a crash).\n\n[2026-11-15T20:06:52-05:00] plan (sonnet): CourseCard link+remove, CoursesPage remove/refresh, new CourseDetailPage, LessonPage on registry (blob assets, prev/next, sidebar), route, update e2e specs from c1/l1 placeholder to python-fundamentals/lesson-01\n\n[2026-11-15T20:34:40-05:00] sonnet: fixed lint (derived state instead of setState in effects), CourseCard test router, e2e specs; tsc/lint/vitest(56)/build/playwright(15) pass\n\n[2026-11-15T20:36:01-05:00] done by sonnet; verified",
         "testStrategy": "e2e: open sql-fundamentals → lesson 1 shows its Markdown and starter SQL; Next crosses into module 2; filter by language hides the other course",
         "subtasks": []
       },
@@ -510,7 +510,7 @@
         "id": 25,
         "title": "Phase 3 gate: lint, types, tests and build pass",
         "description": "Free script check that phase 3 leaves the repo green.",
-        "status": "pending",
+        "status": "done",
         "priority": "high",
         "phase": 3,
         "complexity": 3,
@@ -552,7 +552,7 @@
             "test"
           ]
         ],
-        "details": "Runs lint, tsc, vitest, vite build and Playwright e2e. A failure goes to a builder with the output tail.",
+        "details": "Runs lint, tsc, vitest, vite build and Playwright e2e. A failure goes to a builder with the output tail.\n\n[2026-11-15T20:36:49-05:00] script check passed: 5 command(s), 39.3s, no model used",
         "testStrategy": "python .taskmaster/run_checks.py run --only 25",
         "subtasks": []
       },
@@ -1435,7 +1435,7 @@
         }
       ],
       "created": "2026-11-15",
-      "updated": "2026-11-15T19:40:11-05:00"
+      "updated": "2026-11-15T20:36:49-05:00"
     }
   }
 }

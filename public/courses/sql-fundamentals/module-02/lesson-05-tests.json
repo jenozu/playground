@@ -1,0 +1,35 @@
+{
+  "language": "sql",
+  "tests": [
+    {
+      "name": "employee with department name",
+      "orderMatters": true,
+      "expectedRows": [
+        [
+          "Alice",
+          "Engineering"
+        ],
+        [
+          "Bob",
+          "Engineering"
+        ],
+        [
+          "Carol",
+          "Sales"
+        ],
+        [
+          "Dan",
+          "Sales"
+        ],
+        [
+          "Eve",
+          "Support"
+        ],
+        [
+          "Frank",
+          "Support"
+        ]
+      ]
+    }
+  ]
+}

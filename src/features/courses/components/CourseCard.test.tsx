@@ -8,18 +8,18 @@ const course = { id: 'c', title: 'SQL Basics', language: 'SQL', description: 'Le
   moduleCount: 3, lessonCount: 12, completionPercent: 25, lastAccessed: '2026-01-01' }
 
 test('CourseCard shows its fields', () => {
-  render(<CourseCard course={course} />)
+  render(<MemoryRouter><CourseCard course={course} /></MemoryRouter>)
   expect(screen.getByText('SQL Basics')).toBeInTheDocument()
   expect(screen.getByText('3 modules · 12 lessons')).toBeInTheDocument()
   expect(screen.getByText('25% complete')).toBeInTheDocument()
 })
 
 test('My Courses empty state and filters', () => {
-  const { unmount } = render(<CoursesPage />)
+  const { unmount } = render(<MemoryRouter><CoursesPage /></MemoryRouter>)
   expect(screen.getByLabelText('Search courses')).toBeInTheDocument()
   expect(screen.getByText(/No courses yet/)).toBeInTheDocument()
   unmount()
-  render(<CoursesPage courses={[course]} />)
+  render(<MemoryRouter><CoursesPage courses={[course]} /></MemoryRouter>)
   expect(screen.getByText('SQL Basics')).toBeInTheDocument()
 })
 
