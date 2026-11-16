@@ -3,7 +3,7 @@
 Generated from `.taskmaster/tasks/tasks.json` (the source of truth). Never edit by hand; regenerate with
 `python .taskmaster/render_tasks_md.py`.
 
-**Progress: 35/64 tasks done.**
+**Progress: 36/64 tasks done.**
 
 ## Phase 0 - Foundation
 
@@ -124,7 +124,7 @@ Generated from `.taskmaster/tasks/tasks.json` (the source of truth). Never edit 
 - [x] **33. Stop and timeout for runaway code** _(after 32, 27)_\
   Infinite loops can be stopped and the UI stays responsive (PRD 10.4, 11.5, 20.2).\
   _Test:_ e2e: `while True: pass` → Stop → output says stopped, UI clicks still respond within 1s, next run works; timeout test with a short profile
-- [ ] **34. Python exercise evaluation** _(after 32, 28)_\
+- [x] **34. Python exercise evaluation** _(after 32, 28)_\
   Submit runs Python tests and reports each assert (PRD 12.2).\
   _Test:_ Vitest/e2e: add(a,b) example from PRD 12.2 passes 3 tests; a wrong implementation shows which assert failed
 - [ ] **35. Python sample course e2e and Pyodide limitations doc** _(after 34, 33)_\

@@ -1,5 +1,6 @@
 import { run as runCode, reset as resetEngine, stop as stopCode } from "../../../execution/manager";
 import { testFileSchema } from "../../../course-system/schema";
+import { evaluatePython } from "../../exercise-evaluation/python";
 import { emitIfPassed, evaluateSql } from "../../exercise-evaluation/sql";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -136,15 +137,22 @@ export default function LessonPage() {
     const ex = lesson?.exercise;
     const tf = testFileSchema.safeParse(JSON.parse(text(files?.get(ex?.tests ?? "")) || "null"));
     if (!ex || !tf.success) return setOut("No tests for this lesson.");
-    if (tf.data.language !== "sql") return setOut("Submit is not available for this language yet.");
+    if (tf.data.language === "javascript") return setOut("Submit is not available for this language yet.");
     const options = { dataset: text(files?.get(ex.dataset ?? "")) || undefined };
-    const results = await evaluateSql(tf.data.tests, code, {
-      reset: () => resetEngine("sql"),
-      exec: (c) => runCode("sql", c, { options }),
-    });
+    const results =
+      tf.data.language === "python"
+        ? await evaluatePython(tf.data.tests, code, { exec: (c) => runCode("python", c) })
+        : await evaluateSql(tf.data.tests, code, {
+            reset: () => resetEngine("sql"),
+            exec: (c) => runCode("sql", c, { options }),
+          });
     const line = (r: (typeof results)[number]) =>
       `${r.passed ? "PASS" : "FAIL"} ${r.name}` +
-      (r.passed ? "" : `\n  expected: ${r.expected ?? ""}\n  actual: ${r.actual ?? r.error ?? ""}`);
+      (r.passed
+        ? ""
+        : tf.data.language === "python" && r.expected === undefined
+          ? `\n  error: ${r.error ?? ""}`
+          : `\n  expected: ${r.expected ?? ""}\n  actual: ${r.actual ?? r.error ?? ""}`);
     setTables([]);
     setOut(results.map(line).join("\n"));
     emitIfPassed(results, window, { courseId, lessonId });
