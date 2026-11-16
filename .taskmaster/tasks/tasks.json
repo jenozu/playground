@@ -824,7 +824,7 @@
         ],
         "human": false,
         "review": true,
-        "details": "src/features/learning-progress/: progress service over repos. Complete on passing Submit, or 'Mark complete' button for reading lessons. Record every attempt (time, passed, test counts). Track last course/lesson/activity date. Derived: module/course completion, success rate. Pure calculation functions unit-tested. Header progress indicators use real data.\n\n[2026-11-15T22:37:29-05:00] plan (sonnet): src/features/learning-progress/{calc,service,useProgress}.ts + tests; wire LessonPage (submit, mark complete, header %, last position) and CoursesPage\n\n[2026-11-15T22:38:34-05:00] done: calc/service/tests, LessonPage + CoursesPage wired, e2e/progress.spec.ts passes; vitest 101 pass, lint+tsc clean\n\n[2026-11-15T22:40:18-05:00] done by sonnet; verified, reviewer APPROVE",
+        "details": "src/features/learning-progress/: progress service over repos. Complete on passing Submit, or 'Mark complete' button for reading lessons. Record every attempt (time, passed, test counts). Track last course/lesson/activity date. Derived: module/course completion, success rate. Pure calculation functions unit-tested. Header progress indicators use real data.\n\n[2026-11-15T22:37:29-05:00] plan (sonnet): src/features/learning-progress/{calc,service,useProgress}.ts + tests; wire LessonPage (submit, mark complete, header %, last position) and CoursesPage\n\n[2026-11-15T22:38:34-05:00] done: calc/service/tests, LessonPage + CoursesPage wired, e2e/progress.spec.ts passes; vitest 101 pass, lint+tsc clean\n\n[2026-11-15T22:40:18-05:00] done by sonnet; verified, reviewer APPROVE\n\n[2026-11-15T22:44:43-05:00] fix: calc.ts + progress.test.ts use course-system/schema Course/Module (app passes schema type; types/course.ts differs). build/lint/vitest pass.\n\n[2026-11-15T22:44:53-05:00] corrective: calc.ts used stale Course type, build failed; fixed by sonnet",
         "testStrategy": "Vitest: completion % math, module complete when all lessons done; e2e: submit passing → reload → lesson shows completed",
         "subtasks": []
       },
@@ -832,7 +832,7 @@
         "id": 38,
         "title": "Autosave and restore working code",
         "description": "User code survives leaving the lesson and reloading; starter stays resettable (PRD 9.5, 13.2).",
-        "status": "pending",
+        "status": "done",
         "priority": "medium",
         "phase": 6,
         "complexity": 4,
@@ -841,7 +841,7 @@
         ],
         "human": false,
         "review": false,
-        "details": "Debounced (~800ms) save of editor content per course/lesson/file into the code repo; flush on route change and beforeunload; Save button forces a save with a brief 'Saved' state. On open: saved code if present else starter.",
+        "details": "Debounced (~800ms) save of editor content per course/lesson/file into the code repo; flush on route change and beforeunload; Save button forces a save with a brief 'Saved' state. On open: saved code if present else starter.\n\n[2026-11-15T22:42:15-05:00] done (sonnet): LessonPage autosave 800ms to codeRepo, flush on unmount/beforeunload/Save; e2e/autosave.spec.ts passes\n\n[2026-11-15T22:44:53-05:00] done by sonnet; verified",
         "testStrategy": "e2e: edit code, reload, code restored; Reset brings back starter",
         "subtasks": []
       },
@@ -1480,7 +1480,7 @@
         }
       ],
       "created": "2026-11-15",
-      "updated": "2026-11-15T22:40:18-05:00"
+      "updated": "2026-11-15T22:44:54-05:00"
     }
   }
 }

@@ -1,4 +1,4 @@
-import type { Course, Module } from '../../types/course'
+import type { Course, Module } from '../../course-system/schema'
 
 export interface Attempt {
   id: string

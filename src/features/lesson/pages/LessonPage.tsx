@@ -24,6 +24,7 @@ import type { CourseFiles } from "../../../course-system/parser";
 import { Hints, Solution, shouldReset } from "../ExerciseHelpers";
 import { Entry } from "../../../components/terminal/OutputPanel";
 import { LessonMarkdown } from "../../lesson-viewer/LessonMarkdown";
+import { codeRepo } from "../../../storage/repositories";
 import { coursePercent } from "../../learning-progress/calc";
 import {
   completeLesson,
@@ -123,8 +124,44 @@ export default function LessonPage() {
   useEffect(() => () => clearTimeout(timer.current), []);
   const key = `${courseId}/${lessonId}`;
   const [edit, setEdit] = useState<{ key: string; v: string }>();
-  const code = edit?.key === key ? edit.v : (starter ?? "");
-  const setCode = (v: string) => setEdit({ key, v });
+  // saved code per course/lesson/file (stable ids); loaded on open, falls back to starter
+  const [saved, setSaved] = useState<{ key: string; v?: string }>();
+  const codeId = (k: string) => `code:${k}/main`;
+  useEffect(() => {
+    let live = true;
+    codeRepo.get(codeId(key)).then(
+      (r) => live && setSaved({ key, v: typeof r?.code === "string" ? r.code : undefined }),
+      () => live && setSaved({ key }),
+    );
+    return () => {
+      live = false;
+    };
+  }, [key]);
+  const code = edit?.key === key ? edit.v : ((saved?.key === key ? saved.v : undefined) ?? starter ?? "");
+  const pending = useRef<{ key: string; v: string }>(undefined);
+  const saveTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
+  const flush = async () => {
+    clearTimeout(saveTimer.current);
+    const p = pending.current;
+    pending.current = undefined;
+    if (p) await codeRepo.put({ id: codeId(p.key), code: p.v, updatedAt: new Date().toISOString() }).catch(() => {});
+  };
+  const setCode = (v: string) => {
+    setEdit({ key, v });
+    pending.current = { key, v };
+    clearTimeout(saveTimer.current);
+    saveTimer.current = setTimeout(() => void flush(), 800);
+  };
+  // flush on route change / unmount and on page unload
+  useEffect(() => {
+    const f = () => void flush();
+    window.addEventListener("beforeunload", f);
+    return () => {
+      window.removeEventListener("beforeunload", f);
+      f();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [key]);
   const [out, setOut] = useState("");
   const [tables, setTables] = useState<{ columns: string[]; rows: unknown[][] }[]>([]);
   const [note, setNote] = useState("");
@@ -205,7 +242,7 @@ export default function LessonPage() {
     ...(!lesson?.exercise && !done.has(lessonId ?? "")
       ? [["Mark complete", () => void completeLesson(courseId!, lessonId!).then(refreshProgress)] as [string, () => void]]
       : []),
-    ["Save", () => setNote("Saved (placeholder)")],
+    ["Save", () => void flush().then(() => (setNote("Saved"), setTimeout(() => setNote(""), 1500)))],
     ["Clear output", () => (setOut(""), setTables([]))],
   ];
   const mode = useMode();
@@ -438,6 +475,7 @@ export default function LessonPage() {
         </>
       )}
       <footer className="flex flex-wrap items-center gap-2 border-t border-slate-200 px-3 py-2 dark:border-slate-700">
+        {/* eslint-disable-next-line react-hooks/refs -- flush only touches refs in the click handler */}
         {controls.map(([label, fn]) => (
           <button
             key={label}

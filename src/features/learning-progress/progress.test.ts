@@ -2,7 +2,7 @@ import 'fake-indexeddb/auto'
 import { describe, expect, it } from 'vitest'
 import { coursePercent, isModuleComplete, modulePercent, successRate } from './calc'
 import { completeLesson, completedIds, lastPosition, listLessonProgress, recordAttempt, touchLesson } from './service'
-import type { Course } from '../../types/course'
+import type { Course } from '../../course-system/schema'
 
 const l = (id: string) => ({ id, title: id, type: 'reading', content: '', exercises: [] })
 const course = { id: 'c', modules: [{ id: 'm1', lessons: [l('a'), l('b')] }, { id: 'm2', lessons: [l('c'), l('d')] }] } as unknown as Course
