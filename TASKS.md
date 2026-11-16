@@ -3,7 +3,7 @@
 Generated from `.taskmaster/tasks/tasks.json` (the source of truth). Never edit by hand; regenerate with
 `python .taskmaster/render_tasks_md.py`.
 
-**Progress: 31/63 tasks done.**
+**Progress: 32/63 tasks done.**
 
 ## Phase 0 - Foundation
 
@@ -109,7 +109,7 @@ Generated from `.taskmaster/tasks/tasks.json` (the source of truth). Never edit 
 - [x] **30. SQL lesson end-to-end test** _(after 29)_\
   The full SQL loop works in a real browser.\
   _Test:_ npx playwright test e2e/sql-lesson.spec.ts passes
-- [ ] **31. Phase 4 gate: lint, types, tests and build pass** _(after 26, 27, 28, 29, 30)_\
+- [x] **31. Phase 4 gate: lint, types, tests and build pass** _(after 26, 27, 28, 29, 30)_\
   Free script check that phase 4 leaves the repo green.\
   _Test:_ python .taskmaster/run_checks.py run --only 31
 - [x] **63. Editor dark theme via @codemirror/theme-one-dark, live theme switching** _(after 15)_\
