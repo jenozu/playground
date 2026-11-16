@@ -22,6 +22,8 @@ test.describe('SQL lesson end-to-end', () => {
     // Run: the starter query returns all six employees
     await page.getByRole('button', { name: 'Run', exact: true }).click()
     await expect(output).toHaveText('6 row(s)')
+    await expect(page.getByTestId('entry-table').locator('td').first()).not.toBeEmpty()
+    await expect(page.getByTestId('entry-table').locator('tbody tr')).toHaveCount(6)
 
     // Submit a wrong query: failure details with expected and actual
     await setCode(page, WRONG)

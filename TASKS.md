@@ -3,7 +3,7 @@
 Generated from `.taskmaster/tasks/tasks.json` (the source of truth). Never edit by hand; regenerate with
 `python .taskmaster/render_tasks_md.py`.
 
-**Progress: 32/64 tasks done.**
+**Progress: 33/64 tasks done.**
 
 ## Phase 0 - Foundation
 
@@ -133,7 +133,7 @@ Generated from `.taskmaster/tasks/tasks.json` (the source of truth). Never edit 
 - [ ] **36. Phase 5 gate: lint, types, tests and build pass** _(after 32, 33, 34, 35)_\
   Free script check that phase 5 leaves the repo green.\
   _Test:_ python .taskmaster/run_checks.py run --only 36
-- [ ] **64. Fix: SQL results render as a table in the Output panel** _(after 30)_\
+- [x] **64. Fix: SQL results render as a table in the Output panel** _(after 30)_\
   Corrective for phase 4 (found by task 30 e2e, parked by mistake). OutputPanel supports table entries and the SQL adapter returns one table per result set, but the lesson page shows only 'N row(s)'. Wire the SQL ExecutionResult.table into OutputPanel table entries (columns + rows), like the Codecademy Query Results pane (docs/design/reference.png). Zero-row SELECT shows the column headers with no rows, not 'Query OK.'. Also fix the React duplicate-key warning for sql-fundamentals/lesson-02 in the lesson list.\
   _Test:_ Vitest: running 'SELECT * FROM <table>' in the lesson page renders a table with the expected header cells and row count; zero-row SELECT renders headers and no 'Query OK.'. Playwright SQL lesson spec asserts a table cell value, not just 'N row(s)'. No duplicate-key warning in the lesson list test. npm run lint, typecheck, build pass.
 
