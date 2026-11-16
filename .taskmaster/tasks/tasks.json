@@ -900,7 +900,7 @@
         "id": 42,
         "title": "Export and import learning data",
         "description": "Progress, notes, code and bookmarks can be backed up and restored as JSON (PRD 13.6, 21.4).",
-        "status": "pending",
+        "status": "done",
         "priority": "medium",
         "phase": 6,
         "complexity": 5,
@@ -910,7 +910,7 @@
         ],
         "human": false,
         "review": true,
-        "details": "Settings → Data: export a versioned JSON (exportVersion, date, stores) download; import validates with zod, previews counts, merges or replaces (confirm). Never executes or renders imported strings as HTML.",
+        "details": "Settings → Data: export a versioned JSON (exportVersion, date, stores) download; import validates with zod, previews counts, merges or replaces (confirm). Never executes or renders imported strings as HTML.\n\n[2026-11-15T22:57:28-05:00] built dataBackup.ts (zod validate, single-tx merge/replace) + Settings Data UI + tests; vitest/lint/build pass\n\n[2026-11-15T22:58:49-05:00] escalate sonnet→sonnet fix: reviewer CHANGES NEEDED, attempts store missing from backup\n\n[2026-11-15T23:01:38-05:00] done by sonnet; verified, reviewer findings (attempts store, replace safety) fixed",
         "testStrategy": "Vitest: export → import round-trip equals original; malformed file rejected with a message",
         "subtasks": []
       },
@@ -1480,7 +1480,7 @@
         }
       ],
       "created": "2026-11-15",
-      "updated": "2026-11-15T22:56:12-05:00"
+      "updated": "2026-11-15T23:01:39-05:00"
     }
   }
 }

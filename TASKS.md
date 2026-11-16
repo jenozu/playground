@@ -3,7 +3,7 @@
 Generated from `.taskmaster/tasks/tasks.json` (the source of truth). Never edit by hand; regenerate with
 `python .taskmaster/render_tasks_md.py`.
 
-**Progress: 44/65 tasks done.**
+**Progress: 45/65 tasks done.**
 
 ## Phase 0 - Foundation
 
@@ -154,7 +154,7 @@ Generated from `.taskmaster/tasks/tasks.json` (the source of truth). Never edit 
 - [x] **41. Lesson notes and bookmarks** _(after 37)_\
   Per-lesson notes autosave; lessons and courses can be bookmarked (PRD 13.4, 3.4).\
   _Test:_ e2e: write a note, reload, note still there; bookmark appears on dashboard
-- [ ] **42. Export and import learning data** _(after 41, 38)_\
+- [x] **42. Export and import learning data** _(after 41, 38)_\
   Progress, notes, code and bookmarks can be backed up and restored as JSON (PRD 13.6, 21.4).\
   _Test:_ Vitest: export → import round-trip equals original; malformed file rejected with a message
 - [ ] **43. Phase 6 gate: lint, types, tests and build pass** _(after 37, 38, 39, 40, 41, 42)_\
