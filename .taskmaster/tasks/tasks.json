@@ -464,7 +464,7 @@
         ],
         "human": false,
         "review": true,
-        "details": "src/features/lesson-viewer/LessonMarkdown.tsx: react-markdown + remark-gfm, NO rehype-raw, urlTransform allowing only http(s), mailto and relative paths; relative image paths resolved to blob URLs from course files; external links open with rel=noopener noreferrer; code blocks highlighted (CodeMirror static highlighting or a small highlighter); callouts from `> [!NOTE]`/`[!TIP]`/`[!WARNING]` blockquotes. Shows title and estimated minutes.",
+        "details": "src/features/lesson-viewer/LessonMarkdown.tsx: react-markdown + remark-gfm, NO rehype-raw, urlTransform allowing only http(s), mailto and relative paths; relative image paths resolved to blob URLs from course files; external links open with rel=noopener noreferrer; code blocks highlighted (CodeMirror static highlighting or a small highlighter); callouts from `> [!NOTE]`/`[!TIP]`/`[!WARNING]` blockquotes. Shows title and estimated minutes.\n\n[2026-11-15T19:52:32-05:00] BLOCKED (sonnet): react-markdown and remark-gfm not in package.json or node_modules; no existing markdown renderer in src. Human must run: npm install react-markdown remark-gfm\n\n[2026-11-15T19:53:01-05:00] phase-runner installed react-markdown + remark-gfm (stack deps named in AGENTS.md); retrying builder",
         "testStrategy": "Vitest: renders table/image/code; `<script>`, `<img onerror>`, `javascript:` links and raw HTML render as inert text or are removed",
         "subtasks": []
       },
@@ -1435,7 +1435,7 @@
         }
       ],
       "created": "2026-11-15",
-      "updated": "2026-11-15T19:52:14-05:00"
+      "updated": "2026-11-15T19:53:01-05:00"
     }
   }
 }
