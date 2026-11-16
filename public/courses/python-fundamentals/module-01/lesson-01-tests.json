@@ -1,0 +1,9 @@
+{
+  "language": "python",
+  "tests": [
+    {
+      "name": "prints the greeting",
+      "expectedStdout": "Hello, World!\n"
+    }
+  ]
+}

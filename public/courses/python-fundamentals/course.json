@@ -1,0 +1,98 @@
+{
+  "schemaVersion": 1,
+  "id": "python-fundamentals",
+  "title": "Python Fundamentals",
+  "version": "1.0.0",
+  "language": "python",
+  "description": "First steps in Python: print, variables, conditionals, loops and functions.",
+  "difficulty": "beginner",
+  "estimatedHours": 2,
+  "author": "Personal Coding Academy",
+  "modules": [
+    {
+      "id": "module-01",
+      "title": "The basics",
+      "lessons": [
+        {
+          "id": "lesson-01",
+          "title": "Printing",
+          "content": "module-01/lesson-01.md",
+          "estimatedMinutes": 5,
+          "type": "coding",
+          "exercise": {
+            "type": "python",
+            "starter": "module-01/lesson-01.py",
+            "tests": "module-01/lesson-01-tests.json",
+            "solution": "module-01/lesson-01-solution.py",
+            "hints": [
+              "Put the text inside quotes.",
+              "Use print( ... )."
+            ]
+          }
+        },
+        {
+          "id": "lesson-02",
+          "title": "Variables",
+          "content": "module-01/lesson-02.md",
+          "estimatedMinutes": 5,
+          "type": "reading"
+        },
+        {
+          "id": "lesson-03",
+          "title": "Conditionals",
+          "content": "module-01/lesson-03.md",
+          "estimatedMinutes": 10,
+          "type": "coding",
+          "exercise": {
+            "type": "python",
+            "starter": "module-01/lesson-03.py",
+            "tests": "module-01/lesson-03-tests.json",
+            "solution": "module-01/lesson-03-solution.py",
+            "hints": [
+              "Use number % 2 == 0 to test for even."
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "module-02",
+      "title": "Repetition and reuse",
+      "lessons": [
+        {
+          "id": "lesson-04",
+          "title": "Loops",
+          "content": "module-02/lesson-04.md",
+          "estimatedMinutes": 10,
+          "type": "coding",
+          "exercise": {
+            "type": "python",
+            "starter": "module-02/lesson-04.py",
+            "tests": "module-02/lesson-04-tests.json",
+            "solution": "module-02/lesson-04-solution.py",
+            "hints": [
+              "range(1, 6) stops before 6."
+            ]
+          }
+        },
+        {
+          "id": "lesson-05",
+          "title": "Functions",
+          "content": "module-02/lesson-05.md",
+          "estimatedMinutes": 15,
+          "type": "coding",
+          "exercise": {
+            "type": "python",
+            "starter": "module-02/lesson-05.py",
+            "tests": "module-02/lesson-05-tests.json",
+            "solution": "module-02/lesson-05-solution.py",
+            "hints": [
+              "Start with def square(n):",
+              "Use return."
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

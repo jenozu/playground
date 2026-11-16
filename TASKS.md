@@ -3,7 +3,7 @@
 Generated from `.taskmaster/tasks/tasks.json` (the source of truth). Never edit by hand; regenerate with
 `python .taskmaster/render_tasks_md.py`.
 
-**Progress: 22/62 tasks done.**
+**Progress: 23/62 tasks done.**
 
 ## Phase 0 - Foundation
 
@@ -82,7 +82,7 @@ Generated from `.taskmaster/tasks/tasks.json` (the source of truth). Never edit 
 - [x] **22. Safe Markdown lesson renderer** _(after 20)_  
   Lesson Markdown with code, tables, images, links and callouts, safe for untrusted content (PRD 7.3, 8.1, 17.5).  
   _Test:_ Vitest: renders table/image/code; `<script>`, `<img onerror>`, `javascript:` links and raw HTML render as inert text or are removed
-- [ ] **23. Sample SQL and Python courses as static course files** _(after 19)_  
+- [x] **23. Sample SQL and Python courses as static course files** _(after 19)_  
   Two small real courses that load through the manifest system (PRD 27 Courses).  
   _Test:_ Vitest test loads both folders from disk through the validator with zero errors
 - [ ] **24. Course pages and lesson navigation from the registry** _(after 21, 22, 23, 17, 11)_  

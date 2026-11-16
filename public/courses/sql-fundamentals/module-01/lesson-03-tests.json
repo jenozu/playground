@@ -1,0 +1,39 @@
+{
+  "language": "sql",
+  "tests": [
+    {
+      "name": "sorted by salary, highest first",
+      "expectedColumns": [
+        "name",
+        "salary"
+      ],
+      "orderMatters": true,
+      "expectedRows": [
+        [
+          "Carol",
+          80000
+        ],
+        [
+          "Alice",
+          70000
+        ],
+        [
+          "Eve",
+          65000
+        ],
+        [
+          "Bob",
+          60000
+        ],
+        [
+          "Dan",
+          55000
+        ],
+        [
+          "Frank",
+          50000
+        ]
+      ]
+    }
+  ]
+}

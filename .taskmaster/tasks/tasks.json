@@ -472,7 +472,7 @@
         "id": 23,
         "title": "Sample SQL and Python courses as static course files",
         "description": "Two small real courses that load through the manifest system (PRD 27 Courses).",
-        "status": "pending",
+        "status": "done",
         "priority": "medium",
         "phase": 3,
         "complexity": 4,
@@ -481,7 +481,7 @@
         ],
         "human": false,
         "review": false,
-        "details": "public/courses/index.json + public/courses/sql-fundamentals/ (2 modules, 5 lessons: SELECT, WHERE, ORDER BY, aggregates, JOIN; dataset.sql with employees/departments; each coding lesson has starter .sql and tests JSON) and public/courses/python-fundamentals/ (2 modules, 5 lessons: print, variables, conditionals, loops, functions; starter .py, tests JSON, solution). One reading-only lesson each. Content original, not copied from Codecademy.\n\n[2026-11-15T19:51:10-05:00] note from 21: add folders to public/courses/index.json and write e2e that My Courses lists them (21's e2e deferred to here)",
+        "details": "public/courses/index.json + public/courses/sql-fundamentals/ (2 modules, 5 lessons: SELECT, WHERE, ORDER BY, aggregates, JOIN; dataset.sql with employees/departments; each coding lesson has starter .sql and tests JSON) and public/courses/python-fundamentals/ (2 modules, 5 lessons: print, variables, conditionals, loops, functions; starter .py, tests JSON, solution). One reading-only lesson each. Content original, not copied from Codecademy.\n\n[2026-11-15T19:51:10-05:00] note from 21: add folders to public/courses/index.json and write e2e that My Courses lists them (21's e2e deferred to here)\n\n[2026-11-15T20:04:30-05:00] built both sample courses + index.json, vitest samples.test.ts and e2e pass\n\n[2026-11-15T20:05:58-05:00] done by sonnet; verified",
         "testStrategy": "Vitest test loads both folders from disk through the validator with zero errors",
         "subtasks": []
       },
@@ -1435,7 +1435,7 @@
         }
       ],
       "created": "2026-11-15",
-      "updated": "2026-11-15T20:02:19-05:00"
+      "updated": "2026-11-15T20:05:58-05:00"
     }
   }
 }

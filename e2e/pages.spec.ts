@@ -10,3 +10,9 @@ for (const [path, h] of [['/', 'Dashboard'], ['/courses', 'My Courses']]) {
     expect(errors).toEqual([])
   })
 }
+
+test('My Courses lists the bundled sample courses', async ({ page }) => {
+  await page.goto('/courses')
+  await expect(page.getByText('SQL Fundamentals')).toBeVisible()
+  await expect(page.getByText('Python Fundamentals')).toBeVisible()
+})
