@@ -1,3 +1,6 @@
+import { run as runCode, reset as resetEngine } from "../../../execution/manager";
+import { testFileSchema } from "../../../course-system/schema";
+import { emitIfPassed, evaluateSql } from "../../exercise-evaluation/sql";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import {
@@ -11,11 +14,13 @@ import {
   DEFAULT_PREFERENCES,
   usePreferences,
 } from "../../settings/usePreferences";
+import { useIsDark } from "../../settings/useIsDark";
 import { CodeEditor } from "../../../components/editor/CodeEditor";
 import { FileTabs } from "../../../components/editor/FileTabs";
 import { useCourses } from "../../../course-system/registry/useCourses";
 import { getFiles } from "../../../course-system/registry";
 import type { CourseFiles } from "../../../course-system/parser";
+import { Hints, Solution, shouldReset } from "../ExerciseHelpers";
 import { LessonMarkdown } from "../../lesson-viewer/LessonMarkdown";
 
 const IDS = ["lesson", "editor", "output"];
@@ -71,6 +76,7 @@ export default function LessonPage() {
   const lesson = flat[idx]?.l;
   const markdown = text(files?.get(lesson?.content ?? ""));
   const starter = text(files?.get(lesson?.exercise?.starter ?? ""));
+  const solution = text(files?.get(lesson?.exercise?.solution ?? ""));
   // blob URLs for binary course files (images); revoked when the course changes or on unmount
   const assets = useMemo(() => {
     const m = new Map<string, string>();
@@ -93,6 +99,7 @@ export default function LessonPage() {
     if (t) void navigate(`/courses/${courseId}/lessons/${t.l.id}`);
   };
   const { prefs, loaded, update } = usePreferences();
+  const isDark = useIsDark();
   const group = useRef<GroupImperativeHandle>(null);
   const timer = useRef<ReturnType<typeof setTimeout>>(undefined);
   useEffect(() => () => clearTimeout(timer.current), []);
@@ -102,16 +109,41 @@ export default function LessonPage() {
   const setCode = (v: string) => setEdit({ key, v });
   const [out, setOut] = useState("");
   const [note, setNote] = useState("");
-  // ponytail: placeholder handlers; real execution/save/submit arrive in later phases
-  const run = () =>
-    setOut(`Simulated output for:
-${code}`);
+  // ponytail: placeholder save/submit; arrive in later phases
+  const run = async () => {
+    const r = await runCode(lesson?.exercise?.type ?? course!.language, code, {
+      onStatus: (s) => s !== "done" && setOut(s === "loading" ? "Loading engine..." : "Running..."),
+      options: { dataset: text(files?.get(lesson?.exercise?.dataset ?? "")) || undefined },
+    });
+    setOut([r.output, ...r.errors].filter(Boolean).join("\n") || "(no output)");
+  };
+  const submit = async () => {
+    const ex = lesson?.exercise;
+    const tf = testFileSchema.safeParse(JSON.parse(text(files?.get(ex?.tests ?? "")) || "null"));
+    if (!ex || !tf.success) return setOut("No tests for this lesson.");
+    if (tf.data.language !== "sql") return setOut("Submit is not available for this language yet.");
+    const options = { dataset: text(files?.get(ex.dataset ?? "")) || undefined };
+    const results = await evaluateSql(tf.data.tests, code, {
+      reset: () => resetEngine("sql"),
+      exec: (c) => runCode("sql", c, { options }),
+    });
+    const line = (r: (typeof results)[number]) =>
+      `${r.passed ? "PASS" : "FAIL"} ${r.name}` +
+      (r.passed ? "" : `\n  expected: ${r.expected ?? ""}\n  actual: ${r.actual ?? r.error ?? ""}`);
+    setOut(results.map(line).join("\n"));
+    emitIfPassed(results, window, { courseId, lessonId });
+  };
   const controls: [string, () => void][] = [
     ["Previous", () => go(-1)],
     ["Next", () => go(1)],
-    ["Run", run],
-    ["Submit", () => setNote("Submit (placeholder)")],
-    ["Reset", () => setCode(starter ?? "")],
+    ["Run", () => void run()],
+    ["Submit", () => void submit()],
+    [
+      "Reset",
+      () => {
+        if (shouldReset(code, starter ?? "")) setCode(starter ?? "");
+      },
+    ],
     ["Save", () => setNote("Saved (placeholder)")],
     ["Clear output", () => setOut("")],
   ];
@@ -192,6 +224,8 @@ ${code}`);
               resolveAsset={resolveAsset}
             />
           )}
+          <Hints key={key} hints={lesson!.exercise?.hints ?? []} />
+          {solution !== undefined && <Solution key={key} solution={solution} />}
         </>
       )}
       {id === "editor" && (
@@ -205,11 +239,11 @@ ${code}`);
             <CodeEditor
               value={code}
               onChange={setCode}
-              onRun={run}
+              onRun={() => void run()}
               language={lesson!.exercise?.type ?? course!.language}
               fontSize={prefs.fontSize}
               fontFamily={prefs.fontFamily}
-              dark={document.documentElement.classList.contains("dark")}
+              dark={isDark}
             />
           </div>
         </div>

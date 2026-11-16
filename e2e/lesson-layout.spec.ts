@@ -44,9 +44,9 @@ test('panels scroll independently; controls work', async ({ page }) => {
   expect(await o.evaluate((n) => n.scrollTop)).toBe(0)
 
   await page.getByRole('button', { name: 'Run', exact: true }).click()
-  await expect(page.getByTestId('output-text')).toContainText('Simulated output')
+  await expect(page.getByTestId('output-text')).toContainText('No execution engine')
   await page.getByRole('button', { name: 'Clear output' }).click()
   await expect(page.getByTestId('output-text')).toHaveText('')
   await page.getByLabel('Code').press('Control+Enter')
-  await expect(page.getByTestId('output-text')).toContainText('Simulated output')
+  await expect(page.getByTestId('output-text')).toContainText('No execution engine')
 })

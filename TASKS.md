@@ -3,7 +3,7 @@
 Generated from `.taskmaster/tasks/tasks.json` (the source of truth). Never edit by hand; regenerate with
 `python .taskmaster/render_tasks_md.py`.
 
-**Progress: 25/62 tasks done.**
+**Progress: 32/63 tasks done.**
 
 ## Phase 0 - Foundation
 
@@ -94,24 +94,27 @@ Generated from `.taskmaster/tasks/tasks.json` (the source of truth). Never edit 
 
 ## Phase 4 - SQL playground
 
-- [ ] **26. Execution manager with lazy-loaded engine registry** _(after 3, 24)_\
+- [x] **26. Execution manager with lazy-loaded engine registry** _(after 3, 24)_\
   UI runs code through one manager that picks and lazy-loads the language adapter (PRD 10.1-10.2, 20.1).\
   _Test:_ Vitest with a fake adapter: lazy load called once, timeout produces an error result, stop() calls the adapter
-- [ ] **27. SQL adapter: sql.js in a Web Worker** _(after 26)_\
+- [x] **27. SQL adapter: sql.js in a Web Worker** _(after 26)_\
   SQL runs off the main thread with tables, errors, datasets and reset (PRD 10.3).\
   _Test:_ Vitest (worker logic tested as plain functions with sql.js in node): CREATE/INSERT/SELECT/JOIN/aggregate return rows; bad table gives sqlite error; reset clears user tables
-- [ ] **28. Exercise evaluation and Submit flow (SQL first)** _(after 27)_\
+- [x] **28. Exercise evaluation and Submit flow (SQL first)** _(after 27)_\
   Submit runs the tests and shows pass/fail with expected vs actual; Run never completes a lesson (PRD 12.2-12.3).\
   _Test:_ Vitest: correct SQL passes, wrong row count and wrong order (when ordered) fail with expected/actual
-- [ ] **29. Reset starter code, progressive hints and solution view** _(after 28)_\
+- [x] **29. Reset starter code, progressive hints and solution view** _(after 28)_\
   Exercise helpers that never reveal the solution by accident (PRD 9.4, 12.4-12.5).\
   _Test:_ Vitest/e2e: hint 2 hidden until hint 1 revealed; reset restores starter; viewing solution leaves editor text unchanged
-- [ ] **30. SQL lesson end-to-end test** _(after 29)_\
+- [x] **30. SQL lesson end-to-end test** _(after 29)_\
   The full SQL loop works in a real browser.\
   _Test:_ npx playwright test e2e/sql-lesson.spec.ts passes
-- [ ] **31. Phase 4 gate: lint, types, tests and build pass** _(after 26, 27, 28, 29, 30)_\
+- [x] **31. Phase 4 gate: lint, types, tests and build pass** _(after 26, 27, 28, 29, 30)_\
   Free script check that phase 4 leaves the repo green.\
   _Test:_ python .taskmaster/run_checks.py run --only 31
+- [x] **63. Editor dark theme via @codemirror/theme-one-dark, live theme switching** _(after 15)_\
+  Owner-approved (2026-11-15, PRD decision log). Install @codemirror/theme-one-dark; add a shared theme hook so the CodeMirror editor switches light/dark live when the app theme changes, without remounting or losing editor content.\
+  _Test:_ Vitest: toggling app theme reconfigures the editor (oneDark extension present in dark, absent in light) and keeps the doc text and undo history. npm run lint, typecheck, build pass.
 
 ## Phase 5 - Python playground
 

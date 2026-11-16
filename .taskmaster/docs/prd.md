@@ -2249,3 +2249,4 @@ The objective is to build a reliable foundation that can support years of progra
 - 2026-11-15: PRD adopted for build (master-harness bootstrap) - phases follow section 24 roadmap.
 - 2026-11-15: Hosting (Vercel vs owner's VPS) deferred to phase 9 by the owner - until then merging to main deploys nothing.
 - 2026-11-15: Single-repo layout for now: app at repo root (Vite), sample courses as static files under `public/courses/` loaded via the same manifest loader an imported course uses - keeps 3.1 content independence; a separate `coding-courses` repo (25.2) is a human step when ready.
+- 2026-11-15: Owner approved adding `@codemirror/theme-one-dark` (CodeMirror 6 stays the editor): a shared theme hook so the editor's dark mode follows the app theme live instead of only on mount. Replaces the editor's hand-rolled dark styling; from the parking lot.

@@ -7,4 +7,6 @@ promote to a task (`tasks.py add` or the `adapt` skill), defer, or delete on pur
 - 2026-11-15: task 8 idea: per-store record types; add blocking() handler in openDB at first version bump
 - 2026-11-15: playwright.config.ts reuseExistingServer picks up unrelated app on 5173; use another port or false
 - 2026-11-15: lesson header should show real course/lesson titles once phase 3 exists (from task 13)
-- 2026-11-15 Parking: shared theme hook so editor dark updates live; install @codemirror/theme-one-dark (needs approval)
+- 2026-11-15: manager.ts loaders/timeouts lookups should use Object.hasOwn (language from untrusted manifest, e.g. 'constructor'); single 'active' engine in stop() (task 26 review)
+- 2026-11-15 idea: OutputPanel test entries for Submit results; guard JSON.parse of test file (from 28)
+- 2026-11-15 (from 30): React duplicate key warning `sql-fundamentals/lesson-02` in lesson list rendering; Output panel shows only "N row(s)" not a table; no DB reset button; zero-row SELECT says "Query OK."

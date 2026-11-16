@@ -23,3 +23,20 @@ with numbered steps and the expected result.
 
 ### Task 22 - Safe Markdown lesson renderer (2026-11-15)
 1. Open a lesson with a ```sql / ```python fenced block in the running app. Expected: keywords, strings, comments show in colour on the dark code background.
+
+### Task 27 - SQL adapter in a Web Worker (2026-11-15)
+1. Run `npm run dev`, open a SQL lesson, run `SELECT 1 AS x;`. Expected: result table shows x=1; sql.js WASM loads only on first run (Network tab).
+2. Run an infinite-ish query (recursive CTE with huge limit). Expected: times out and the UI stays responsive; the next run works.
+3. Run invalid SQL. Expected: readable error, no crash.
+
+### Task 28 - SQL Submit flow (2026-11-15)
+1. `npm run dev`, open a SQL lesson, Submit a correct query. Expected: PASS lines; Run alone never completes the lesson.
+2. Submit a wrong query. Expected: FAIL with expected vs actual. Submit again after: dataset restored (reset before each test works in the real worker).
+
+### Task 29 - Reset, hints, solution (2026-11-15)
+1. Edit code, Reset, decline confirm: edits stay; accept: starter returns.
+2. Show hint repeatedly: hints appear one at a time.
+3. Show solution + confirm: appears read-only; editor text unchanged.
+
+### Task 63 - Editor dark theme (2026-11-15)
+1. Open a lesson, toggle theme in Settings. Expected: editor recolors live (oneDark), text and undo history kept.

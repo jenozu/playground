@@ -30,6 +30,21 @@ describe('CodeEditor', () => {
     expect(view.state.doc.toString()).toBe('select 1;')
   })
 
+  it('switches to oneDark live, keeping doc and undo history', () => {
+    const { rerender } = render(<CodeEditor value="select 1" onChange={() => {}} language="sql" />)
+    const view = EditorView.findFromDOM(screen.getByTestId('code-editor').querySelector('.cm-editor') as HTMLElement)!
+    expect(view.state.facet(EditorView.darkTheme)).toBe(false)
+    view.dispatch({ changes: { from: 8, insert: ';' }, userEvent: 'input.type' })
+    rerender(<CodeEditor value="select 1;" onChange={() => {}} language="sql" dark />)
+    expect(EditorView.findFromDOM(screen.getByTestId('code-editor').querySelector('.cm-editor') as HTMLElement)).toBe(view)
+    expect(view.state.facet(EditorView.darkTheme)).toBe(true)
+    expect(view.state.doc.toString()).toBe('select 1;')
+    expect(undo(view)).toBe(true)
+    expect(view.state.doc.toString()).toBe('select 1')
+    rerender(<CodeEditor value="select 1" onChange={() => {}} language="sql" />)
+    expect(view.state.facet(EditorView.darkTheme)).toBe(false)
+  })
+
   it('Mod-Enter calls onRun', () => {
     const onRun = vi.fn()
     render(<CodeEditor value="" onChange={() => {}} language="python" onRun={onRun} />)

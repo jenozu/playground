@@ -7,6 +7,8 @@ export interface ExecutionResult {
     columns: string[];
     rows: unknown[][];
   };
+  /** SQL: every result set (table is the first). */
+  tables?: { columns: string[]; rows: unknown[][] }[];
 }
 
 export interface ExecutionEngine {
