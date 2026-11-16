@@ -5,6 +5,8 @@ import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
   plugins: [react(), tailwindcss()],
+  worker: { format: 'es' }, // Pyodide worker uses dynamic import
+  optimizeDeps: { exclude: ['pyodide'] }, // pre-bundling breaks Pyodide's asset loading (cold-cache hang)
   test: {
     globals: true,
     environment: 'jsdom',

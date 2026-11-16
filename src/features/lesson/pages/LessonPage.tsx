@@ -113,8 +113,11 @@ export default function LessonPage() {
   const [note, setNote] = useState("");
   // ponytail: placeholder save/submit; arrive in later phases
   const run = async () => {
-    const r = await runCode(lesson?.exercise?.type ?? course!.language, code, {
-      onStatus: (s) => s !== "done" && (setTables([]), setOut(s === "loading" ? "Loading engine..." : "Running...")),
+    const lang = lesson?.exercise?.type ?? course!.language;
+    const r = await runCode(lang, code, {
+      onStatus: (s) =>
+        s !== "done" &&
+        (setTables([]), setOut(s === "loading" ? (lang === "python" ? "Loading Python…" : "Loading engine...") : "Running...")),
       options: { dataset: text(files?.get(lesson?.exercise?.dataset ?? "")) || undefined },
     });
     const t = r.tables ?? (r.table ? [r.table] : []);

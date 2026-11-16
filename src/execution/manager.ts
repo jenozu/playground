@@ -6,6 +6,7 @@ export type Loader = () => Promise<ExecutionEngine>;
 // Adapters register here as separate chunks (dynamic import); added by the SQL/Python/JS tasks.
 export const loaders: Record<string, Loader> = {
   sql: () => import("./adapters/sql").then((m) => m.createSqlEngine()),
+  python: () => import("./adapters/python").then((m) => m.createPythonEngine()),
 };
 
 export const timeouts: Record<string, number> = { sql: 5000, python: 10000, javascript: 5000 };

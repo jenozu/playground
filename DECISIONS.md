@@ -19,3 +19,12 @@ Proposals, status "proposed" until the implementing task lands. Format: decision
 - **react-router** for routing; **react-resizable-panels** for the three-panel layout.
 - **react-markdown without raw HTML** (no rehype-raw): imported Markdown is untrusted.
 - **fflate** for ZIP extraction: small, browser-friendly, with path validation on our side.
+
+## Task 32: Python adapter (2026-11-15)
+- **Pyodide from the npm `pyodide` package, served same-origin:** `scripts/copy-pyodide.mjs` (predev/prebuild) copies
+  the runtime into `public/pyodide/` (gitignored); the worker loads it with `indexURL = BASE_URL + "pyodide/"`.
+  `optimizeDeps.exclude: ['pyodide']` in vite.config: Vite's dep pre-bundling breaks Pyodide's own asset loading.
+- **CSP impact (phase 9):** Pyodide compiles WebAssembly at runtime, so the CSP must allow `script-src 'self'
+  'wasm-unsafe-eval'` and `worker-src 'self'` (module worker). No CDN origin is needed.
+- Load is raced against a 60 s timeout ("Python engine failed to load"); stdout uses a raw `write` handler plus an
+  explicit flush after each run so output without a trailing newline is kept.

@@ -3,7 +3,7 @@
 Generated from `.taskmaster/tasks/tasks.json` (the source of truth). Never edit by hand; regenerate with
 `python .taskmaster/render_tasks_md.py`.
 
-**Progress: 33/64 tasks done.**
+**Progress: 34/64 tasks done.**
 
 ## Phase 0 - Foundation
 
@@ -118,7 +118,7 @@ Generated from `.taskmaster/tasks/tasks.json` (the source of truth). Never edit 
 
 ## Phase 5 - Python playground
 
-- [ ] **32. Python adapter: Pyodide in a Web Worker, lazy-loaded** _(after 26)_\
+- [x] **32. Python adapter: Pyodide in a Web Worker, lazy-loaded** _(after 26)_\
   Python runs in the browser with stdout, tracebacks, repeated runs and reset (PRD 10.4, 20.1).\
   _Test:_ Vitest for message/traceback helpers; e2e: print('hi') shows hi; undefined name shows NameError line; second run works
 - [ ] **33. Stop and timeout for runaway code** _(after 32, 27)_\
