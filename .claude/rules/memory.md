@@ -19,10 +19,10 @@ Never update it per task.
 ---
 
 ## Now (overwrite each time, max 6 lines)
-- Phase 2: tasks 13, 14, 16 done on branch `phase-0` (pushed to origin, no PR yet). CodeMirror installed; 15 unblocked.
-- Next: `/run-phase 2` to finish 15, 17, 18. Layout reference: docs/design/reference.png.
+- Phase 2 complete, PR #1 merged to main. Branch phase-3 ready.
+- Next: `/run-phase 3`. Tasks 5 (remote added) and 6 handled; check human-checklist.
 - In progress: none.
-- Manual checks waiting: none.
+- Manual checks waiting: task 15 editor (eyes-on, see manual-checks.md).
 
 ## Facts (stable, max 15 lines)
 - Dev machine: Windows 11 + Git Bash, Node 22, Python 3.12 (harness scripts only).
@@ -41,8 +41,8 @@ Never update it per task.
 | Tier | Done first try | Escalated up | Notes |
 |---|---|---|---|
 | haiku | 2 | 0 | |
-| sonnet | 7 | 0 | |
-| opus | 0 | 0 | |
+| sonnet | 8 | 1 | task 15 escalated |
+| opus | 1 | 0 | task 15 |
 <!-- If one tier escalates on 3 tasks in a row, the phase-runner escalates to the lead, who may raise that tier's
      starting complexity in .claude/skills/next-task/SKILL.md. If haiku passes everything, give it complexity 4 too. -->
 
