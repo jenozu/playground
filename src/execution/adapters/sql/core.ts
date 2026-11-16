@@ -16,7 +16,18 @@ export function createDb(SQL: SqlJsStatic, dataset?: string): Database {
 export function execSql(db: Database, code: string): ExecutionResult {
   const t0 = performance.now();
   try {
-    const sets = db.exec(code);
+    // iterateStatements (not db.exec) so a zero-row SELECT still yields its column names
+    const sets: { columns: string[]; values: unknown[][] }[] = [];
+    for (const st of db.iterateStatements(code)) {
+      const columns = st.getColumnNames();
+      if (!columns.length) {
+        st.step();
+        continue;
+      }
+      const values: unknown[][] = [];
+      while (st.step()) values.push(st.get());
+      sets.push({ columns, values });
+    }
     const executionTime = performance.now() - t0;
     if (!sets.length) return { success: true, output: "Query OK.", errors: [], executionTime };
     const [first] = sets;

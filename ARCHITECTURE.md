@@ -45,3 +45,10 @@ Versions are pinned at install time by the task that adds each package (see DECI
 - **CSP with WASM:** sql.js/Pyodide need `wasm-unsafe-eval` (and possibly a worker-src/blob rule). Mitigate: test CSP early in phase 4/5; document the exact header.
 - **GitHub API rate limits:** unauthenticated 60 requests/hour. Mitigate: fetch the repo ZIP (one request) rather than per-file calls; cache; show a clear error.
 - **IndexedDB quota and eviction:** browser may evict or refuse writes. Mitigate: request persistent storage, keep progress small, offer export of progress.
+
+## Python limitations
+Python runs in Pyodide (CPython compiled to WASM) in a Web Worker. Known limits (PRD 10.4):
+- **No native-dependency packages:** only pure-Python wheels and packages Pyodide ships; anything needing OS-level C extensions or system libraries will not install.
+- **No blocking `input()`:** there is no stdin; lessons must not rely on interactive input.
+- **No network or persistent filesystem:** sockets and raw HTTP are unavailable; the virtual filesystem lives in memory and is lost on reload or worker restart.
+- **Large first load:** ~10 MB of Pyodide downloads on the first Python lesson (then HTTP-cached); a runaway program is killed by terminating the worker, which costs a reload.

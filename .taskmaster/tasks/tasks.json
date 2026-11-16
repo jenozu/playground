@@ -687,7 +687,7 @@
             "test"
           ]
         ],
-        "details": "Runs lint, tsc, vitest, vite build and Playwright e2e. A failure goes to a builder with the output tail.\n\n[2026-11-15T21:36:03-05:00] script check FAILED: `npx playwright test` exit 1 (expected 0); details in .claude/tmp/checks/31.log\n\n[2026-11-15T21:38:51-05:00] script check passed: 5 command(s), 53.6s, no model used\n\n[2026-11-15T21:39:10-05:00] fix: e2e/lesson-responsive.spec.ts phone test moved from python stub to SQL lesson (python engine arrives phase 5); assertions kept, output now exact '6 row(s)'. Tablet test unchanged.",
+        "details": "Runs lint, tsc, vitest, vite build and Playwright e2e. A failure goes to a builder with the output tail.\n\n[2026-11-15T21:36:03-05:00] script check FAILED: `npx playwright test` exit 1 (expected 0); details in .claude/tmp/checks/31.log\n\n[2026-11-15T21:38:51-05:00] script check passed: 5 command(s), 53.6s, no model used\n\n[2026-11-15T21:39:10-05:00] fix: e2e/lesson-responsive.spec.ts phone test moved from python stub to SQL lesson (python engine arrives phase 5); assertions kept, output now exact '6 row(s)'. Tablet test unchanged.\n\n[2026-11-15T21:39:40-05:00] PR #3 merged",
         "testStrategy": "python .taskmaster/run_checks.py run --only 31",
         "subtasks": []
       },
@@ -695,7 +695,7 @@
         "id": 32,
         "title": "Python adapter: Pyodide in a Web Worker, lazy-loaded",
         "description": "Python runs in the browser with stdout, tracebacks, repeated runs and reset (PRD 10.4, 20.1).",
-        "status": "pending",
+        "status": "done",
         "priority": "medium",
         "phase": 5,
         "complexity": 6,
@@ -704,7 +704,7 @@
         ],
         "human": false,
         "review": true,
-        "details": "src/execution/adapters/python/: module worker loading Pyodide only when first needed (npm `pyodide` package with assets served same-origin; if that fights Vite, pinned jsdelivr URL and note CSP impact in DECISIONS.md). Capture stdout/stderr via setStdout/setStderr batched messages; errors → Python traceback string with the final 'NameError: ...' line extracted; each run in a fresh globals dict (reset = new dict); show 'Loading Python…' status during first load. Initial page bundle must not include Pyodide.",
+        "details": "src/execution/adapters/python/: module worker loading Pyodide only when first needed (npm `pyodide` package with assets served same-origin; if that fights Vite, pinned jsdelivr URL and note CSP impact in DECISIONS.md). Capture stdout/stderr via setStdout/setStderr batched messages; errors → Python traceback string with the final 'NameError: ...' line extracted; each run in a fresh globals dict (reset = new dict); show 'Loading Python…' status during first load. Initial page bundle must not include Pyodide.\n\n[2026-11-15T21:57:39-05:00] built python adapter (core/worker/index), pyodide npm, assets copied to public/pyodide via scripts/copy-pyodide.mjs (predev/prebuild). Unit tests, typecheck, lint, build pass. Real-Pyodide-in-node smoke test hung (not verified in browser).\n\n[2026-11-15T22:04:01-05:00] escalate sonnet→opus: reviewer CHANGES NEEDED (optimizeDeps exclude pyodide, load timeout, e2e on cold cache, trailing-newline stdout)\n\n[2026-11-15T22:10:39-05:00] opus: fixed reviewer findings. vite optimizeDeps.exclude pyodide; 60s load timeout in index.ts (kill rejects pending with 'Python engine failed to load'); worker maps rejected load to an error; stdout/stderr via raw write handler + explicit sys.stdout.flush() (verified in real Pyodide/node: batched handler never flushes partial lines); errors = [frames, last line] so NameError shows once; 'Loading Python…' status in LessonPage; DECISIONS.md CSP note (wasm-unsafe-eval, worker-src self). New e2e/python-run.spec.ts passes on cold cache (node_modules/.vite + public/pyodide deleted, 9s). lesson-layout e2e expected 'No execution engine' for python lesson (stale placeholder) -> now '(no output)'. vitest 92/92, e2e 18/18, lint, typecheck, build pass; pyodide only in worker chunk.\n\n[2026-11-15T22:12:49-05:00] done by opus, escalated from sonnet; verified, reviewer APPROVE",
         "testStrategy": "Vitest for message/traceback helpers; e2e: print('hi') shows hi; undefined name shows NameError line; second run works",
         "subtasks": []
       },
@@ -712,7 +712,7 @@
         "id": 33,
         "title": "Stop and timeout for runaway code",
         "description": "Infinite loops can be stopped and the UI stays responsive (PRD 10.4, 11.5, 20.2).",
-        "status": "pending",
+        "status": "done",
         "priority": "medium",
         "phase": 5,
         "complexity": 5,
@@ -722,7 +722,7 @@
         ],
         "human": false,
         "review": true,
-        "details": "Stop button active while running → manager.stop() terminates the worker and spawns a fresh one (Python re-init is slow: show status). Timeout per profile triggers the same path with a 'Timed out after Ns' error. Applies to SQL and Python adapters.",
+        "details": "Stop button active while running → manager.stop() terminates the worker and spawns a fresh one (Python re-init is slow: show status). Timeout per profile triggers the same path with a 'Timed out after Ns' error. Applies to SQL and Python adapters.\n\n[2026-11-15T22:13:05-05:00] plan (sonnet): inspect execution manager/adapters, wire stop+timeout\n\n[2026-11-15T22:16:48-05:00] Stop button in LessonPage (enabled while running), manager timeout now settles before stop(); e2e stop+timeout pass on cold vite cache\n\n[2026-11-15T22:19:16-05:00] done by sonnet; verified, reviewer APPROVE (minor Run-while-running parked)",
         "testStrategy": "e2e: `while True: pass` → Stop → output says stopped, UI clicks still respond within 1s, next run works; timeout test with a short profile",
         "subtasks": []
       },
@@ -730,7 +730,7 @@
         "id": 34,
         "title": "Python exercise evaluation",
         "description": "Submit runs Python tests and reports each assert (PRD 12.2).",
-        "status": "pending",
+        "status": "done",
         "priority": "medium",
         "phase": 5,
         "complexity": 5,
@@ -740,7 +740,7 @@
         ],
         "human": false,
         "review": false,
-        "details": "Python evaluator: run user code, then each named test snippet in the same namespace (in the worker), catch AssertionError per test; expected-stdout tests compare captured output (trim trailing whitespace). Errors in user code fail all tests with the traceback.",
+        "details": "Python evaluator: run user code, then each named test snippet in the same namespace (in the worker), catch AssertionError per test; expected-stdout tests compare captured output (trim trailing whitespace). Errors in user code fail all tests with the traceback.\n\n[2026-11-15T22:21:31-05:00] built evaluatePython + Submit wiring; vitest 95 pass, e2e python-submit passes with real Pyodide\n\n[2026-11-15T22:23:09-05:00] done by sonnet; verified",
         "testStrategy": "Vitest/e2e: add(a,b) example from PRD 12.2 passes 3 tests; a wrong implementation shows which assert failed",
         "subtasks": []
       },
@@ -748,7 +748,7 @@
         "id": 35,
         "title": "Python sample course e2e and Pyodide limitations doc",
         "description": "The Python course works end to end; limits are documented (PRD 10.4).",
-        "status": "pending",
+        "status": "done",
         "priority": "medium",
         "phase": 5,
         "complexity": 3,
@@ -758,7 +758,7 @@
         ],
         "human": false,
         "review": false,
-        "details": "e2e/python-lesson.spec.ts: open python-fundamentals coding lesson, run, submit wrong, submit right. Add 'Python limitations' section to ARCHITECTURE.md (no native-dependency packages, no input() blocking, no network/filesystem persistence, first load size).",
+        "details": "e2e/python-lesson.spec.ts: open python-fundamentals coding lesson, run, submit wrong, submit right. Add 'Python limitations' section to ARCHITECTURE.md (no native-dependency packages, no input() blocking, no network/filesystem persistence, first load size).\n\n[2026-11-15T22:28:18-05:00] added e2e/python-lesson.spec.ts, python phone test restored in lesson-responsive, ARCHITECTURE.md Python limitations; tests pass\n\n[2026-11-15T22:29:00-05:00] done by sonnet; verified; python phone e2e restored alongside SQL",
         "testStrategy": "npx playwright test e2e/python-lesson.spec.ts passes; grep -q 'Python limitations' ARCHITECTURE.md",
         "subtasks": []
       },
@@ -766,7 +766,7 @@
         "id": 36,
         "title": "Phase 5 gate: lint, types, tests and build pass",
         "description": "Free script check that phase 5 leaves the repo green.",
-        "status": "pending",
+        "status": "done",
         "priority": "high",
         "phase": 5,
         "complexity": 3,
@@ -806,7 +806,7 @@
             "test"
           ]
         ],
-        "details": "Runs lint, tsc, vitest, vite build and Playwright e2e. A failure goes to a builder with the output tail.",
+        "details": "Runs lint, tsc, vitest, vite build and Playwright e2e. A failure goes to a builder with the output tail.\n\n[2026-11-15T22:30:20-05:00] script check passed: 5 command(s), 78.9s, no model used",
         "testStrategy": "python .taskmaster/run_checks.py run --only 36",
         "subtasks": []
       },
@@ -1402,6 +1402,21 @@
         "phase": 4,
         "id": 63,
         "subtasks": []
+      },
+      {
+        "title": "Fix: SQL results render as a table in the Output panel",
+        "description": "Corrective for phase 4 (found by task 30 e2e, parked by mistake). OutputPanel supports table entries and the SQL adapter returns one table per result set, but the lesson page shows only 'N row(s)'. Wire the SQL ExecutionResult.table into OutputPanel table entries (columns + rows), like the Codecademy Query Results pane (docs/design/reference.png). Zero-row SELECT shows the column headers with no rows, not 'Query OK.'. Also fix the React duplicate-key warning for sql-fundamentals/lesson-02 in the lesson list.",
+        "status": "done",
+        "priority": "high",
+        "dependencies": [
+          30
+        ],
+        "details": "[2026-11-15T21:43:10-05:00] sonnet: execSql uses iterateStatements (zero-row SELECT keeps headers), LessonPage renders tables via exported Entry, Solution key fixed (dup key with Hints). vitest/lint/tsc/build/e2e pass\n\n[2026-11-15T21:44:50-05:00] escalate sonnet→opus: verifier FAIL, missing Vitest LessonPage table test and duplicate-key test\n\n[2026-11-15T21:45:46-05:00] plan (opus): add src/features/lesson/pages/LessonPage.test.tsx - render LessonPage for sql-fundamentals/lesson-02 with real bundled course files (glob ?raw), mocked useCourses/getFiles, run() mocked onto real sql.js execSql; assert table headers/row count, zero-row headers w/o 'Query OK.', no duplicate-key console.error\n\n[2026-11-15T21:47:58-05:00] opus: added src/features/lesson/pages/LessonPage.test.tsx (4 tests: SELECT * table headers + 6 rows, zero-row headers/no rows/no 'Query OK.', Clear output removes table, no duplicate-key console.error on sql-fundamentals/lesson-02). Real bundled course files + real sql.js core; mocked registry, manager.run (in-process execSql) and CodeEditor (CodeMirror getClientRects fails in jsdom). Mutation-checked: all 4 fail with old Solution key / no table render. vitest 86/86, lint, typecheck, build, e2e sql-lesson pass.\n\n[2026-11-15T21:49:53-05:00] done by opus, escalated from sonnet; verified, reviewer APPROVE",
+        "testStrategy": "Vitest: running 'SELECT * FROM <table>' in the lesson page renders a table with the expected header cells and row count; zero-row SELECT renders headers and no 'Query OK.'. Playwright SQL lesson spec asserts a table cell value, not just 'N row(s)'. No duplicate-key warning in the lesson list test. npm run lint, typecheck, build pass.",
+        "complexity": 4,
+        "phase": 5,
+        "id": 64,
+        "subtasks": []
       }
     ],
     "metadata": {
@@ -1450,7 +1465,7 @@
         }
       ],
       "created": "2026-11-15",
-      "updated": "2026-11-15T21:39:10-05:00"
+      "updated": "2026-11-15T22:30:20-05:00"
     }
   }
 }

@@ -15,7 +15,7 @@ interface Props {
   onClear?: () => void;
 }
 
-function Entry({ e }: { e: OutputEntry }) {
+export function Entry({ e }: { e: OutputEntry }) {
   switch (e.type) {
     case 'stdout':
       return <pre data-testid="entry-stdout" className="whitespace-pre-wrap">{e.text}</pre>;

@@ -3,7 +3,7 @@
 Generated from `.taskmaster/tasks/tasks.json` (the source of truth). Never edit by hand; regenerate with
 `python .taskmaster/render_tasks_md.py`.
 
-**Progress: 32/63 tasks done.**
+**Progress: 38/64 tasks done.**
 
 ## Phase 0 - Foundation
 
@@ -118,21 +118,24 @@ Generated from `.taskmaster/tasks/tasks.json` (the source of truth). Never edit 
 
 ## Phase 5 - Python playground
 
-- [ ] **32. Python adapter: Pyodide in a Web Worker, lazy-loaded** _(after 26)_\
+- [x] **32. Python adapter: Pyodide in a Web Worker, lazy-loaded** _(after 26)_\
   Python runs in the browser with stdout, tracebacks, repeated runs and reset (PRD 10.4, 20.1).\
   _Test:_ Vitest for message/traceback helpers; e2e: print('hi') shows hi; undefined name shows NameError line; second run works
-- [ ] **33. Stop and timeout for runaway code** _(after 32, 27)_\
+- [x] **33. Stop and timeout for runaway code** _(after 32, 27)_\
   Infinite loops can be stopped and the UI stays responsive (PRD 10.4, 11.5, 20.2).\
   _Test:_ e2e: `while True: pass` → Stop → output says stopped, UI clicks still respond within 1s, next run works; timeout test with a short profile
-- [ ] **34. Python exercise evaluation** _(after 32, 28)_\
+- [x] **34. Python exercise evaluation** _(after 32, 28)_\
   Submit runs Python tests and reports each assert (PRD 12.2).\
   _Test:_ Vitest/e2e: add(a,b) example from PRD 12.2 passes 3 tests; a wrong implementation shows which assert failed
-- [ ] **35. Python sample course e2e and Pyodide limitations doc** _(after 34, 33)_\
+- [x] **35. Python sample course e2e and Pyodide limitations doc** _(after 34, 33)_\
   The Python course works end to end; limits are documented (PRD 10.4).\
   _Test:_ npx playwright test e2e/python-lesson.spec.ts passes; grep -q 'Python limitations' ARCHITECTURE.md
-- [ ] **36. Phase 5 gate: lint, types, tests and build pass** _(after 32, 33, 34, 35)_\
+- [x] **36. Phase 5 gate: lint, types, tests and build pass** _(after 32, 33, 34, 35)_\
   Free script check that phase 5 leaves the repo green.\
   _Test:_ python .taskmaster/run_checks.py run --only 36
+- [x] **64. Fix: SQL results render as a table in the Output panel** _(after 30)_\
+  Corrective for phase 4 (found by task 30 e2e, parked by mistake). OutputPanel supports table entries and the SQL adapter returns one table per result set, but the lesson page shows only 'N row(s)'. Wire the SQL ExecutionResult.table into OutputPanel table entries (columns + rows), like the Codecademy Query Results pane (docs/design/reference.png). Zero-row SELECT shows the column headers with no rows, not 'Query OK.'. Also fix the React duplicate-key warning for sql-fundamentals/lesson-02 in the lesson list.\
+  _Test:_ Vitest: running 'SELECT * FROM <table>' in the lesson page renders a table with the expected header cells and row count; zero-row SELECT renders headers and no 'Query OK.'. Playwright SQL lesson spec asserts a table cell value, not just 'N row(s)'. No duplicate-key warning in the lesson list test. npm run lint, typecheck, build pass.
 
 ## Phase 6 - Learning progress
 

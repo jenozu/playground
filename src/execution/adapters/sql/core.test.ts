@@ -19,6 +19,12 @@ describe("sql core", () => {
     const r = execSql(createDb(SQL), "SELECT 1 a; SELECT 2 b;");
     expect(r.tables).toHaveLength(2);
   });
+  it("zero-row SELECT keeps its column headers", () => {
+    const db = createDb(SQL, "CREATE TABLE t(id INT, n TEXT);");
+    const r = execSql(db, "SELECT * FROM t");
+    expect(r.table).toEqual({ columns: ["id", "n"], rows: [] });
+    expect(r.output).toBe("0 row(s)");
+  });
   it("keeps sqlite error", () => {
     const r = execSql(createDb(SQL), "SELECT * FROM employees");
     expect(r.success).toBe(false);

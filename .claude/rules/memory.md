@@ -19,10 +19,9 @@ Never update it per task.
 ---
 
 ## Now (overwrite each time, max 6 lines)
-- Phase 4 complete (26-31, 63) on branch `phase-4`; PR delivered at phase end. Next: `/run-phase 5` (Python).
-- Human: Task 15 install item and tasks 5, 6 may still be open (see human-checklist).
-- In progress: none.
-- Manual checks waiting: eyes-on for 27, 28, 29, 63 (manual-checks.md).
+- Phase 5 (Python) complete on branch `phase-5`: tasks 32-36, 64 done; PR via deliver.
+- In progress: none. Next: phase 6.
+- Manual checks waiting: none.
 
 ## Facts (stable, max 15 lines)
 - Dev machine: Windows 11 + Git Bash, Node 22, Python 3.12 (harness scripts only).
@@ -36,6 +35,8 @@ Never update it per task.
   haiku → sonnet → opus. Manual checks batched per phase.
 
 ## Learned / gotchas (max 15 lines, newest first)
+- Pyodide: vite optimizeDeps.exclude needed (cold-cache hang); use raw stdout `write` handler; assets copied by scripts/copy-pyodide.mjs.
+- Builders skip testStrategy unit tests (task 64); verifier catches it.
 - Builders may write tests importing uninstalled libs (user-event); vitest then silently shows unchanged count. Check count rises.
 - Phase-2 e2e used a python stub; real engines changed output. Check e2e when adding engines.
 - jsdom pinned 26.1.0 (31.x crashes on Node 22.12); React 18.3.1, TS 5.9, ESLint 9 per DECISIONS.md.

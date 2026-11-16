@@ -1,5 +1,6 @@
-import { run as runCode, reset as resetEngine } from "../../../execution/manager";
+import { run as runCode, reset as resetEngine, stop as stopCode } from "../../../execution/manager";
 import { testFileSchema } from "../../../course-system/schema";
+import { evaluatePython } from "../../exercise-evaluation/python";
 import { emitIfPassed, evaluateSql } from "../../exercise-evaluation/sql";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -21,6 +22,7 @@ import { useCourses } from "../../../course-system/registry/useCourses";
 import { getFiles } from "../../../course-system/registry";
 import type { CourseFiles } from "../../../course-system/parser";
 import { Hints, Solution, shouldReset } from "../ExerciseHelpers";
+import { Entry } from "../../../components/terminal/OutputPanel";
 import { LessonMarkdown } from "../../lesson-viewer/LessonMarkdown";
 
 const IDS = ["lesson", "editor", "output"];
@@ -108,28 +110,50 @@ export default function LessonPage() {
   const code = edit?.key === key ? edit.v : (starter ?? "");
   const setCode = (v: string) => setEdit({ key, v });
   const [out, setOut] = useState("");
+  const [tables, setTables] = useState<{ columns: string[]; rows: unknown[][] }[]>([]);
   const [note, setNote] = useState("");
   // ponytail: placeholder save/submit; arrive in later phases
+  const [running, setRunning] = useState(false);
+  const stop = async () => {
+    await stopCode();
+    setOut("Execution stopped.");
+  };
   const run = async () => {
-    const r = await runCode(lesson?.exercise?.type ?? course!.language, code, {
-      onStatus: (s) => s !== "done" && setOut(s === "loading" ? "Loading engine..." : "Running..."),
+    const lang = lesson?.exercise?.type ?? course!.language;
+    const r = await runCode(lang, code, {
+      onStatus: (s) => {
+        setRunning(s === "running");
+        if (s === "done") return;
+        setTables([]);
+        setOut(s === "loading" ? (lang === "python" ? "Loading Python…" : "Loading engine...") : "Running...");
+      },
       options: { dataset: text(files?.get(lesson?.exercise?.dataset ?? "")) || undefined },
     });
+    const t = r.tables ?? (r.table ? [r.table] : []);
+    setTables(t);
     setOut([r.output, ...r.errors].filter(Boolean).join("\n") || "(no output)");
   };
   const submit = async () => {
     const ex = lesson?.exercise;
     const tf = testFileSchema.safeParse(JSON.parse(text(files?.get(ex?.tests ?? "")) || "null"));
     if (!ex || !tf.success) return setOut("No tests for this lesson.");
-    if (tf.data.language !== "sql") return setOut("Submit is not available for this language yet.");
+    if (tf.data.language === "javascript") return setOut("Submit is not available for this language yet.");
     const options = { dataset: text(files?.get(ex.dataset ?? "")) || undefined };
-    const results = await evaluateSql(tf.data.tests, code, {
-      reset: () => resetEngine("sql"),
-      exec: (c) => runCode("sql", c, { options }),
-    });
+    const results =
+      tf.data.language === "python"
+        ? await evaluatePython(tf.data.tests, code, { exec: (c) => runCode("python", c) })
+        : await evaluateSql(tf.data.tests, code, {
+            reset: () => resetEngine("sql"),
+            exec: (c) => runCode("sql", c, { options }),
+          });
     const line = (r: (typeof results)[number]) =>
       `${r.passed ? "PASS" : "FAIL"} ${r.name}` +
-      (r.passed ? "" : `\n  expected: ${r.expected ?? ""}\n  actual: ${r.actual ?? r.error ?? ""}`);
+      (r.passed
+        ? ""
+        : tf.data.language === "python" && r.expected === undefined
+          ? `\n  error: ${r.error ?? ""}`
+          : `\n  expected: ${r.expected ?? ""}\n  actual: ${r.actual ?? r.error ?? ""}`);
+    setTables([]);
     setOut(results.map(line).join("\n"));
     emitIfPassed(results, window, { courseId, lessonId });
   };
@@ -137,6 +161,7 @@ export default function LessonPage() {
     ["Previous", () => go(-1)],
     ["Next", () => go(1)],
     ["Run", () => void run()],
+    ["Stop", () => void stop()],
     ["Submit", () => void submit()],
     [
       "Reset",
@@ -145,7 +170,7 @@ export default function LessonPage() {
       },
     ],
     ["Save", () => setNote("Saved (placeholder)")],
-    ["Clear output", () => setOut("")],
+    ["Clear output", () => (setOut(""), setTables([]))],
   ];
   const mode = useMode();
   const [tab, setTab] = useState("editor");
@@ -225,7 +250,7 @@ export default function LessonPage() {
             />
           )}
           <Hints key={key} hints={lesson!.exercise?.hints ?? []} />
-          {solution !== undefined && <Solution key={key} solution={solution} />}
+          {solution !== undefined && <Solution key={`sol-${key}`} solution={solution} />}
         </>
       )}
       {id === "editor" && (
@@ -251,6 +276,9 @@ export default function LessonPage() {
       {id === "output" && (
         <>
           <pre data-testid="output-text">{out}</pre>
+          {tables.map((t, i) => (
+            <Entry key={i} e={{ type: "table", ...t }} />
+          ))}
           {filler.map((t) => (
             <p key={t} className="invisible">
               {t}
@@ -380,6 +408,7 @@ export default function LessonPage() {
             type="button"
             className="rounded border px-2 py-1 text-sm"
             onClick={fn}
+            disabled={label === "Stop" && !running}
           >
             {label}
           </button>
