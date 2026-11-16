@@ -19,6 +19,7 @@ import { FileTabs } from "../../../components/editor/FileTabs";
 import { useCourses } from "../../../course-system/registry/useCourses";
 import { getFiles } from "../../../course-system/registry";
 import type { CourseFiles } from "../../../course-system/parser";
+import { Hints, Solution, shouldReset } from "../ExerciseHelpers";
 import { LessonMarkdown } from "../../lesson-viewer/LessonMarkdown";
 
 const IDS = ["lesson", "editor", "output"];
@@ -74,6 +75,7 @@ export default function LessonPage() {
   const lesson = flat[idx]?.l;
   const markdown = text(files?.get(lesson?.content ?? ""));
   const starter = text(files?.get(lesson?.exercise?.starter ?? ""));
+  const solution = text(files?.get(lesson?.exercise?.solution ?? ""));
   // blob URLs for binary course files (images); revoked when the course changes or on unmount
   const assets = useMemo(() => {
     const m = new Map<string, string>();
@@ -134,7 +136,12 @@ export default function LessonPage() {
     ["Next", () => go(1)],
     ["Run", () => void run()],
     ["Submit", () => void submit()],
-    ["Reset", () => setCode(starter ?? "")],
+    [
+      "Reset",
+      () => {
+        if (shouldReset(code, starter ?? "")) setCode(starter ?? "");
+      },
+    ],
     ["Save", () => setNote("Saved (placeholder)")],
     ["Clear output", () => setOut("")],
   ];
@@ -215,6 +222,8 @@ export default function LessonPage() {
               resolveAsset={resolveAsset}
             />
           )}
+          <Hints key={key} hints={lesson!.exercise?.hints ?? []} />
+          {solution !== undefined && <Solution key={key} solution={solution} />}
         </>
       )}
       {id === "editor" && (

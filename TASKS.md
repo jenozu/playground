@@ -3,7 +3,7 @@
 Generated from `.taskmaster/tasks/tasks.json` (the source of truth). Never edit by hand; regenerate with
 `python .taskmaster/render_tasks_md.py`.
 
-**Progress: 28/63 tasks done.**
+**Progress: 29/63 tasks done.**
 
 ## Phase 0 - Foundation
 
@@ -103,7 +103,7 @@ Generated from `.taskmaster/tasks/tasks.json` (the source of truth). Never edit 
 - [x] **28. Exercise evaluation and Submit flow (SQL first)** _(after 27)_\
   Submit runs the tests and shows pass/fail with expected vs actual; Run never completes a lesson (PRD 12.2-12.3).\
   _Test:_ Vitest: correct SQL passes, wrong row count and wrong order (when ordered) fail with expected/actual
-- [ ] **29. Reset starter code, progressive hints and solution view** _(after 28)_\
+- [x] **29. Reset starter code, progressive hints and solution view** _(after 28)_\
   Exercise helpers that never reveal the solution by accident (PRD 9.4, 12.4-12.5).\
   _Test:_ Vitest/e2e: hint 2 hidden until hint 1 revealed; reset restores starter; viewing solution leaves editor text unchanged
 - [ ] **30. SQL lesson end-to-end test** _(after 29)_\

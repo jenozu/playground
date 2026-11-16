@@ -612,7 +612,7 @@
         "id": 29,
         "title": "Reset starter code, progressive hints and solution view",
         "description": "Exercise helpers that never reveal the solution by accident (PRD 9.4, 12.4-12.5).",
-        "status": "pending",
+        "status": "done",
         "priority": "medium",
         "phase": 4,
         "complexity": 4,
@@ -621,7 +621,7 @@
         ],
         "human": false,
         "review": false,
-        "details": "Reset restores starter code (confirm if edited). Hints panel in lesson panel reveals hints one at a time. 'Show solution' behind a confirm, shown read-only beside the user code, never overwrites it. Starter, user code and solution kept distinct in state.",
+        "details": "Reset restores starter code (confirm if edited). Hints panel in lesson panel reveals hints one at a time. 'Show solution' behind a confirm, shown read-only beside the user code, never overwrites it. Starter, user code and solution kept distinct in state.\n\n[2026-11-15T21:23:42-05:00] built Hints/Solution in features/lesson/ExerciseHelpers.tsx, Reset confirm in LessonPage; vitest/lint/tsc pass\n\n[2026-11-15T21:24:38-05:00] escalate sonnet→opus: verifier FAIL (test imports uninstalled user-event, uncovered reset/solution)\n\n[2026-11-15T21:24:54-05:00] plan (opus): ExerciseHelpers.tsx/.test.tsx, LessonPage.tsx - drop user-event for fireEvent, extract shouldReset() helper for testable reset confirm, add reset + solution-unchanged tests\n\n[2026-11-15T21:25:45-05:00] opus: replaced user-event with fireEvent; extracted shouldReset() used by LessonPage Reset; added tests for reset confirm paths and solution leaving editor text unchanged. vitest/typecheck/lint/build pass\n\n[2026-11-15T21:26:52-05:00] done by opus, escalated from sonnet; verified",
         "testStrategy": "Vitest/e2e: hint 2 hidden until hint 1 revealed; reset restores starter; viewing solution leaves editor text unchanged",
         "subtasks": []
       },
@@ -1450,7 +1450,7 @@
         }
       ],
       "created": "2026-11-15",
-      "updated": "2026-11-15T21:22:40-05:00"
+      "updated": "2026-11-15T21:26:52-05:00"
     }
   }
 }

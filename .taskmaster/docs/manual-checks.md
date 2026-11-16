@@ -32,3 +32,8 @@ with numbered steps and the expected result.
 ### Task 28 - SQL Submit flow (2026-11-15)
 1. `npm run dev`, open a SQL lesson, Submit a correct query. Expected: PASS lines; Run alone never completes the lesson.
 2. Submit a wrong query. Expected: FAIL with expected vs actual. Submit again after: dataset restored (reset before each test works in the real worker).
+
+### Task 29 - Reset, hints, solution (2026-11-15)
+1. Edit code, Reset, decline confirm: edits stay; accept: starter returns.
+2. Show hint repeatedly: hints appear one at a time.
+3. Show solution + confirm: appears read-only; editor text unchanged.
