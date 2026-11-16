@@ -4,7 +4,9 @@ export type Status = "loading" | "running" | "done";
 export type Loader = () => Promise<ExecutionEngine>;
 
 // Adapters register here as separate chunks (dynamic import); added by the SQL/Python/JS tasks.
-export const loaders: Record<string, Loader> = {};
+export const loaders: Record<string, Loader> = {
+  sql: () => import("./adapters/sql").then((m) => m.createSqlEngine()),
+};
 
 export const timeouts: Record<string, number> = { sql: 5000, python: 10000, javascript: 5000 };
 
@@ -12,7 +14,7 @@ const engines = new Map<string, Promise<ExecutionEngine>>();
 let active: ExecutionEngine | undefined;
 
 export function getEngine(language: string): Promise<ExecutionEngine> {
-  const load = loaders[language];
+  const load = Object.hasOwn(loaders, language) ? loaders[language] : undefined;
   if (!load) return Promise.reject(new Error(`No execution engine for language "${language}".`));
   let p = engines.get(language);
   if (!p) {
@@ -41,7 +43,7 @@ export async function run(
     opts.onStatus?.("done");
     return fail(e instanceof Error ? e.message : String(e));
   }
-  const ms = opts.timeoutMs ?? timeouts[language] ?? 5000;
+  const ms = opts.timeoutMs ?? (Object.hasOwn(timeouts, language) ? timeouts[language] : 5000);
   opts.onStatus?.("running");
   active = engine;
   let timer: ReturnType<typeof setTimeout> | undefined;
@@ -50,7 +52,7 @@ export async function run(
       engine.execute(code, opts.options),
       new Promise<ExecutionResult>((res) => {
         timer = setTimeout(() => {
-          void engine.stop();
+          engine.stop().catch(() => {});
           res(fail(`Timed out after ${ms / 1000}s.`));
         }, ms);
       }),

@@ -19,10 +19,10 @@ Never update it per task.
 ---
 
 ## Now (overwrite each time, max 6 lines)
-- Phase 3 complete (tasks 19-25 done) on branch `phase-3`; PR opened at phase end.
-- Next: `/run-phase 4` (SQL). Tasks 5, 6 and Task 15 install may still be open on human-checklist.
-- In progress: none.
-- Manual checks waiting: none.
+- Phase 4 on branch `phase-4`: task 26 done+committed. 27 (SQL adapter) built by opus, verifier PASS, awaiting reviewer re-review (rate limit hit); work committed as wip.
+- Remaining: 27 close-out, 28, 29, 30, 63 (before 31), 31.
+- Re-run `/run-phase 4` after limit reset (10:10pm Toronto).
+- Manual checks waiting: SQL worker in real browser (task 27).
 
 ## Facts (stable, max 15 lines)
 - Dev machine: Windows 11 + Git Bash, Node 22, Python 3.12 (harness scripts only).
