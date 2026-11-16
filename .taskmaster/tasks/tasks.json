@@ -86,17 +86,16 @@
         "id": 6,
         "title": "Add the Codecademy reference screenshot to the repo",
         "description": "The layout reference the PRD refers to (22.5) must be in the repo for visual checks.",
-        "status": "pending",
+        "status": "done",
         "priority": "medium",
         "phase": 0,
         "complexity": 1,
         "dependencies": [],
         "human": true,
         "review": false,
-        "details": "Owner: save the screenshot as docs/design/reference.png and commit it (or drop it in the folder and tell the lead).\n\n[2026-11-15T13:12:40-05:00] human step queued: see human-checklist.md (agents may build around it; stays open until the human confirms)",
+        "details": "Owner: save the screenshot as docs/design/reference.png and commit it (or drop it in the folder and tell the lead).\n\n[2026-11-15T13:12:40-05:00] human step queued: see human-checklist.md (agents may build around it; stays open until the human confirms)\n\n[2026-11-15T19:22:28-05:00] human supplied screenshot; saved as docs/design/reference.png (Codecademy Intro to SQL lesson)",
         "testStrategy": "ls docs/design/reference.png",
-        "subtasks": [],
-        "queued": true
+        "subtasks": []
       },
       {
         "id": 7,
@@ -310,7 +309,7 @@
         ],
         "human": false,
         "review": false,
-        "details": "src/components/editor/CodeEditor.tsx wrapping @codemirror/* (basicSetup pieces, lang-sql, lang-python, lang-javascript), controlled value/onChange, language prop, font size/font from preferences, dark/light theme. FileTabs component: list of files, active file, onSelect; single file used for now but API supports many (open/create/switch/reset one file later). Don't recreate the editor on every render (use a ref).\n\n[2026-11-15T18:36:14-05:00] BLOCKED: npm install of codemirror packages denied by permission system; queued on human-checklist; retry after human installs",
+        "details": "src/components/editor/CodeEditor.tsx wrapping @codemirror/* (basicSetup pieces, lang-sql, lang-python, lang-javascript), controlled value/onChange, language prop, font size/font from preferences, dark/light theme. FileTabs component: list of files, active file, onSelect; single file used for now but API supports many (open/create/switch/reset one file later). Don't recreate the editor on every render (use a ref).\n\n[2026-11-15T18:36:14-05:00] BLOCKED: npm install of codemirror packages denied by permission system; queued on human-checklist; retry after human installs\n\n[2026-11-15T19:22:29-05:00] human ran codemirror npm install; all 8 packages in package.json + node_modules. Unblocked.",
         "testStrategy": "Vitest: editor mounts and onChange fires; e2e: type in editor, undo restores previous text",
         "subtasks": []
       },
@@ -1436,7 +1435,7 @@
         }
       ],
       "created": "2026-11-15",
-      "updated": "2026-11-15T18:54:31-05:00"
+      "updated": "2026-11-15T19:22:29-05:00"
     }
   }
 }

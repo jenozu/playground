@@ -19,8 +19,8 @@ Never update it per task.
 ---
 
 ## Now (overwrite each time, max 6 lines)
-- Phase 2: tasks 13, 14, 16 done on branch `phase-0` (pushed to origin, no PR yet). 15 blocked on npm install of codemirror (denied).
-- Human: run install on human-checklist (Task 15), then `/run-phase 2` to finish 15, 17, 18. Task 6 (screenshot) still open.
+- Phase 2: tasks 13, 14, 16 done on branch `phase-0` (pushed to origin, no PR yet). CodeMirror installed; 15 unblocked.
+- Next: `/run-phase 2` to finish 15, 17, 18. Layout reference: docs/design/reference.png.
 - In progress: none.
 - Manual checks waiting: none.
 
@@ -48,5 +48,4 @@ Never update it per task.
 
 ## Open questions for the human (max 5; delete once answered)
 - Hosting: Vercel or the Hostinger VPS? (phase 9 task)
-- Codecademy reference screenshot: add it to docs/design/ so the layout can be compared (PRD 22.5).
 - Separate coding-courses repo on GitHub: create it now, or keep samples in public/courses/ until phase 7?

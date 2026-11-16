@@ -3,7 +3,7 @@
 Generated from `.taskmaster/tasks/tasks.json` (the source of truth). Never edit by hand; regenerate with
 `python .taskmaster/render_tasks_md.py`.
 
-**Progress: 14/62 tasks done.**
+**Progress: 15/62 tasks done.**
 
 ## Phase 0 - Foundation
 
@@ -22,7 +22,7 @@ Generated from `.taskmaster/tasks/tasks.json` (the source of truth). Never edit 
 - [x] **5. Create the GitHub repository and add it as origin** **[HUMAN]**  
   Phases deliver as PRs, which needs a GitHub remote.  
   _Test:_ git remote get-url origin prints a github.com URL
-- [ ] **6. Add the Codecademy reference screenshot to the repo** **[HUMAN]**  
+- [x] **6. Add the Codecademy reference screenshot to the repo** **[HUMAN]**  
   The layout reference the PRD refers to (22.5) must be in the repo for visual checks.  
   _Test:_ ls docs/design/reference.png
 - [x] **7. Phase 0 gate: lint, types, tests and build pass** _(after 1, 2, 3, 4)_  
