@@ -2,7 +2,7 @@ import { createBrowserRouter } from 'react-router-dom'
 import AppLayout from '../../components/layout/AppLayout'
 import NotFoundPage from '../../components/layout/NotFoundPage'
 import DashboardPage from '../../features/dashboard/pages/DashboardPage'
-import CoursesPage from '../../features/courses/pages/CoursesPage'
+import { RegisteredCoursesPage } from '../../features/courses/pages/CoursesPage'
 import PracticePage from '../../features/practice/pages/PracticePage'
 import ProjectsPage from '../../features/projects/pages/ProjectsPage'
 import ProgressPage from '../../features/progress/pages/ProgressPage'
@@ -16,7 +16,7 @@ export const routes = [
     element: <AppLayout />,
     children: [
       { index: true, element: <DashboardPage /> },
-      { path: 'courses', element: <CoursesPage /> },
+      { path: 'courses', element: <RegisteredCoursesPage /> },
       { path: 'practice', element: <PracticePage /> },
       { path: 'projects', element: <ProjectsPage /> },
       { path: 'progress', element: <ProgressPage /> },

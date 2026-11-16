@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import CourseCard, { type CourseSummary } from '../components/CourseCard'
+import { useCourses } from '../../../course-system/registry/useCourses'
 
 export default function CoursesPage({ courses = [] }: { courses?: CourseSummary[] }) {
   const [q, setQ] = useState('')
@@ -39,4 +40,16 @@ export default function CoursesPage({ courses = [] }: { courses?: CourseSummary[
       )}
     </section>
   )
+}
+
+export function RegisteredCoursesPage() {
+  const { courses, loading, error } = useCourses()
+  if (loading) return <p>Loading courses…</p>
+  if (error) return <p role="alert">Could not load courses: {error}</p>
+  const summaries: CourseSummary[] = courses.map(({ course: c }) => ({
+    id: c.id, title: c.title, language: c.language, description: c.description, difficulty: c.difficulty,
+    moduleCount: c.modules.length, lessonCount: c.modules.reduce((n, m) => n + m.lessons.length, 0),
+    completionPercent: 0, // progress wiring is phase 6
+  }))
+  return <CoursesPage courses={summaries} />
 }

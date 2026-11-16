@@ -3,7 +3,7 @@
 Generated from `.taskmaster/tasks/tasks.json` (the source of truth). Never edit by hand; regenerate with
 `python .taskmaster/render_tasks_md.py`.
 
-**Progress: 20/62 tasks done.**
+**Progress: 21/62 tasks done.**
 
 ## Phase 0 - Foundation
 
@@ -76,7 +76,7 @@ Generated from `.taskmaster/tasks/tasks.json` (the source of truth). Never edit 
 - [x] **20. Manifest parser and validator over a virtual file map** _(after 19)_  
   One loader for bundled, GitHub and ZIP courses that reports useful errors (PRD 14.4, 20.3).  
   _Test:_ npx vitest run src/course-system: one test per error code (missing manifest, invalid JSON, unsupported version, missing lesson file, missing exercise file, escaping path, unsupported language)
-- [ ] **21. Course registry backed by storage, with bundled sample loading** _(after 20, 8)_  
+- [x] **21. Course registry backed by storage, with bundled sample loading** _(after 20, 8)_  
   Validated courses register into IndexedDB and appear automatically; removal keeps progress (PRD 6.4, 5.3).  
   _Test:_ Vitest with fake-indexeddb: register, list, remove leaves progress records; e2e: sample courses appear in My Courses on first load
 - [ ] **22. Safe Markdown lesson renderer** _(after 20)_  
