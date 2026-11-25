@@ -157,7 +157,7 @@ Generated from `.taskmaster/tasks/tasks.json` (the source of truth). Never edit 
 - [x] **42. Export and import learning data** _(after 41, 38)_\
   Progress, notes, code and bookmarks can be backed up and restored as JSON (PRD 13.6, 21.4).\
   _Test:_ Vitest: export → import round-trip equals original; malformed file rejected with a message
-- [ ] **43. Phase 6 gate: lint, types, tests and build pass** _(after 37, 38, 39, 40, 41, 42)_\
+- [x] **43. Phase 6 gate: lint, types, tests and build pass** _(after 37, 38, 39, 40, 41, 42)_\
   Free script check that phase 6 leaves the repo green.\
   _Test:_ python .taskmaster/run_checks.py run --only 43
 - [x] **65. Fix: Run disabled while a run is in progress** _(after 33)_\
