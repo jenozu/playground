@@ -10,4 +10,5 @@ promote to a task (`tasks.py add` or the `adapt` skill), defer, or delete on pur
 - 2026-11-15: manager.ts loaders/timeouts lookups should use Object.hasOwn (language from untrusted manifest, e.g. 'constructor'); single 'active' engine in stop() (task 26 review)
 - 2026-11-15 idea: OutputPanel test entries for Submit results; guard JSON.parse of test file (from 28)
 - 2026-11-15 (from 30): React duplicate key warning `sql-fundamentals/lesson-02` in lesson list rendering (table + zero-row moved to task 64); no DB reset button
-- 2026-11-15: task 33 reviewer minor: LessonPage Run not disabled while running (second Run clobbers running flag). Not fixed.
+- 2026-11-15: task 33 reviewer minor: LessonPage Run not disabled while running (second Run clobbers running flag). Moved to task 65.
+- 2026-11-15: src/types/course.ts duplicates zod schema types, looks stale (found in 37 fix)

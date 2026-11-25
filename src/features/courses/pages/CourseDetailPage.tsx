@@ -1,4 +1,5 @@
 import { Link, useParams } from 'react-router-dom'
+import { BookmarkButton } from '../../notes/BookmarkButton'
 import { useCourses } from '../../../course-system/registry/useCourses'
 
 export default function CourseDetailPage() {
@@ -18,6 +19,7 @@ export default function CourseDetailPage() {
     <section>
       <h1 className="text-2xl font-bold">{c.title}</h1>
       <p className="mt-1 text-slate-600">{c.description}</p>
+      <div className="mt-2"><BookmarkButton courseId={c.id} label="course" /></div>
       {c.modules.map((m) => (
         <div key={m.id} className="mt-4">
           <h2 className="font-semibold">{m.title}</h2>

@@ -1,12 +1,15 @@
 import { Link } from 'react-router-dom'
 import CourseCard, { type CourseSummary } from '../../courses/components/CourseCard'
 
+export interface LessonLink { title: string; courseTitle: string; to: string }
+
 interface Props {
   activeCourses?: CourseSummary[]
-  continueLearning?: { title: string; courseTitle: string }
+  continueLearning?: LessonLink
   recentlyCompleted?: string[]
-  recommended?: CourseSummary
+  recommended?: LessonLink
   overallPercent?: number
+  bookmarks?: LessonLink[]
 }
 
 function Section({ title, empty, children }: { title: string; empty: string; children?: React.ReactNode }) {
@@ -19,7 +22,7 @@ function Section({ title, empty, children }: { title: string; empty: string; chi
 }
 
 export default function DashboardPage({
-  activeCourses = [], continueLearning, recentlyCompleted = [], recommended, overallPercent,
+  activeCourses = [], continueLearning, recentlyCompleted = [], recommended, overallPercent, bookmarks = [],
 }: Props) {
   return (
     <div>
@@ -27,7 +30,7 @@ export default function DashboardPage({
       <p className="mt-2 text-slate-600">Welcome back. Pick up where you left off.</p>
       <div className="mt-4 grid gap-4 md:grid-cols-2">
         <Section title="Continue Learning" empty="Nothing to continue yet. Start a course to see it here.">
-          {continueLearning && <p className="mt-2 text-sm">{continueLearning.title} ({continueLearning.courseTitle})</p>}
+          {continueLearning && <p className="mt-2 text-sm"><Link to={continueLearning.to} className="underline">Continue: {continueLearning.title}</Link> ({continueLearning.courseTitle})</p>}
         </Section>
         <Section title="Overall progress" empty="No progress yet.">
           {overallPercent !== undefined && <p className="mt-2 text-sm">{overallPercent}% complete</p>}
@@ -43,7 +46,14 @@ export default function DashboardPage({
           )}
         </Section>
         <Section title="Recommended next" empty="Recommendations appear once you have courses.">
-          {recommended && <CourseCard course={recommended} />}
+          {recommended && <p className="mt-2 text-sm"><Link to={recommended.to} className="underline">{recommended.title}</Link> ({recommended.courseTitle})</p>}
+        </Section>
+        <Section title="Bookmarks" empty="No bookmarks yet.">
+          {bookmarks.length > 0 && (
+            <ul className="mt-2 list-disc pl-5 text-sm">
+              {bookmarks.map((b) => <li key={b.to}><Link to={b.to} className="underline">{b.title}</Link> ({b.courseTitle})</li>)}
+            </ul>
+          )}
         </Section>
         <Section title="Quick exercise" empty="">
           <p className="mt-2 text-sm"><Link to="/practice" className="underline">Try a quick exercise</Link></p>

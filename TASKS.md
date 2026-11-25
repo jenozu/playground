@@ -3,7 +3,7 @@
 Generated from `.taskmaster/tasks/tasks.json` (the source of truth). Never edit by hand; regenerate with
 `python .taskmaster/render_tasks_md.py`.
 
-**Progress: 38/64 tasks done.**
+**Progress: 45/65 tasks done.**
 
 ## Phase 0 - Foundation
 
@@ -139,27 +139,30 @@ Generated from `.taskmaster/tasks/tasks.json` (the source of truth). Never edit 
 
 ## Phase 6 - Learning progress
 
-- [ ] **37. Progress tracking: completion, attempts, last position** _(after 8, 28)_\
+- [x] **37. Progress tracking: completion, attempts, last position** _(after 8, 28)_\
   Lesson completion, exercise attempts and last accessed lesson persist by stable IDs (PRD 8.4, 13.1).\
   _Test:_ Vitest: completion % math, module complete when all lessons done; e2e: submit passing → reload → lesson shows completed
-- [ ] **38. Autosave and restore working code** _(after 37)_\
+- [x] **38. Autosave and restore working code** _(after 37)_\
   User code survives leaving the lesson and reloading; starter stays resettable (PRD 9.5, 13.2).\
   _Test:_ e2e: edit code, reload, code restored; Reset brings back starter
-- [ ] **39. Continue Learning and live dashboard** _(after 38)_\
+- [x] **39. Continue Learning and live dashboard** _(after 38)_\
   Dashboard resumes the last lesson and shows real progress (PRD 5.2, 13.3).\
   _Test:_ e2e: complete lesson 1 → dashboard shows it recently completed and recommends lesson 2; Continue opens the last lesson
-- [ ] **40. Progress page** _(after 37)_\
+- [x] **40. Progress page** _(after 37)_\
   Practical overview: active/completed courses, modules, lessons, success rate, recent languages (PRD 5.4).\
   _Test:_ Vitest render with seeded progress shows correct counts
-- [ ] **41. Lesson notes and bookmarks** _(after 37)_\
+- [x] **41. Lesson notes and bookmarks** _(after 37)_\
   Per-lesson notes autosave; lessons and courses can be bookmarked (PRD 13.4, 3.4).\
   _Test:_ e2e: write a note, reload, note still there; bookmark appears on dashboard
-- [ ] **42. Export and import learning data** _(after 41, 38)_\
+- [x] **42. Export and import learning data** _(after 41, 38)_\
   Progress, notes, code and bookmarks can be backed up and restored as JSON (PRD 13.6, 21.4).\
   _Test:_ Vitest: export → import round-trip equals original; malformed file rejected with a message
-- [ ] **43. Phase 6 gate: lint, types, tests and build pass** _(after 37, 38, 39, 40, 41, 42)_\
+- [x] **43. Phase 6 gate: lint, types, tests and build pass** _(after 37, 38, 39, 40, 41, 42)_\
   Free script check that phase 6 leaves the repo green.\
   _Test:_ python .taskmaster/run_checks.py run --only 43
+- [x] **65. Fix: Run disabled while a run is in progress** _(after 33)_\
+  Corrective for phase 5 (task 33 reviewer finding, parked by mistake). On LessonPage, Run stays enabled during a run, so a second Run clobbers the running flag and Stop gets disabled mid-run. Disable Run (and Submit) while running; Stop stays enabled until the run ends, errors, times out or is stopped.\
+  _Test:_ Vitest on LessonPage: while a run is pending, Run and Submit are disabled and Stop is enabled; after it resolves, rejects or is stopped, Run is enabled and Stop disabled; clicking Run twice fast executes once. npm run lint, typecheck pass.
 
 ## Phase 7 - Course import
 

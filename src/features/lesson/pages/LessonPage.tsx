@@ -21,9 +21,20 @@ import { FileTabs } from "../../../components/editor/FileTabs";
 import { useCourses } from "../../../course-system/registry/useCourses";
 import { getFiles } from "../../../course-system/registry";
 import type { CourseFiles } from "../../../course-system/parser";
+import { LessonNotes } from "../../notes/LessonNotes";
+import { BookmarkButton } from "../../notes/BookmarkButton";
 import { Hints, Solution, shouldReset } from "../ExerciseHelpers";
 import { Entry } from "../../../components/terminal/OutputPanel";
 import { LessonMarkdown } from "../../lesson-viewer/LessonMarkdown";
+import { codeRepo } from "../../../storage/repositories";
+import { coursePercent } from "../../learning-progress/calc";
+import {
+  completeLesson,
+  completedIds,
+  listLessonProgress,
+  recordAttempt,
+  touchLesson,
+} from "../../learning-progress/service";
 
 const IDS = ["lesson", "editor", "output"];
 const toLayout = (w: number[]): Layout =>
@@ -100,6 +111,14 @@ export default function LessonPage() {
     const t = flat[idx + d];
     if (t) void navigate(`/courses/${courseId}/lessons/${t.l.id}`);
   };
+  const [done, setDone] = useState<Set<string>>(new Set());
+  const refreshProgress = async () =>
+    setDone(completedIds(await listLessonProgress(courseId), courseId ?? ""));
+  useEffect(() => {
+    if (!courseId || !lessonId) return;
+    void touchLesson(courseId, lessonId).then(refreshProgress).catch(() => {});
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [courseId, lessonId]);
   const { prefs, loaded, update } = usePreferences();
   const isDark = useIsDark();
   const group = useRef<GroupImperativeHandle>(null);
@@ -107,56 +126,109 @@ export default function LessonPage() {
   useEffect(() => () => clearTimeout(timer.current), []);
   const key = `${courseId}/${lessonId}`;
   const [edit, setEdit] = useState<{ key: string; v: string }>();
-  const code = edit?.key === key ? edit.v : (starter ?? "");
-  const setCode = (v: string) => setEdit({ key, v });
+  // saved code per course/lesson/file (stable ids); loaded on open, falls back to starter
+  const [saved, setSaved] = useState<{ key: string; v?: string }>();
+  const codeId = (k: string) => `code:${k}/main`;
+  useEffect(() => {
+    let live = true;
+    codeRepo.get(codeId(key)).then(
+      (r) => live && setSaved({ key, v: typeof r?.code === "string" ? r.code : undefined }),
+      () => live && setSaved({ key }),
+    );
+    return () => {
+      live = false;
+    };
+  }, [key]);
+  const code = edit?.key === key ? edit.v : ((saved?.key === key ? saved.v : undefined) ?? starter ?? "");
+  const pending = useRef<{ key: string; v: string }>(undefined);
+  const saveTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
+  const flush = async () => {
+    clearTimeout(saveTimer.current);
+    const p = pending.current;
+    pending.current = undefined;
+    if (p) await codeRepo.put({ id: codeId(p.key), code: p.v, updatedAt: new Date().toISOString() }).catch(() => {});
+  };
+  const setCode = (v: string) => {
+    setEdit({ key, v });
+    pending.current = { key, v };
+    clearTimeout(saveTimer.current);
+    saveTimer.current = setTimeout(() => void flush(), 800);
+  };
+  // flush on route change / unmount and on page unload
+  useEffect(() => {
+    const f = () => void flush();
+    window.addEventListener("beforeunload", f);
+    return () => {
+      window.removeEventListener("beforeunload", f);
+      f();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [key]);
   const [out, setOut] = useState("");
   const [tables, setTables] = useState<{ columns: string[]; rows: unknown[][] }[]>([]);
   const [note, setNote] = useState("");
   // ponytail: placeholder save/submit; arrive in later phases
-  const [running, setRunning] = useState(false);
+  // one execution at a time: React flushes the state update before the next click, so busy also guards re-entry
+  const [busy, setBusy] = useState(false);
+  const exclusive = async (fn: () => Promise<void>) => {
+    if (busy) return;
+    setBusy(true);
+    try {
+      await fn();
+    } catch (e) {
+      setOut(`Error: ${e instanceof Error ? e.message : String(e)}`);
+    } finally {
+      setBusy(false);
+    }
+  };
   const stop = async () => {
     await stopCode();
     setOut("Execution stopped.");
   };
-  const run = async () => {
-    const lang = lesson?.exercise?.type ?? course!.language;
-    const r = await runCode(lang, code, {
-      onStatus: (s) => {
-        setRunning(s === "running");
-        if (s === "done") return;
-        setTables([]);
-        setOut(s === "loading" ? (lang === "python" ? "Loading Python…" : "Loading engine...") : "Running...");
-      },
-      options: { dataset: text(files?.get(lesson?.exercise?.dataset ?? "")) || undefined },
+  const run = () =>
+    exclusive(async () => {
+      const lang = lesson?.exercise?.type ?? course!.language;
+      const r = await runCode(lang, code, {
+        onStatus: (s) => {
+          if (s === "done") return;
+          setTables([]);
+          setOut(s === "loading" ? (lang === "python" ? "Loading Python…" : "Loading engine...") : "Running...");
+        },
+        options: { dataset: text(files?.get(lesson?.exercise?.dataset ?? "")) || undefined },
+      });
+      const t = r.tables ?? (r.table ? [r.table] : []);
+      setTables(t);
+      setOut([r.output, ...r.errors].filter(Boolean).join("\n") || "(no output)");
     });
-    const t = r.tables ?? (r.table ? [r.table] : []);
-    setTables(t);
-    setOut([r.output, ...r.errors].filter(Boolean).join("\n") || "(no output)");
-  };
-  const submit = async () => {
-    const ex = lesson?.exercise;
-    const tf = testFileSchema.safeParse(JSON.parse(text(files?.get(ex?.tests ?? "")) || "null"));
-    if (!ex || !tf.success) return setOut("No tests for this lesson.");
-    if (tf.data.language === "javascript") return setOut("Submit is not available for this language yet.");
-    const options = { dataset: text(files?.get(ex.dataset ?? "")) || undefined };
-    const results =
-      tf.data.language === "python"
-        ? await evaluatePython(tf.data.tests, code, { exec: (c) => runCode("python", c) })
-        : await evaluateSql(tf.data.tests, code, {
-            reset: () => resetEngine("sql"),
-            exec: (c) => runCode("sql", c, { options }),
-          });
-    const line = (r: (typeof results)[number]) =>
-      `${r.passed ? "PASS" : "FAIL"} ${r.name}` +
-      (r.passed
-        ? ""
-        : tf.data.language === "python" && r.expected === undefined
-          ? `\n  error: ${r.error ?? ""}`
-          : `\n  expected: ${r.expected ?? ""}\n  actual: ${r.actual ?? r.error ?? ""}`);
-    setTables([]);
-    setOut(results.map(line).join("\n"));
-    emitIfPassed(results, window, { courseId, lessonId });
-  };
+  const submit = () =>
+    exclusive(async () => {
+      const ex = lesson?.exercise;
+      const tf = testFileSchema.safeParse(JSON.parse(text(files?.get(ex?.tests ?? "")) || "null"));
+      if (!ex || !tf.success) return setOut("No tests for this lesson.");
+      if (tf.data.language === "javascript") return setOut("Submit is not available for this language yet.");
+      const options = { dataset: text(files?.get(ex.dataset ?? "")) || undefined };
+      const results =
+        tf.data.language === "python"
+          ? await evaluatePython(tf.data.tests, code, { exec: (c) => runCode("python", c) })
+          : await evaluateSql(tf.data.tests, code, {
+              reset: () => resetEngine("sql"),
+              exec: (c) => runCode("sql", c, { options }),
+            });
+      const line = (r: (typeof results)[number]) =>
+        `${r.passed ? "PASS" : "FAIL"} ${r.name}` +
+        (r.passed
+          ? ""
+          : tf.data.language === "python" && r.expected === undefined
+            ? `\n  error: ${r.error ?? ""}`
+            : `\n  expected: ${r.expected ?? ""}\n  actual: ${r.actual ?? r.error ?? ""}`);
+      setTables([]);
+      setOut(results.map(line).join("\n"));
+      emitIfPassed(results, window, { courseId, lessonId });
+      if (courseId && lessonId) {
+        await recordAttempt(courseId, lessonId, results);
+        await refreshProgress();
+      }
+    });
   const controls: [string, () => void][] = [
     ["Previous", () => go(-1)],
     ["Next", () => go(1)],
@@ -169,7 +241,10 @@ export default function LessonPage() {
         if (shouldReset(code, starter ?? "")) setCode(starter ?? "");
       },
     ],
-    ["Save", () => setNote("Saved (placeholder)")],
+    ...(!lesson?.exercise && !done.has(lessonId ?? "")
+      ? [["Mark complete", () => void completeLesson(courseId!, lessonId!).then(refreshProgress)] as [string, () => void]]
+      : []),
+    ["Save", () => void flush().then(() => (setNote("Saved"), setTimeout(() => setNote(""), 1500)))],
     ["Clear output", () => (setOut(""), setTables([]))],
   ];
   const mode = useMode();
@@ -251,6 +326,7 @@ export default function LessonPage() {
           )}
           <Hints key={key} hints={lesson!.exercise?.hints ?? []} />
           {solution !== undefined && <Solution key={`sol-${key}`} solution={solution} />}
+          <LessonNotes key={`notes-${key}`} courseId={courseId!} lessonId={lessonId!} />
         </>
       )}
       {id === "editor" && (
@@ -310,8 +386,9 @@ export default function LessonPage() {
         <h1 className="flex-1 truncate font-semibold">
           {course.title} / {lesson.title}
         </h1>
-        <span className="text-sm">Course 0%</span>
-        <span className="text-sm">Lesson 0%</span>
+        <BookmarkButton key={key} courseId={course.id} lessonId={lesson.id} label="lesson" />
+        <span className="text-sm">Course {coursePercent(course, done)}%</span>
+        <span className="text-sm">Lesson {done.has(lesson.id) ? 100 : 0}%</span>
         <button
           type="button"
           className="rounded border px-2 py-1 text-sm"
@@ -402,13 +479,14 @@ export default function LessonPage() {
         </>
       )}
       <footer className="flex flex-wrap items-center gap-2 border-t border-slate-200 px-3 py-2 dark:border-slate-700">
+        {/* eslint-disable-next-line react-hooks/refs -- flush only touches refs in the click handler */}
         {controls.map(([label, fn]) => (
           <button
             key={label}
             type="button"
             className="rounded border px-2 py-1 text-sm"
             onClick={fn}
-            disabled={label === "Stop" && !running}
+            disabled={label === "Stop" ? !busy : busy && (label === "Run" || label === "Submit")}
           >
             {label}
           </button>
