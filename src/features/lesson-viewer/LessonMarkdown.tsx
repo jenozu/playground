@@ -134,7 +134,7 @@ export function LessonMarkdown({
         </a>
       ),
     img: ({ src, alt }) => {
-      if (!src) return null;
+      if (!src || typeof src !== "string") return null; // React 19 types allow Blob
       const isRelative = !/^(https?:|mailto:)/i.test(src);
       const resolved = isRelative && resolveAsset ? resolveAsset(src) : src;
       return resolved ? (
